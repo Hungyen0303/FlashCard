@@ -14,15 +14,9 @@ class Logo extends StatelessWidget {
         children: [
           Image.asset(
             "assets/logo.png",
-            height: 100,
+            height: 200,
           ),
-          Text(
-            "Flash Card Magic",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 25,
-            ),
-          )
+
         ],
       ),
     );
