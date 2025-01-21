@@ -25,6 +25,15 @@ class Loginpage extends StatelessWidget {
         MaterialPageRoute(builder: (_) => Forgetpasswordpage())
     );
   }
+    void Login( GlobalKey<FormState> _formState ) {
+      if (_formState.currentState!.validate())
+      {
+
+      }
+      else {
+
+      }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +56,9 @@ class Loginpage extends StatelessWidget {
       body: SingleChildScrollView(
         controller:  _scrollController,
           child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
           Container(
             padding: EdgeInsets.only(bottom: 25.0),
             decoration: BoxDecoration(
@@ -84,9 +93,8 @@ class Loginpage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(
-
-                      padding: const EdgeInsets.only(
+                    const Padding(
+                      padding:  EdgeInsets.only(
                           left: 35.0, right: 24.0, bottom: 25.0, top: 0),
                       child: Align(
                         alignment: Alignment.topLeft,
@@ -105,7 +113,6 @@ class Loginpage extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 40, right: 40.0, top: 25.0),
                       child: TextFormField(
-
                         onTap: () => _scrollToFocusedField(300),
                         textAlign: TextAlign.left,
                         style: TextStyle(fontWeight: FontWeight.bold),
@@ -145,6 +152,20 @@ class Loginpage extends StatelessWidget {
                               width: 2.0,
                             ),
                           ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(
+                              color: Colors.redAccent, // Màu viền khi lỗi
+                              width: 1.5,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(
+                              color: Colors.redAccent, // Màu viền khi lỗi và được focus
+                              width: 2.0,
+                            ),
+                          ),
                           border: OutlineInputBorder(
                             gapPadding: 15,
                             borderRadius: BorderRadius.all(Radius.circular(25)),
@@ -170,6 +191,7 @@ class Loginpage extends StatelessWidget {
                         obscureText: true,
                         style: TextStyle(fontWeight: FontWeight.bold),
                         controller: _passwordController,
+
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(
@@ -177,7 +199,7 @@ class Loginpage extends StatelessWidget {
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 2.0, horizontal: 20.0),
                           labelText: 'Password',
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.lock,
                             color: MAIN_COLOR,
                           ),
@@ -188,6 +210,21 @@ class Loginpage extends StatelessWidget {
                               width: 1.5,
                             ),
                           ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(
+                              color: Colors.redAccent, // Màu viền khi lỗi
+                              width: 1.5,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(
+                              color: Colors.redAccent, // Màu viền khi lỗi và được focus
+                              width: 2.0,
+                            ),
+                          ),
+
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25),
                             borderSide: BorderSide(
@@ -197,13 +234,16 @@ class Loginpage extends StatelessWidget {
                           ),
                           filled: true,
                           fillColor: Colors.green[50],
+
+
+
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
+                            return 'Please enter your password';
                           } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
                               .hasMatch(value)) {
-                            return 'Please enter a valid email';
+                            return 'Please enter a valid password';
                           }
                           return null;
                         },
@@ -230,14 +270,16 @@ class Loginpage extends StatelessWidget {
                                 vertical: 0.0, horizontal: 140.0),
                             backgroundColor: MAIN_TEXT_COLOR,
                             foregroundColor: Colors.white,
-                            animationDuration: Duration(seconds: 5),
+                            animationDuration: Duration(seconds: 2),
                             elevation: 4.0),
-                        onPressed: () {},
+                        onPressed: () {
+                          Login(_formKey) ;
+                        },
                         child: Text(
                           "Login",
                           style: TextStyle(color: MAIN_COLOR),
                         )),
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
                     Text(
@@ -246,7 +288,7 @@ class Loginpage extends StatelessWidget {
                         color: MAIN_COLOR,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
@@ -266,7 +308,9 @@ class Loginpage extends StatelessWidget {
                           width: 35,
                         ),
                         GestureDetector(
+
                           child: SizedBox(
+
                             height: 35,
                             width: 35,
                             child: Image.asset(
@@ -290,7 +334,7 @@ class Loginpage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
                     Row(
