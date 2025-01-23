@@ -1,5 +1,6 @@
 import 'package:flashcard_learning/color/AllColor.dart';
 import 'package:flashcard_learning/pages/ForgetPasswordPage.dart';
+import 'package:flashcard_learning/pages/HomePage.dart';
 import 'package:flashcard_learning/pages/OnboardPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,22 +26,25 @@ class Loginpage extends StatelessWidget {
         MaterialPageRoute(builder: (_) => Forgetpasswordpage())
     );
   }
-    void Login( GlobalKey<FormState> _formState ) {
-      if (_formState.currentState!.validate())
-      {
 
-      }
-      else {
-
-      }
-    }
 
   @override
   Widget build(BuildContext context) {
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
+    _emailController.text = "nguyenvana@gmail.com" ;
+    _passwordController.text = "123456789s";
     final ScrollController _scrollController = ScrollController();
+    void Login( GlobalKey<FormState> _formState ) {
+      if (_formState.currentState!.validate())
+      {
+        Navigator.push(context, MaterialPageRoute(builder: (_) => Homepage() ));
+    }
+      else {
+
+      }
+    }
     void _scrollToFocusedField(double offset) {
       // Đợi một chút để keyboard hiện lên
       Future.delayed(const Duration(milliseconds: 250), () {
@@ -119,6 +123,7 @@ class Loginpage extends StatelessWidget {
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         canRequestFocus: true,
+
                         cursorColor: MAIN_COLOR,
                         cursorRadius: Radius.circular(50.0),
                         decoration: InputDecoration(
@@ -238,15 +243,7 @@ class Loginpage extends StatelessWidget {
 
 
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                              .hasMatch(value)) {
-                            return 'Please enter a valid password';
-                          }
-                          return null;
-                        },
+
                       ),
                     ),
                     Align(
