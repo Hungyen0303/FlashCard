@@ -2,8 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Cardcustom extends StatefulWidget {
-  const Cardcustom({super.key});
+  const Cardcustom({super.key, required this.image, required this.title, required this.start, required this.end, required this.level});
 
+  final String image ;
+  final String title ;
+  final int start ;
+  final int  end ;
+  final String level ;
   @override
   State<Cardcustom> createState() => _CardcustomState();
 }
@@ -15,11 +20,12 @@ class _CardcustomState extends State<Cardcustom> {
       alignment: Alignment.topLeft,
       children: [
         Container(
+          //padding: EdgeInsets.only(bottom: 8),
+          margin: EdgeInsets.only(right: 12),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               color: Colors.blue),
-          margin: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-          height: 200,
+          height: 210,
           width: 150,
           //color: Colors.blue,
           child:
@@ -34,16 +40,28 @@ class _CardcustomState extends State<Cardcustom> {
               width: 150,
               child: ClipRect(
                 child: Image.asset(
-                  "assets/img-2.jpg",
+                  widget.image,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            Text(
-              "Joining a School Club",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
+              child: Text(
+               widget.title,
+                style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white),
+              ),
             ),
-            Text("3-5 minutes"),
+            Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: Text(
+                "${widget.start}-${widget.end} minutes",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ]),
         ),
         Align(
@@ -53,7 +71,7 @@ class _CardcustomState extends State<Cardcustom> {
               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 2),
               color: Colors.green,
               child: Text(
-                "EASY",
+                "${widget.level}",
                 style: TextStyle(color: Colors.white),
               ),
             ),
