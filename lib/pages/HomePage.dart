@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
+import 'ChatWithAIPage.dart';
+
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -15,7 +17,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  List<Widget> widgets = [Mainflashcard(), Dictionarypage()  ,  Accountpage(), Accountpage()];
+  List<Widget> widgets = [Mainflashcard(), Dictionarypage()  ,  ChatWithAIPage(), Accountpage()];
   int currentPageIndex = 0;
 
 
