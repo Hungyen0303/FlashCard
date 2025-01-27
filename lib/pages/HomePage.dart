@@ -1,5 +1,6 @@
 import 'package:flashcard_learning/color/AllColor.dart';
 import 'package:flashcard_learning/pages/AccountPage.dart';
+import 'package:flashcard_learning/pages/DictionaryPage.dart';
 import 'package:flashcard_learning/pages/MainFlashCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  List<Widget> widgets = [Mainflashcard(), Accountpage()  ,  Accountpage(), Accountpage()];
+  List<Widget> widgets = [Mainflashcard(), Dictionarypage()  ,  Accountpage(), Accountpage()];
   int currentPageIndex = 0;
 
 
@@ -80,3 +81,5 @@ class _HomepageState extends State<Homepage> {
     );
   }
 }
+
+
