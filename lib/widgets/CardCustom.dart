@@ -2,13 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Cardcustom extends StatefulWidget {
-  const Cardcustom({super.key, required this.image, required this.title, required this.start, required this.end, required this.level});
+   Cardcustom({super.key, required this.image, required this.title, required this.start, required this.end, required this.level});
 
   final String image ;
   final String title ;
   final int start ;
   final int  end ;
   final String level ;
+  
+  final Color bg = Color(0xFFF3E5F5) ; 
+  final Color text_color = Color(0xFF6200EE) ;
+  
   @override
   State<Cardcustom> createState() => _CardcustomState();
 }
@@ -24,7 +28,7 @@ class _CardcustomState extends State<Cardcustom> {
           margin: EdgeInsets.only(right: 12),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Colors.blue),
+              color: widget.bg),
           height: 210,
           width: 150,
           //color: Colors.blue,
@@ -52,14 +56,14 @@ class _CardcustomState extends State<Cardcustom> {
                 style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w400,
-                    color: Colors.white),
+                    color: widget.text_color),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 8, right: 8),
               child: Text(
                 "${widget.start}-${widget.end} minutes",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: widget.text_color),
               ),
             ),
           ]),

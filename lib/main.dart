@@ -12,9 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       title: 'Learning with Flash Card',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: "MainFont",
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),

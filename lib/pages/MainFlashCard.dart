@@ -13,10 +13,76 @@ class Mainflashcard extends StatefulWidget {
 }
 
 class _MainflashcardState extends State<Mainflashcard> {
+  Padding buildListtile(String title, Icon leadingIcon) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListTile(
+        horizontalTitleGap: 30,
+        splashColor: Colors.deepPurpleAccent,
+        focusColor: Colors.blue,
+        iconColor: Colors.red,
+        tileColor: MAIN_THEME_PURPLE,
+        trailing: Container(
+          width: 45,
+          height: 45,
+          margin: EdgeInsets.only(right: 10),
+          child: Icon(
+            Icons.navigate_next,
+            color: Colors.white,
+          ),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xffa16eeb), Color(0xFF6200EE)]),
+              color: Colors.red,
+              shape: BoxShape.circle),
+        ),
+        onTap: () {},
+        leading: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: IconTheme(
+              data: IconThemeData(
+                color: Color(0xffa16eeb),
+              ),
+              child: leadingIcon,
+            )),
+        title: Container(
+          child: Text(
+            title,
+            style: styleOfList,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            softWrap: true, // Cho phép xuống dòng
+          ),
+        ),
+        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        textColor: MAIN_THEME_PURPLE_TEXT,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    );
+  }
+
   String nameUser = "Người dùng khách ";
   Color bg_color = Color(0xFFebdfee);
   final TextStyle styleOfList = TextStyle(
       color: MAIN_THEME_PURPLE_TEXT, fontSize: 20, fontWeight: FontWeight.w500);
+
+  Container buildActions(Icon icon) {
+    return Container(
+      child: IconTheme(
+          data: IconThemeData(
+            color: Color(0xFF6200EE),
+          ),
+          child: icon),
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      decoration: BoxDecoration(
+          color: Color(0xffe8a90e), borderRadius: BorderRadius.circular(10)),
+    );
+  }
 
   List<String> listTiles = [
     "Ôn lại từ trong flashcard ",
@@ -28,15 +94,15 @@ class _MainflashcardState extends State<Mainflashcard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Color(0xFFebdfee),
+      backgroundColor: Color(0xffF8F9FA),
       appBar: AppBar(
         leading: Icon(
           LineIcons.userShield,
-          color: Colors.red,
+          color: Color(0xFF6200EE),
         ),
         actions: [
-          Icon(Icons.fireplace_sharp),
-          Icon(Icons.lightbulb_circle),
+          buildActions(Icon(LineIcons.lightningBolt)),
+          buildActions(Icon(LineIcons.fire)),
         ],
       ),
       body: Padding(
@@ -66,205 +132,15 @@ class _MainflashcardState extends State<Mainflashcard> {
                   "Hôm nay chúng ta nên làm gì ",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: MAIN_THEME_PURPLE_TEXT,
+                    color: Color(0xFF6200EE),
                     fontSize: 25,
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  splashColor: Colors.red,
-                  focusColor: Colors.blue,
-                  iconColor: Colors.orange,
-                  tileColor: Colors.grey[300],
-                  trailing: Container(
-                    width: 45,
-                    height: 45,
-                    margin: EdgeInsets.only(right: 10),
-                    child: Icon(
-                      Icons.navigate_next,
-                      color: Colors.white,
-                    ),
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Colors.orange, Colors.orangeAccent]),
-                        color: Colors.red,
-                        shape: BoxShape.circle),
-                  ),
-                  onTap: () {},
-                  leading: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Icon(
-                      LineIcons.book,
-                      size: 34,
-                    ),
-                  ),
-                  title: Container(
-                    child: Text(
-                      listTiles[0],
-                      style: styleOfList,
-                      maxLines: 2,
-                      // Giới hạn số dòng
-                      overflow: TextOverflow.ellipsis,
-                      // Cắt bớt nếu vượt quá maxLines
-                      softWrap: true, // Cho phép xuống dòng
-                    ),
-                  ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  textColor: MAIN_THEME_PURPLE_TEXT,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  splashColor: Colors.red,
-                  focusColor: Colors.blue,
-                  iconColor: Colors.orange,
-                  tileColor: Colors.grey[300],
-                  trailing: Container(
-                    width: 45,
-                    height: 45,
-                    margin: EdgeInsets.only(right: 10),
-                    child: Icon(
-                      Icons.navigate_next,
-                      color: Colors.white,
-                    ),
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Colors.orange, Colors.orangeAccent]),
-                        color: Colors.red,
-                        shape: BoxShape.circle),
-                  ),
-                  onTap: () {},
-                  leading: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Icon(
-                      LineIcons.book,
-                      size: 34,
-                    ),
-                  ),
-                  title: Container(
-                    child: Text(
-                      listTiles[0],
-                      style: styleOfList,
-                      maxLines: 2,
-                      // Giới hạn số dòng
-                      overflow: TextOverflow.ellipsis,
-                      // Cắt bớt nếu vượt quá maxLines
-                      softWrap: true, // Cho phép xuống dòng
-                    ),
-                  ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  textColor: MAIN_THEME_PURPLE_TEXT,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  splashColor: Colors.red,
-                  focusColor: Colors.blue,
-                  iconColor: Colors.orange,
-                  tileColor: Colors.grey[300],
-                  trailing: Container(
-                    width: 45,
-                    height: 45,
-                    margin: EdgeInsets.only(right: 10),
-                    child: Icon(
-                      Icons.navigate_next,
-                      color: Colors.white,
-                    ),
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Colors.orange, Colors.orangeAccent]),
-                        color: Colors.red,
-                        shape: BoxShape.circle),
-                  ),
-                  onTap: () {},
-                  leading: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Icon(
-                      LineIcons.book,
-                      size: 34,
-                    ),
-                  ),
-
-
-                  title: Container(
-                    child: Text(
-                      listTiles[0],
-                      style: styleOfList,
-                      maxLines: 2, // Giới hạn số dòng
-                      overflow: TextOverflow.ellipsis, // Cắt bớt nếu vượt quá maxLines
-                      softWrap: true, // Cho phép xuống dòng
-                    ),
-                  ),
-
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  textColor: MAIN_THEME_PURPLE_TEXT,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  splashColor: Colors.red,
-                  focusColor: Colors.blue,
-                  iconColor: Colors.orange,
-                  tileColor: Colors.grey[300],
-                  trailing: Container(
-                    width: 45,
-                    height: 45,
-                    margin: EdgeInsets.only(right: 10),
-                    child: Icon(
-                      Icons.navigate_next,
-                      color: Colors.white,
-                    ),
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Colors.orange, Colors.orangeAccent]),
-                        color: Colors.red,
-                        shape: BoxShape.circle),
-                  ),
-                  onTap: () {},
-                  leading: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Icon(
-                      LineIcons.book,
-                      size: 34,
-                    ),
-                  ),
-
-
-                  title: Container(
-                    child: Text(
-                      listTiles[0],
-                      style: styleOfList,
-                      maxLines: 2, // Giới hạn số dòng
-                      overflow: TextOverflow.ellipsis, // Cắt bớt nếu vượt quá maxLines
-                      softWrap: true, // Cho phép xuống dòng
-                    ),
-                  ),
-
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  textColor: MAIN_THEME_PURPLE_TEXT,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
+              buildListtile(listTiles[0], Icon(Icons.rate_review_outlined)),
+              buildListtile(listTiles[1], Icon(LineIcons.plusCircle)),
+              buildListtile(listTiles[2], Icon(LineIcons.leanpub)),
+              buildListtile(listTiles[3], Icon(LineIcons.rocketChat)),
             ],
           ),
         ),

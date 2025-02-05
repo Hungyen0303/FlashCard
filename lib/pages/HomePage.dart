@@ -28,8 +28,8 @@ class _HomepageState extends State<Homepage> {
 
   ] ;
 
-  Color textColor =  Color(0xFFe9d4ef)  ;
-  Color bgColor = Color(0xFF7a2e95);
+  Color textColor =  MAIN_THEME_PURPLE_TEXT ;
+  Color bgColor = MAIN_THEME_PURPLE;
 
   @override
   Widget build(BuildContext context) {

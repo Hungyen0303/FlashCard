@@ -23,9 +23,9 @@ class _AiconversationState extends State<Aiconversation> {
       child: Container(
           height: 300,
           width: double.infinity,
-          padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           decoration: BoxDecoration(
-              color: MAIN_THEME_PURPLE,
+              color: Color(0xFFDEB5D7),
               borderRadius: BorderRadius.all(Radius.circular(10.0))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +33,7 @@ class _AiconversationState extends State<Aiconversation> {
               Text(
                 "AI Conversations",
                 style: TextStyle(
-                  color: MAIN_THEME_PURPLE_TEXT,
+                  color: Color(0xff6200EE),
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
@@ -42,7 +42,7 @@ class _AiconversationState extends State<Aiconversation> {
                 "Có 3 cuộc hội đối thoại ",
                 style: TextStyle(
                   fontFamily: "MyCustomFont",
-                  color: Color(0xFF0a50e7),
+                  color: Color(0xFFF3E5F5),
                   fontSize: 18,
                 ),
               ),
