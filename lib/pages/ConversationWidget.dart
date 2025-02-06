@@ -26,7 +26,7 @@ class _ConversationWidgetState extends State<ConversationWidget> {
               isBot: false,
               content: "How to use this word \"ephermeral\" go ahead "),
 
-          Contentchatcontainer(isBot: true, content: "Sure , go ahead "),
+          Contentchatcontainer(isBot: true, content: "Sure , go ahead , which word you want to add  "),
           Contentchatcontainer(isBot: false, content: "Sure , go ahead "),
 
         ],
