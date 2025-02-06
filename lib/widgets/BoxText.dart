@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +16,11 @@ class Boxtext extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 5),
         padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
         decoration: BoxDecoration(
-            color: Colors.grey, borderRadius: BorderRadius.circular(10)),
+            color: MAIN_THEME_PINK, borderRadius: BorderRadius.circular(10)),
         child: Text(
           word,
           style: TextStyle(
-            color: Colors.white,
+            color: MAIN_THEME_PINK_TEXT,
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
+import '../color/AllColor.dart';
 import 'ConversationWidget.dart';
 
 class ChatWithAIPage extends StatefulWidget {
@@ -89,5 +90,6 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
             )
           ],
         ));
+
   }
 }
