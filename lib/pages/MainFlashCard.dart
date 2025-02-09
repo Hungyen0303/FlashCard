@@ -1,10 +1,11 @@
 import 'package:flashcard_learning/color/AllColor.dart';
+import 'package:flashcard_learning/widgets/AppBarCustom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
 import '../widgets/AIConversation.dart';
-
+import '../widgets/AppBarCustom.dart';
 class Mainflashcard extends StatefulWidget {
   const Mainflashcard({super.key});
 
@@ -84,6 +85,19 @@ class _MainflashcardState extends State<Mainflashcard> {
     );
   }
 
+  AppBar _buildAppbar() {
+    return AppBar(
+      leading: Icon(
+        LineIcons.userShield,
+        color: Color(0xFF6200EE),
+      ),
+      actions: [
+        buildActions(Icon(LineIcons.lightningBolt)),
+        buildActions(Icon(LineIcons.fire)),
+      ],
+    );
+  }
+
   List<String> listTiles = [
     "Ôn lại từ trong flashcard ",
     "Thêm từ mới vào flashcard ",
@@ -95,16 +109,7 @@ class _MainflashcardState extends State<Mainflashcard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffF8F9FA),
-      appBar: AppBar(
-        leading: Icon(
-          LineIcons.userShield,
-          color: Color(0xFF6200EE),
-        ),
-        actions: [
-          buildActions(Icon(LineIcons.lightningBolt)),
-          buildActions(Icon(LineIcons.fire)),
-        ],
-      ),
+      appBar: _buildAppbar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
         child: SingleChildScrollView(

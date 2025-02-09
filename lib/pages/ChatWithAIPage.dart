@@ -41,7 +41,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
   }
 
   bool isAsking = false;
-  TextEditingController _askingcontroller = TextEditingController();
+  final TextEditingController _askingcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
