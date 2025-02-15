@@ -1,4 +1,5 @@
 import 'package:flashcard_learning/color/AllColor.dart';
+import 'package:flashcard_learning/pages/SearchResultPage.dart';
 import 'package:flashcard_learning/widgets/BoxText.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,8 @@ class _DictionarypageState extends State<Dictionarypage> {
     color: Color(0xffdb0d46),
     fontSize: 20,
   );
-  bool isSearch = false ;
+  bool isSearch = false;
+
   AppBar buildAppBar() {
     return AppBar(
       title: Row(
@@ -75,7 +77,7 @@ class _DictionarypageState extends State<Dictionarypage> {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Text(
                     "Bạn muốn tìm gì",
-                    style: titleStyle ,
+                    style: titleStyle,
                   ),
                 ),
                 // if (isSearch)
@@ -97,7 +99,7 @@ class _DictionarypageState extends State<Dictionarypage> {
                   onTapOutside: (event) {
                     FocusManager.instance.primaryFocus?.unfocus();
                     setState(() {
-                      isSearch = false;
+                     // isSearch = false;
                     });
                   },
                   controller: _searchController,
@@ -151,25 +153,25 @@ class _DictionarypageState extends State<Dictionarypage> {
                 Center(
                   child: AnimatedOpacity(
                     duration: Duration(milliseconds: 300),
-                    opacity: isSearch ? 1 : 0.2 ,
+                    opacity: isSearch ? 1 : 0.2,
                     child: Visibility(
 
-                      visible: isSearch,
+                        visible: isSearch,
                         child: SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(vertical: 20),
+                                  padding: EdgeInsets.symmetric(vertical: 20),
                                   shape: RoundedRectangleBorder(
                                       side: BorderSide(
                                         color: MAIN_THEME_PINK_TEXT,
                                       ),
                                       borderRadius:
-                                          BorderRadius.all(Radius.circular(10)))),
+                                      BorderRadius.all(Radius.circular(10)))),
                               onPressed: () {
                                 gotoSearchPage(_searchController.text);
                               },
-                              child: Text("Tra cứu" , style: TextStyle(
+                              child: Text("Tra cứu", style: TextStyle(
                                 fontSize: 20,
                               ),)),
                         )),
@@ -184,7 +186,7 @@ class _DictionarypageState extends State<Dictionarypage> {
                     Container(
                       height: 180,
                       padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       width: 180,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -192,7 +194,7 @@ class _DictionarypageState extends State<Dictionarypage> {
                               colors: [
                                 Color(0xff2196f3), // Xanh dương sáng
                                 Color(0xff9c27b0), // Tím nhạt
-                              ],                      begin: Alignment.topCenter,
+                              ], begin: Alignment.topCenter,
                               end: Alignment.bottomCenter)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -223,7 +225,7 @@ class _DictionarypageState extends State<Dictionarypage> {
                     Container(
                       height: 180,
                       padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       width: 180,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -264,12 +266,12 @@ class _DictionarypageState extends State<Dictionarypage> {
                     )
                   ],
                 ),
-                SizedBox(height: 10,) ,
+                SizedBox(height: 10,),
                 Text(
-                  style: titleStyle ,
+                  style: titleStyle,
                   "Những từ tìm kiếm phổ biến ",
                 ),
-                SizedBox(height: 10,) ,
+                SizedBox(height: 10,),
                 Boxtext(word: "Cleaning the house", ontap: () {}),
                 Boxtext(word: "Refresh ", ontap: () {}),
                 Boxtext(word: "Putting up decoration ", ontap: () {}),
@@ -280,5 +282,8 @@ class _DictionarypageState extends State<Dictionarypage> {
         ));
   }
 
-  void gotoSearchPage(String text) {}
+  void gotoSearchPage(String text) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => Searchresultpage(text: "Hello"))) ;
+  }
 }
