@@ -6,6 +6,7 @@ import 'package:line_icons/line_icons.dart';
 
 import '../widgets/AIConversation.dart';
 import '../widgets/AppBarCustom.dart';
+import 'allFlashCardSet.dart';
 class Mainflashcard extends StatefulWidget {
   const Mainflashcard({super.key});
 
@@ -14,7 +15,10 @@ class Mainflashcard extends StatefulWidget {
 }
 
 class _MainflashcardState extends State<Mainflashcard> {
-  Padding buildListtile(String title, Icon leadingIcon) {
+  void _gotoAllCollections(context) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => AllFlashCardSet() )) ;
+  }
+  Padding buildListtile(String title, Icon leadingIcon , Function callback) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListTile(
@@ -39,7 +43,7 @@ class _MainflashcardState extends State<Mainflashcard> {
               color: Colors.red,
               shape: BoxShape.circle),
         ),
-        onTap: () {},
+        onTap: () => callback(),
         leading: Padding(
             padding: const EdgeInsets.only(left: 8),
             child: IconTheme(
@@ -142,10 +146,12 @@ class _MainflashcardState extends State<Mainflashcard> {
                   ),
                 ),
               ),
-              buildListtile(listTiles[0], Icon(Icons.rate_review_outlined)),
-              buildListtile(listTiles[1], Icon(LineIcons.plusCircle)),
-              buildListtile(listTiles[2], Icon(LineIcons.leanpub)),
-              buildListtile(listTiles[3], Icon(LineIcons.rocketChat)),
+              buildListtile(listTiles[0], Icon(Icons.rate_review_outlined) , () {
+                _gotoAllCollections(context);
+              }),
+              buildListtile(listTiles[1], Icon(LineIcons.plusCircle)  , () {}),
+              buildListtile(listTiles[2], Icon(LineIcons.leanpub) , (){}),
+              buildListtile(listTiles[3], Icon(LineIcons.rocketChat) , (){}),
             ],
           ),
         ),
