@@ -1,6 +1,6 @@
-import 'package:flashcard_learning/color/AllColor.dart';
-import 'package:flashcard_learning/enum/level.dart';
-import 'package:flashcard_learning/widgets/CardCustom.dart';
+import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/utils/enum/level.dart';
+import 'package:flashcard_learning/ui/home/widgets/CardCustom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

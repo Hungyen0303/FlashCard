@@ -1,6 +1,6 @@
-import 'package:flashcard_learning/color/AllColor.dart';
-import 'package:flashcard_learning/pages/SearchResultPage.dart';
-import 'package:flashcard_learning/widgets/BoxText.dart';
+import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/ui/search_result/searchResult_screen.dart';
+import 'package:flashcard_learning/ui/dictionary/BoxText.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
@@ -272,10 +272,10 @@ class _DictionarypageState extends State<Dictionarypage> {
                   "Những từ tìm kiếm phổ biến ",
                 ),
                 SizedBox(height: 10,),
-                Boxtext(word: "Cleaning the house", ontap: () {}),
-                Boxtext(word: "Refresh ", ontap: () {}),
-                Boxtext(word: "Putting up decoration ", ontap: () {}),
-                Boxtext(word: "Putting up decoration ", ontap: () {}),
+                Boxtext(word: "Cleaning the house", onTap: () {}),
+                Boxtext(word: "Refresh ", onTap: () {}),
+                Boxtext(word: "Putting up decoration ", onTap: () {}),
+                Boxtext(word: "Putting up decoration ", onTap: () {}),
               ],
             ),
           ),

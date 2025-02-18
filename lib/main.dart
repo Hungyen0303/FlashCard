@@ -1,4 +1,4 @@
-import 'package:flashcard_learning/pages/OnboardPage.dart';
+import 'package:flashcard_learning/ui/home/widgets/onboard_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

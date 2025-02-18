@@ -1,22 +1,19 @@
-import 'package:flashcard_learning/color/AllColor.dart';
-import 'package:flashcard_learning/pages/ForgetPasswordPage.dart';
-import 'package:flashcard_learning/pages/HomePage.dart';
-import 'package:flashcard_learning/pages/OnboardPage.dart';
+import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
+import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/ui/auth/forgetpassword/widgets/forgetpassword_screen.dart';
+import 'package:flashcard_learning/ui/home/widgets/shell_screen.dart';
+import 'package:flashcard_learning/ui/home/widgets/onboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/logo.dart';
-import 'RegisterPage.dart';
-import 'Testpage.dart';
+import '../../../../logo.dart';
+import '../../register/widgets/register_screen.dart';
+import '../../../test/Testpage.dart';
 
 class Loginpage extends StatelessWidget {
-  const Loginpage({super.key});
+  Loginpage({super.key, required this.loginViewModel});
 
-  void _onBackToIntro(context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const OnBoardingPage()),
-    );
-  }
+  final LoginViewModel loginViewModel;
 
   void _gotoRegisterPage(context) {
     Navigator.of(context)
@@ -24,7 +21,7 @@ class Loginpage extends StatelessWidget {
   }
 
   void _gotoTest(context) {
-    Navigator.push(context, MaterialPageRoute(builder: (_)=> TestPage()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => TestPage()));
   }
 
   void _gotoForgetPasswordPage(context) {
@@ -32,30 +29,35 @@ class Loginpage extends StatelessWidget {
         MaterialPageRoute(builder: (_) => Forgetpasswordpage()));
   }
 
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  final ScrollController _scrollController = ScrollController();
+
+  void login(GlobalKey<FormState> formState, BuildContext context) {
+    if (formState.currentState!.validate()) {
+      loginViewModel.login(_emailController.text, _passwordController.text);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Homepage()));
+    } else {}
+  }
+
+  void _scrollToFocusedField(double offset) {
+    // Đợi một chút để keyboard hiện lên
+    Future.delayed(const Duration(milliseconds: 250), () {
+      _scrollController.animateTo(
+        offset,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.bounceInOut,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _emailController = TextEditingController();
-    final _passwordController = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
     _emailController.text = "nguyenvana@gmail.com";
     _passwordController.text = "123456789s";
-    final ScrollController _scrollController = ScrollController();
-    void Login(GlobalKey<FormState> formState) {
-      if (formState.currentState!.validate()) {
-        Navigator.push(context, MaterialPageRoute(builder: (_) => Homepage()));
-      } else {}
-    }
-
-    void _scrollToFocusedField(double offset) {
-      // Đợi một chút để keyboard hiện lên
-      Future.delayed(const Duration(milliseconds: 250), () {
-        _scrollController.animateTo(
-          offset,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.bounceInOut,
-        );
-      });
-    }
 
     return Scaffold(
       backgroundColor: COLOR_LOGIN_BACKGROUND,
@@ -271,7 +273,7 @@ class Loginpage extends StatelessWidget {
                                 animationDuration: Duration(seconds: 2),
                                 elevation: 4.0),
                             onPressed: () {
-                              Login(_formKey);
+                              login(_formKey, context);
                             },
                             child: Text(
                               "Login",

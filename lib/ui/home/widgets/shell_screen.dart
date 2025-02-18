@@ -1,13 +1,12 @@
-import 'package:flashcard_learning/color/AllColor.dart';
-import 'package:flashcard_learning/pages/AccountPage.dart';
-import 'package:flashcard_learning/pages/DictionaryPage.dart';
-import 'package:flashcard_learning/pages/MainFlashCard.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/ui/account/account_screen.dart';
+import 'package:flashcard_learning/ui/dictionary/dictionary_screen.dart';
+import 'package:flashcard_learning/ui/home/widgets/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
-import 'ChatWithAIPage.dart';
+import '../../chat/widgets/chatwithAI_screen.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -63,7 +62,7 @@ class _HomepageState extends State<Homepage> {
             GButton(
 
               icon: LineIcons.home,
-              text: 'Home',
+              text: 'Homepage',
             ),
             GButton(
               icon: LineIcons.bookOpen,

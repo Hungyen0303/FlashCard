@@ -1,4 +1,4 @@
-import 'package:flashcard_learning/widgets/ContentChatContainer.dart';
+import 'package:flashcard_learning/ui/chat/widgets/ContentChatContainer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,5 @@
-import 'package:flashcard_learning/color/AllColor.dart';
-import 'package:flashcard_learning/pages/LoginPage.dart';
+import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/ui/auth/login/widgets/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +16,9 @@ class OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const Loginpage()),
-    );
+    // Navigator.of(context).pushReplacement(
+    //   MaterialPageRoute(builder: (_) => const Loginpage()),
+    // );
   }
 
   Widget _buildFullscreenImage() {

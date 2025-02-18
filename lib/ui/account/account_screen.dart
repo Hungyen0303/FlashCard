@@ -1,5 +1,5 @@
-import 'package:flashcard_learning/color/AllColor.dart';
-import 'package:flashcard_learning/pages/LoginPage.dart';
+import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/ui/auth/login/widgets/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
@@ -22,7 +22,7 @@ class _AccountpageState extends State<Accountpage> {
     });
   }
   void _Logout () {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Loginpage(),)) ;
+   // Navigator.push(context, MaterialPageRoute(builder: (context) => Loginpage(),)) ;
   }
   void _gotoAccountPage() {}
 

@@ -1,12 +1,9 @@
-import 'package:flashcard_learning/color/AllColor.dart';
-import 'package:flashcard_learning/widgets/AppBarCustom.dart';
+import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
-
-import '../widgets/AIConversation.dart';
-import '../widgets/AppBarCustom.dart';
-import 'allFlashCardSet.dart';
+import 'AIConversation.dart';
+import '../../flashcard_sets/flashcard_sets_screen.dart';
 class Mainflashcard extends StatefulWidget {
   const Mainflashcard({super.key});
 

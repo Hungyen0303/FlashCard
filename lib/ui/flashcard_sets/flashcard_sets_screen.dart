@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:flashcard_learning/widgets/GridItem.dart';
-import 'package:flashcard_learning/widgets/ListItem.dart';
+import 'package:flashcard_learning/ui/flashcard_sets/grid_item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'SpecificFlashCardPage.dart';
+import '../specific_flashcard/specific_flashcard_screen.dart';
+import 'list_item_widget.dart';
 
 class AllFlashCardSet extends StatefulWidget {
   const AllFlashCardSet({super.key});

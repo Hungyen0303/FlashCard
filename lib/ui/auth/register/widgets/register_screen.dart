@@ -1,9 +1,9 @@
-import 'package:flashcard_learning/pages/LoginPage.dart';
+import 'package:flashcard_learning/ui/auth/login/widgets/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../color/AllColor.dart';
-import '../widgets/logo.dart';
+import '../../../../utils/color/AllColor.dart';
+import '../../../../logo.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -200,7 +200,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                              left: 40, right: 40.0, top: 12 , bottom: 25),
+                              left: 40, right: 40.0, top: 12, bottom: 25),
                           child: TextFormField(
                             onTap: () => _scrollToFocusedField(300),
                             textAlign: TextAlign.left,
@@ -247,7 +247,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             },
                           ),
                         ),
-
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(
@@ -264,7 +263,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(
                           height: 25,
                         ),
-
                         SizedBox(
                           height: 25,
                         ),
@@ -275,13 +273,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               Text("Already have an account ?",
                                   style: TextStyle(color: Colors.black87)),
                               GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        (context),
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                const Loginpage()));
-                                  },
+                                  onTap: () {},
                                   child: Text(" Login ",
                                       style: TextStyle(color: MAIN_COLOR))),
                             ]),
