@@ -4,18 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'AIConversation.dart';
 import '../../flashcard_sets/flashcard_sets_screen.dart';
-class Mainflashcard extends StatefulWidget {
-  const Mainflashcard({super.key});
 
+class Mainflashcard extends StatefulWidget {
+  const Mainflashcard({super.key, required this.onTabChange});
+
+  final Function onTabChange;
   @override
   State<Mainflashcard> createState() => _MainflashcardState();
 }
 
 class _MainflashcardState extends State<Mainflashcard> {
   void _gotoAllCollections(context) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => AllFlashCardSet() )) ;
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => AllFlashCardSet()));
   }
-  Padding buildListtile(String title, Icon leadingIcon , Function callback) {
+
+  Padding buildListtile(String title, Icon leadingIcon, Function callback) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListTile(
@@ -61,13 +65,13 @@ class _MainflashcardState extends State<Mainflashcard> {
         contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
         textColor: MAIN_THEME_PURPLE_TEXT,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
     );
   }
 
-  String nameUser = "Người dùng khách ";
+  String nameUser = "Người dùng khách";
   Color bg_color = Color(0xFFebdfee);
   final TextStyle styleOfList = TextStyle(
       color: MAIN_THEME_PURPLE_TEXT, fontSize: 20, fontWeight: FontWeight.w500);
@@ -143,12 +147,15 @@ class _MainflashcardState extends State<Mainflashcard> {
                   ),
                 ),
               ),
-              buildListtile(listTiles[0], Icon(Icons.rate_review_outlined) , () {
+              buildListtile(listTiles[0], Icon(Icons.rate_review_outlined), () {
                 _gotoAllCollections(context);
               }),
-              buildListtile(listTiles[1], Icon(LineIcons.plusCircle)  , () {}),
-              buildListtile(listTiles[2], Icon(LineIcons.leanpub) , (){}),
-              buildListtile(listTiles[3], Icon(LineIcons.rocketChat) , (){}),
+              buildListtile(listTiles[1], Icon(LineIcons.plusCircle), () {}),
+              buildListtile(listTiles[2], Icon(LineIcons.leanpub), () {}),
+              buildListtile(listTiles[3], Icon(LineIcons.rocketChat), () {
+                widget.onTabChange(2);
+              }),
+
             ],
           ),
         ),

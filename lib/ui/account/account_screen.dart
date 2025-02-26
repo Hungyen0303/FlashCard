@@ -1,42 +1,49 @@
+import 'package:flashcard_learning/main.dart';
+import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/ui/auth/login/widgets/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class Accountpage extends StatefulWidget {
-  Accountpage({super.key});
+class AccountPage extends StatefulWidget {
+  AccountPage({super.key});
 
   int _index = 0;
 
   @override
-  State<Accountpage> createState() => _AccountpageState();
+  State<AccountPage> createState() => _AccountPageState();
 }
 
-class _AccountpageState extends State<Accountpage> {
+class _AccountPageState extends State<AccountPage> {
   void changeTab(int tab) {
     setState(() {
       widget._index = tab;
     });
   }
-  void _Logout () {
-   // Navigator.push(context, MaterialPageRoute(builder: (context) => Loginpage(),)) ;
+
+  void _Logout(BuildContext context) {
+    // TODO : give token back
+
+    context.go(AppRoute.login);
   }
+
   void _gotoAccountPage() {}
 
   Container buildActions(Icon icon) {
     return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      decoration: BoxDecoration(
+          color: Color(0xffe8a90e), borderRadius: BorderRadius.circular(10)),
       child: IconTheme(
           data: IconThemeData(
             color: Color(0xFF6200EE),
           ),
           child: icon),
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      decoration: BoxDecoration(
-          color: Color(0xffe8a90e), borderRadius: BorderRadius.circular(10)),
     );
   }
 
@@ -172,6 +179,7 @@ class _AccountpageState extends State<Accountpage> {
                               alignment: Alignment.center,
                             ),
                             Align(
+                              alignment: Alignment.bottomRight,
                               child: Container(
                                   decoration: BoxDecoration(
                                       color: Colors.red,
@@ -181,7 +189,6 @@ class _AccountpageState extends State<Accountpage> {
                                     CupertinoIcons.camera_viewfinder,
                                     size: 20,
                                   )),
-                              alignment: Alignment.bottomRight,
                             )
                           ]),
                         ),
@@ -384,7 +391,9 @@ class _AccountpageState extends State<Accountpage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xfffe3030),
                     ),
-                    onPressed: () {_Logout(); },
+                    onPressed: () {
+                      _Logout(context);
+                    },
                     child: Text(
                       "Đăng xuất",
                       style: textStyle.copyWith(

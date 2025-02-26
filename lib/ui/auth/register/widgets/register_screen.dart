@@ -1,6 +1,7 @@
 import 'package:flashcard_learning/ui/auth/login/widgets/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../utils/color/AllColor.dart';
 import '../../../../logo.dart';
@@ -273,7 +274,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               Text("Already have an account ?",
                                   style: TextStyle(color: Colors.black87)),
                               GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    context.pop();
+                                  },
                                   child: Text(" Login ",
                                       style: TextStyle(color: MAIN_COLOR))),
                             ]),

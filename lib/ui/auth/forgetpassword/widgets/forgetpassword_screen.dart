@@ -1,8 +1,11 @@
+import 'package:flashcard_learning/routing/router.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
 import 'package:flashcard_learning/ui/auth/login/widgets/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../routing/route.dart';
 import '../../../../utils/color/AllColor.dart';
 import '../../../../logo.dart';
 
@@ -164,7 +167,9 @@ class _ForgetpasswordState extends State<Forgetpasswordpage> {
                               Text("Already have an account ?",
                                   style: TextStyle(color: Colors.black87)),
                               GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    context.pop();
+                                  },
                                   child: Text(" Login ",
                                       style: TextStyle(color: MAIN_COLOR))),
                             ]),

@@ -1,32 +1,35 @@
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
+import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/ui/auth/forgetpassword/widgets/forgetpassword_screen.dart';
-import 'package:flashcard_learning/ui/home/widgets/shell_screen.dart';
-import 'package:flashcard_learning/ui/home/widgets/onboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../logo.dart';
+import '../../../../routing/route.dart';
 import '../../register/widgets/register_screen.dart';
 import '../../../test/Testpage.dart';
 
-class Loginpage extends StatelessWidget {
+class Loginpage extends StatefulWidget {
   Loginpage({super.key, required this.loginViewModel});
 
   final LoginViewModel loginViewModel;
 
-  void _gotoRegisterPage(context) {
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (_) => RegisterPage()));
+  State<Loginpage> createState() => LoginState();
+}
+
+class LoginState extends State<Loginpage> {
+  void _gotoRegisterPage(BuildContext context) {
+   context.push(AppRoute.signup);
   }
 
   void _gotoTest(context) {
     Navigator.push(context, MaterialPageRoute(builder: (_) => TestPage()));
   }
 
-  void _gotoForgetPasswordPage(context) {
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => Forgetpasswordpage()));
+  void _gotoForgetPasswordPage(BuildContext context) {
+    context.push(AppRoute.forgetpassword);
   }
 
   final _emailController = TextEditingController();
@@ -35,12 +38,30 @@ class Loginpage extends StatelessWidget {
 
   final ScrollController _scrollController = ScrollController();
 
-  void login(GlobalKey<FormState> formState, BuildContext context) {
+   bool isWrong = false;
+  Future<void> login(
+      GlobalKey<FormState> formState, BuildContext context) async {
     if (formState.currentState!.validate()) {
-      loginViewModel.login(_emailController.text, _passwordController.text);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Homepage()));
-    } else {}
+      LoadingOverlay.show(context);
+      bool isValid = await widget.loginViewModel
+          .login(_emailController.text, _passwordController.text);
+      if (isValid) {
+        context.go('/home');
+      } else {
+        setState(() {
+          isWrong  = true;
+        });
+        print("Login fails ");
+      }
+      LoadingOverlay.hide();
+    }
+  }
+
+
+  @override
+  void initState() {
+    _emailController.text = "user1@gmail.com";
+    _passwordController.text = "password1";
   }
 
   void _scrollToFocusedField(double offset) {
@@ -56,8 +77,7 @@ class Loginpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _emailController.text = "nguyenvana@gmail.com";
-    _passwordController.text = "123456789s";
+
 
     return Scaffold(
       backgroundColor: COLOR_LOGIN_BACKGROUND,
@@ -164,7 +184,8 @@ class Loginpage extends StatelessWidget {
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25),
                                 borderSide: BorderSide(
-                                  color: Colors.redAccent, // Màu viền khi lỗi
+                                  color: Colors.redAccent,
+                                  // Màu viền khi lỗi
                                   width: 1.5,
                                 ),
                               ),
@@ -224,7 +245,8 @@ class Loginpage extends StatelessWidget {
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25),
                                 borderSide: BorderSide(
-                                  color: Colors.redAccent, // Màu viền khi lỗi
+                                  color: Colors.redAccent,
+                                  // Màu viền khi lỗi
                                   width: 1.5,
                                 ),
                               ),
@@ -252,7 +274,7 @@ class Loginpage extends StatelessWidget {
                             alignment: Alignment.bottomRight,
                             child: Padding(
                               padding: const EdgeInsets.only(
-                                  right: 50, top: 12, bottom: 25.0),
+                                  right: 50, top: 12, bottom: 12.0),
                               child: GestureDetector(
                                 onTap: () => _gotoForgetPasswordPage(context),
                                 child: Text(
@@ -264,16 +286,29 @@ class Loginpage extends StatelessWidget {
                                 ),
                               ),
                             )),
+
+
+                        Visibility(
+                          visible: isWrong,
+                            child: Center(
+                          child: Text("The email or password is incorrect" ,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 15 ,
+                            fontWeight: FontWeight.w600 ,
+                          ),),
+                        )) ,
+                        SizedBox(height: 15,),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 0.0, horizontal: 140.0),
                                 backgroundColor: MAIN_TEXT_COLOR,
                                 foregroundColor: Colors.white,
-                                animationDuration: Duration(seconds: 2),
+                                animationDuration: const Duration(seconds: 2),
                                 elevation: 4.0),
-                            onPressed: () {
-                              login(_formKey, context);
+                            onPressed: () async {
+                              await login(_formKey, context);
                             },
                             child: Text(
                               "Login",

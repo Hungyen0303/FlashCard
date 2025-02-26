@@ -1,8 +1,10 @@
+import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/ui/auth/login/widgets/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 class OnBoardingPage extends StatefulWidget {
@@ -15,10 +17,8 @@ class OnBoardingPage extends StatefulWidget {
 class OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
-  void _onIntroEnd(context) {
-    // Navigator.of(context).pushReplacement(
-    //   MaterialPageRoute(builder: (_) => const Loginpage()),
-    // );
+  void _onIntroEnd(BuildContext context) {
+    context.go(AppRoute.login);
   }
 
   Widget _buildFullscreenImage() {
@@ -62,7 +62,6 @@ class OnBoardingPageState extends State<OnBoardingPage> {
       //     ),
       //   ),
       // ),
-
 
       // globalFooter: SizedBox(
       //   width: double.infinity,
