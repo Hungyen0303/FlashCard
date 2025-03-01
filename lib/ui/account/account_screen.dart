@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/MainAppUser.dart';
 import 'package:flashcard_learning/main.dart';
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
@@ -24,6 +25,7 @@ class _AccountPageState extends State<AccountPage> {
       widget._index = tab;
     });
   }
+
 
   void _Logout(BuildContext context) {
     // TODO : give token back
@@ -91,17 +93,20 @@ class _AccountPageState extends State<AccountPage> {
                     onTap: () => changeTab(0),
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 12),
-                      width: MediaQuery.of(context).size.width * 0.3,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.3,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           color:
-                              0 == widget._index ? Colors.grey : Colors.black),
+                          0 == widget._index ? Colors.grey : Colors.black),
                       child: Text(
                         textAlign: TextAlign.center,
                         "Tiến độ",
                         style: TextStyle(
                           color:
-                              0 == widget._index ? Colors.black : Colors.white,
+                          0 == widget._index ? Colors.black : Colors.white,
                         ),
                       ),
                     ),
@@ -110,17 +115,20 @@ class _AccountPageState extends State<AccountPage> {
                     onTap: () => changeTab(1),
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 10),
-                      width: MediaQuery.of(context).size.width * 0.3,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.3,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           color:
-                              1 == widget._index ? Colors.grey : Colors.black),
+                          1 == widget._index ? Colors.grey : Colors.black),
                       child: Text(
                         textAlign: TextAlign.center,
                         "Thành tựu",
                         style: TextStyle(
                           color:
-                              1 == widget._index ? Colors.black : Colors.white,
+                          1 == widget._index ? Colors.black : Colors.white,
                         ),
                       ),
                     ),
@@ -129,17 +137,20 @@ class _AccountPageState extends State<AccountPage> {
                     onTap: () => changeTab(2),
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 10),
-                      width: MediaQuery.of(context).size.width * 0.3,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.3,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           color:
-                              2 == widget._index ? Colors.grey : Colors.black),
+                          2 == widget._index ? Colors.grey : Colors.black),
                       child: Text(
                         textAlign: TextAlign.center,
                         "Bạn bè",
                         style: TextStyle(
                           color:
-                              2 == widget._index ? Colors.black : Colors.white,
+                          2 == widget._index ? Colors.black : Colors.white,
                         ),
                       ),
                     ),
@@ -152,7 +163,7 @@ class _AccountPageState extends State<AccountPage> {
               ),
               Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
                   color: Color(0xffd0eff3),
@@ -168,7 +179,7 @@ class _AccountPageState extends State<AccountPage> {
                             Container(
                               decoration: BoxDecoration(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(50000)),
+                                  BorderRadius.all(Radius.circular(50000)),
                                   color: Colors.greenAccent),
                             ),
                             Align(
@@ -194,7 +205,7 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                       ),
                       title: Text(
-                        "Người dùng khách",
+                        MainAppUser.user!.name,
                         style: TextStyle(color: MAIN_THEME_BLUE_TEXT),
                       ),
                       subtitle: GestureDetector(
@@ -220,12 +231,13 @@ class _AccountPageState extends State<AccountPage> {
                       children: [
                         RichText(
                             text: TextSpan(children: [
-                          TextSpan(text: "Trạng thái\n", style: textStyle),
-                          TextSpan(
-                              text: "Miễn phí",
-                              style: textStyle.copyWith(
-                                  fontSize: 25, fontWeight: FontWeight.bold)),
-                        ])),
+                              TextSpan(text: "Trạng thái\n", style: textStyle),
+                              TextSpan(
+                                  text: MainAppUser.user?.plan,
+                                  style: textStyle.copyWith(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold)),
+                            ])),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.greenAccent,
@@ -244,7 +256,7 @@ class _AccountPageState extends State<AccountPage> {
               Container(
                 margin: const EdgeInsets.only(top: 30),
                 padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
                   color: Color(0xffd0eff3),
@@ -280,7 +292,10 @@ class _AccountPageState extends State<AccountPage> {
                             padding: EdgeInsets.symmetric(vertical: 10),
                             alignment: Alignment.center,
                             decoration: boxDecoration,
-                            width: MediaQuery.of(context).size.width * 0.4,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 0.4,
                             child: Text("7 ngày qua"),
                           ),
                         ),
@@ -289,7 +304,10 @@ class _AccountPageState extends State<AccountPage> {
                             padding: EdgeInsets.symmetric(vertical: 10),
                             alignment: Alignment.center,
                             decoration: boxDecoration,
-                            width: MediaQuery.of(context).size.width * 0.4,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 0.4,
                             child: Text("1 tháng qua"),
                           ),
                         ),

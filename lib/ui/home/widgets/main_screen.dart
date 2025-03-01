@@ -1,14 +1,20 @@
+import 'package:flashcard_learning/MainAppUser.dart';
+import 'package:flashcard_learning/domain/models/user.dart';
+import 'package:flashcard_learning/routing/route.dart';
+import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 import 'AIConversation.dart';
-import '../../flashcard_sets/flashcard_sets_screen.dart';
+import '../../flashcard_sets/widgets/flashcard_sets_screen.dart';
 
 class Mainflashcard extends StatefulWidget {
   const Mainflashcard({super.key, required this.onTabChange});
 
   final Function onTabChange;
+
   @override
   State<Mainflashcard> createState() => _MainflashcardState();
 }
@@ -16,7 +22,7 @@ class Mainflashcard extends StatefulWidget {
 class _MainflashcardState extends State<Mainflashcard> {
   void _gotoAllCollections(context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (_) => AllFlashCardSet()));
+        context, MaterialPageRoute(builder: (_) => const AllFlashCardSet()));
   }
 
   Padding buildListtile(String title, Icon leadingIcon, Function callback) {
@@ -71,7 +77,6 @@ class _MainflashcardState extends State<Mainflashcard> {
     );
   }
 
-  String nameUser = "Người dùng khách";
   Color bg_color = Color(0xFFebdfee);
   final TextStyle styleOfList = TextStyle(
       color: MAIN_THEME_PURPLE_TEXT, fontSize: 20, fontWeight: FontWeight.w500);
@@ -128,7 +133,7 @@ class _MainflashcardState extends State<Mainflashcard> {
                       style: TextStyle(
                           color: MAIN_THEME_PURPLE_TEXT, fontSize: 18)),
                   TextSpan(
-                      text: nameUser,
+                      text: MainAppUser.user?.name,
                       style: TextStyle(
                           color: MAIN_THEME_PURPLE_TEXT,
                           fontSize: 25,
@@ -155,7 +160,6 @@ class _MainflashcardState extends State<Mainflashcard> {
               buildListtile(listTiles[3], Icon(LineIcons.rocketChat), () {
                 widget.onTabChange(2);
               }),
-
             ],
           ),
         ),

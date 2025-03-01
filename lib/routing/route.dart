@@ -7,5 +7,12 @@ class AppRoute {
 
   static String boarding = '/boarding';
 
-  static String forgetpassword = '/forgetpassword' ;
+  static String forgetpassword = '/forgetpassword';
+
+  static String flashCardSet = '/flashcardSet/:name';
+
+  static String gotoFlashcardSet(String name) => '/flashcardSet/$name';
+
+
+
 }

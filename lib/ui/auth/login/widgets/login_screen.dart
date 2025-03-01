@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/MainAppUser.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
@@ -46,6 +47,8 @@ class LoginState extends State<Loginpage> {
       bool isValid = await widget.loginViewModel
           .login(_emailController.text, _passwordController.text);
       if (isValid) {
+
+        MainAppUser.user = await widget.loginViewModel.getUser(_emailController.text);
         context.go('/home');
       } else {
         setState(() {

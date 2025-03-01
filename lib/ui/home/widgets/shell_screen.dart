@@ -7,6 +7,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 import '../../chat/widgets/chatwithAI_screen.dart';
+import '../../dictionary/DictionaryViewModel.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -28,6 +29,7 @@ class _HomepageState extends State<Homepage> {
     MAIN_THEME_BLUE_TEXT,
     MAIN_THEME_BLUE,
   ];
+
   void changeTab(int tab) {
     setState(() {
       currentPageIndex = tab;
@@ -35,6 +37,7 @@ class _HomepageState extends State<Homepage> {
       textColor = color_bg_btn[tab * 2];
     });
   }
+
   Color textColor = MAIN_THEME_PURPLE_TEXT;
   Color bgColor = MAIN_THEME_PURPLE;
 
@@ -43,7 +46,9 @@ class _HomepageState extends State<Homepage> {
     super.initState();
     widgets = [
       Mainflashcard(onTabChange: changeTab),
-      const Dictionarypage(),
+      DictionaryPage(
+        dictionaryViewModel: DictionaryViewModel(),
+      ),
       const ChatWithAIPage(),
       AccountPage(),
     ];
@@ -69,7 +74,7 @@ class _HomepageState extends State<Homepage> {
           //tabShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 8)], // tab button shadow
           curve: Curves.easeIn,
           // tab animation curves
-          duration: Duration(milliseconds: 50),
+          duration: const Duration(milliseconds: 50),
           // tab animation duration
           gap: 10,
           // the tab button gap between icon and text

@@ -1,11 +1,12 @@
+import 'package:flashcard_learning/domain/models/Word.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
 class Searchresultpage extends StatelessWidget {
-  Searchresultpage({super.key, required this.text});
+  Searchresultpage({super.key, required this.word});
 
-  final text;
+  final Word word;
 
   void getText() {}
 
@@ -35,7 +36,7 @@ class Searchresultpage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.grey[500],
         leading: Padding(
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
           child: GestureDetector(
             child: Icon(Icons.navigate_before),
             onTap: () {
@@ -55,8 +56,8 @@ class Searchresultpage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildText("Hello", mainWord),
-                  _buildText("/hello/", null),
+                  _buildText(word.english, mainWord),
+                  _buildText(word.phonetic, null),
                   SizedBox(
                     height: 20,
                   ),
@@ -75,13 +76,11 @@ class Searchresultpage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  _buildText("xin chào ", null),
+                  _buildText(word.vietnamese, null),
                   _buildText("Definition", submain),
-                  Text(
-                      "A common greeting used to express a friendly or polite acknowledgement"),
+                  Text(word.definition),
                   _buildText("Example", submain),
-                  Text(
-                      "When meeting someone , it is customary to say 'hello' as a form of greeting  "),
+                  Text(word.example),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(

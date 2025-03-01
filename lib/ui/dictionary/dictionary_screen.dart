@@ -1,21 +1,26 @@
+import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/ui/search_result/searchResult_screen.dart';
 import 'package:flashcard_learning/ui/dictionary/BoxText.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Dictionarypage extends StatefulWidget {
-  const Dictionarypage({super.key});
+import '../../domain/models/Word.dart';
+import 'DictionaryViewModel.dart';
+
+class DictionaryPage extends StatefulWidget {
+  const DictionaryPage({super.key, required this.dictionaryViewModel});
+
+  final DictionaryViewModel dictionaryViewModel;
 
   @override
-  State<Dictionarypage> createState() => _DictionarypageState();
+  State<DictionaryPage> createState() => _DictionaryPageState();
 }
 
-class _DictionarypageState extends State<Dictionarypage> {
+class _DictionaryPageState extends State<DictionaryPage> {
   final TextEditingController _searchController = TextEditingController();
+  List<Word> popularWords = [];
 
   TextStyle titleStyle = TextStyle(
     fontWeight: FontWeight.w600,
@@ -64,6 +69,21 @@ class _DictionarypageState extends State<Dictionarypage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _fetchPopularWords();
+  }
+
+  Future<void> _fetchPopularWords() async {
+    final words = await widget.dictionaryViewModel.getPopularWord();
+    if (mounted) {
+      setState(() {
+        popularWords = words;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: buildAppBar(),
@@ -99,7 +119,7 @@ class _DictionarypageState extends State<Dictionarypage> {
                   onTapOutside: (event) {
                     FocusManager.instance.primaryFocus?.unfocus();
                     setState(() {
-                     // isSearch = false;
+                      // isSearch = false;
                     });
                   },
                   controller: _searchController,
@@ -149,13 +169,14 @@ class _DictionarypageState extends State<Dictionarypage> {
                   ),
                   surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Center(
                   child: AnimatedOpacity(
                     duration: Duration(milliseconds: 300),
                     opacity: isSearch ? 1 : 0.2,
                     child: Visibility(
-
                         visible: isSearch,
                         child: SizedBox(
                           width: double.infinity,
@@ -166,14 +187,17 @@ class _DictionarypageState extends State<Dictionarypage> {
                                       side: BorderSide(
                                         color: MAIN_THEME_PINK_TEXT,
                                       ),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(10)))),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)))),
                               onPressed: () {
                                 gotoSearchPage(_searchController.text);
                               },
-                              child: Text("Tra cứu", style: TextStyle(
-                                fontSize: 20,
-                              ),)),
+                              child: Text(
+                                "Tra cứu",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              )),
                         )),
                   ),
                 ),
@@ -186,7 +210,7 @@ class _DictionarypageState extends State<Dictionarypage> {
                     Container(
                       height: 180,
                       padding:
-                      EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       width: 180,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -194,7 +218,8 @@ class _DictionarypageState extends State<Dictionarypage> {
                               colors: [
                                 Color(0xff2196f3), // Xanh dương sáng
                                 Color(0xff9c27b0), // Tím nhạt
-                              ], begin: Alignment.topCenter,
+                              ],
+                              begin: Alignment.topCenter,
                               end: Alignment.bottomCenter)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -225,7 +250,7 @@ class _DictionarypageState extends State<Dictionarypage> {
                     Container(
                       height: 180,
                       padding:
-                      EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       width: 180,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -249,7 +274,6 @@ class _DictionarypageState extends State<Dictionarypage> {
                             textAlign: TextAlign.center,
                             "Tìm bằng hình ảnh ",
                             style: TextStyle(
-
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white),
@@ -266,24 +290,45 @@ class _DictionarypageState extends State<Dictionarypage> {
                     )
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Text(
                   style: titleStyle,
                   "Những từ tìm kiếm phổ biến ",
                 ),
-                SizedBox(height: 10,),
-                Boxtext(word: "Cleaning the house", onTap: () {}),
-                Boxtext(word: "Refresh ", onTap: () {}),
-                Boxtext(word: "Putting up decoration ", onTap: () {}),
-                Boxtext(word: "Putting up decoration ", onTap: () {}),
+                const SizedBox(
+                  height: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: popularWords
+                      .map((word) => Boxtext(
+                          word: word.english,
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => Searchresultpage(
+                                      word: word,
+                                    )));
+                          }))
+                      .toList(),
+                )
               ],
             ),
           ),
         ));
   }
 
-  void gotoSearchPage(String text) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => Searchresultpage(text: "Hello"))) ;
+  // TODO : config navigation's
+  Future<void> gotoSearchPage(String text) async {
+    LoadingOverlay.show(context);
+    Word word = await widget.dictionaryViewModel.getWord(text);
+    LoadingOverlay.hide();
+    if (mounted) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => Searchresultpage(
+                word: word,
+              )));
+    }
   }
 }

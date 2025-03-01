@@ -1,6 +1,7 @@
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/ui/auth/forgetpassword/widgets/forgetpassword_screen.dart';
 import 'package:flashcard_learning/ui/auth/register/widgets/register_screen.dart';
+import 'package:flashcard_learning/ui/specific_flashcard/specific_flashcard_screen.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,13 @@ class AppRouter {
               //routeLogger.info(state.name);
 
               return const RegisterPage();
+            }),
+        GoRoute(
+            path: AppRoute.flashCardSet,
+            builder: (context, state) {
+              //routeLogger.info(state.name);
+              String name = state.pathParameters['name'] ?? "default";
+              return SpecificFlashCardPage(nameOfSet: name);
             }),
       ]);
 }

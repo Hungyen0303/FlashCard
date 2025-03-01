@@ -1,4 +1,5 @@
 import 'package:flashcard_learning/data/repositories/auth/AuthRepository.dart';
+import 'package:flashcard_learning/domain/models/user.dart';
 
 class Authrepositorylocal extends AuthRepository {
   final Map<String, String> fakeAccounts = {
@@ -23,5 +24,10 @@ class Authrepositorylocal extends AuthRepository {
     return " fail to login ";
   }
 
+  Future<User> getUser(String username )  async
+  {
+    await Future.delayed(Duration(seconds: 1));
+    return User("John Wick ", "avatar", "Basic");
+  }
 
 }
