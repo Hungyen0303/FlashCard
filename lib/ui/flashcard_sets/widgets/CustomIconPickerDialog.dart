@@ -18,9 +18,8 @@ class Customiconpickerdialog extends StatefulWidget {
 
 class _CustomiconpickerdialogState extends State<Customiconpickerdialog> {
   Color iconColor = MAIN_THEME_BLUE_TEXT;
-  IconData? choosedIcon = null;
 
-  List<IconData> iconData = [
+  List<IconData> iconDatas = [
     Icons.book,
     LineIcons.star,
     Icons.abc_outlined,
@@ -40,12 +39,12 @@ class _CustomiconpickerdialogState extends State<Customiconpickerdialog> {
         padding: EdgeInsets.zero,
         mainAxisSpacing: 0,
         crossAxisSpacing: 0,
-        children: iconData
+        children: iconDatas
             .map((e) => IconButton(
                   onPressed: () {
-                    choosedIcon = e;
                     Provider.of<CustomCardProvider>(context, listen: false)
-                        .changeIcon(e);
+                        .setIconData(e);
+
                     context.pop();
                   },
                   icon: Icon(
@@ -84,10 +83,10 @@ class _CustomiconpickerdialogState extends State<Customiconpickerdialog> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(top: 10),
       child: Consumer<CustomCardProvider>(
           builder: (context, customCardProvider, child) {
-        return choosedIcon == null
+        return customCardProvider.iconData == null
             ? ElevatedButton(
                 onPressed: () {
                   _showIconPickerDialog();
@@ -106,8 +105,7 @@ class _CustomiconpickerdialogState extends State<Customiconpickerdialog> {
                 icon: IconTheme(
                     data: IconThemeData(
                         size: 40, color: customCardProvider.iconColor),
-                    child: Icon(customCardProvider.iconData) ??
-                        const Icon(Icons.book)));
+                    child: Icon(customCardProvider.iconData ?? Icons.book)));
       }),
     );
   }

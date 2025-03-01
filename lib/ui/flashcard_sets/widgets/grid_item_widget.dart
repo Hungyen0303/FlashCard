@@ -2,79 +2,33 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flashcard_learning/domain/models/flashSet.dart';
+import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
+import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:pie_menu/pie_menu.dart';
+import 'package:provider/provider.dart';
 
 import '../../../routing/route.dart';
 
-class Griditem extends StatelessWidget {
-  Griditem({
+class GridItem extends StatelessWidget {
+  const GridItem({
     super.key,
     required this.flashCardSet,
+    required this.edit,
+    required this.delete,
+    required this.share,
   });
 
   final FlashCardSet flashCardSet;
+  final Function edit;
+  final Function delete;
 
-  Future<void> _showContextMenu(BuildContext context, Offset position) async {
-    final RenderBox overlay =
-        Overlay.of(context).context.findRenderObject() as RenderBox;
-    final result = await showMenu<String>(
-      context: context,
-      position: RelativeRect.fromLTRB(
-        position.dx, // Vị trí x của lần nhấn
-        position.dy, // Vị trí y của lần nhấn
-        position.dx,
-        position.dy,
-      ),
-      items: [
-        const PopupMenuItem<String>(
-          value: 'edit',
-          child: ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('Edit'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'delete',
-          child: ListTile(
-            leading: Icon(Icons.delete),
-            title: Text('Delete'),
-          ),
-        ),
-      ],
-      elevation: 8.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    );
-
-    // Xử lý khi chọn
-    if (result != null) {
-      switch (result) {
-        case 'edit':
-          _editFlashCardSet(context);
-          break;
-        case 'delete':
-          _deleteFlashCardSet(context);
-          break;
-      }
-    }
-  }
-
-  void _editFlashCardSet(BuildContext context) {
-    // Logic chỉnh sửa
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Editing ')),
-    );
-  }
-
-  void _deleteFlashCardSet(BuildContext context) {
-    // Logic xóa
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Deleted ')),
-    );
-  }
+  final Function share;
 
   void _goToSpecificFlashCardSet(String nameOfSet, BuildContext context) {
     context.push(AppRoute.gotoFlashcardSet("math"));
@@ -94,77 +48,116 @@ class Griditem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void showPopUpMenu() {}
-    Map<Color, Color> color = getRandomColor();
-    return GestureDetector(
-      onLongPress: () => {_showContextMenu(context, const Offset(0, 0))},
-      onTap: () => _goToSpecificFlashCardSet(flashCardSet.name, context),
-      child: Container(
-        foregroundDecoration: BoxDecoration(),
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        width: MediaQuery.of(context).size.width * 0.5,
-        decoration: BoxDecoration(
-          color: color.values.first,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 5,
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Text(
-                  "#${flashCardSet.numberOfCard}",
-                  style: TextStyle(fontSize: 16, color: color.keys.first),
+
+    return PieMenu(
+        onPressed: () {
+          _goToSpecificFlashCardSet(flashCardSet.name, context);
+        },
+        actions: [
+          PieAction(
+            tooltip: const Text('Edit'),
+            onSelect: () => edit(),
+
+            /// Optical correction
+            child: Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: FaIcon(FontAwesomeIcons.penToSquare),
+            ),
+          ),
+          PieAction(
+            buttonTheme: PieButtonTheme(
+                backgroundColor: Colors.red, iconColor: Colors.white),
+            tooltip: const Text('Delete'),
+            onSelect: () => delete(),
+            child: const FaIcon(
+              FontAwesomeIcons.trash,
+            ),
+          ),
+          PieAction(
+            buttonTheme: PieButtonTheme(
+                backgroundColor: Colors.greenAccent, iconColor: Colors.white),
+            tooltip: const Text('Share'),
+            onSelect: () => share(),
+            child: const FaIcon(FontAwesomeIcons.share),
+          ),
+        ],
+        child: Container(
+          foregroundDecoration: BoxDecoration(),
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          width: MediaQuery.of(context).size.width * 0.5,
+          decoration: BoxDecoration(
+            color: flashCardSet.color.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                flex: 5,
+                child: Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Text(
+                    "#${flashCardSet.numberOfCard}",
+                    style: TextStyle(fontSize: 16, color: flashCardSet.color),
+                  ),
                 ),
               ),
-            ),
-            Icon(
-              flashCardSet.iconData,
-              size: 80,
-              color: flashCardSet.color,
-            ),
-            Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  margin: EdgeInsets.only(right: 10, bottom: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Icon(Icons.timer_outlined, color: color.keys.first),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        "${flashCardSet.minute} minutes",
-                        style: TextStyle(color: color.keys.first),
-                      ),
-                    ],
-                  ),
-                )),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.blueGrey,
-                    offset: Offset(1, 1),
-                  )
-                ],
-                color: Colors.grey[400],
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20)),
+              Icon(
+                flashCardSet.iconData,
+                size: 80,
+                color: flashCardSet.color,
               ),
-              alignment: Alignment.center,
-              child: Text(
-                flashCardSet.name,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10, bottom: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(Icons.timer_outlined, color: flashCardSet.color),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "${flashCardSet.minute} minutes",
+                          style: TextStyle(color: flashCardSet.color),
+                        ),
+                      ],
+                    ),
+                  )),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        flashCardSet.color,
+                        flashCardSet.color.withOpacity(0.5),
+                      ]),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.blueGrey,
+                      offset: Offset(1, 1),
+                    )
+                  ],
+                  color: Colors.grey[400],
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20)),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  flashCardSet.name,
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

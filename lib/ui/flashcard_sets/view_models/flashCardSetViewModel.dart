@@ -13,7 +13,8 @@ class FlashCardSetViewModel extends ChangeNotifier {
   FlashCardSetViewModel() {
     loadData();
   }
-  Logger logger = Logger("FlashCardSetViewModel") ;
+
+  Logger logger = Logger("FlashCardSetViewModel");
 
   List<FlashCardSet> _listFlashCardSets = [];
 
@@ -32,9 +33,27 @@ class FlashCardSetViewModel extends ChangeNotifier {
   }
 
   Future<bool> addNewSet(FlashCardSet newSet) async {
-    bool addedSuccessfully = await _repo.addNewSet(newSet) ;
+    bool addedSuccessfully = await _repo.addNewSet(newSet);
     if (addedSuccessfully) {
-      loadData();
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> editASet(FlashCardSet oldSet , FlashCardSet newSet) async {
+    bool editedSuccessfully = await _repo.editASet(oldSet , newSet);
+    if (editedSuccessfully) {
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> deleteASet(String name) async {
+    bool deletedSuccessfully = await _repo.deleteASet(name);
+    if (deletedSuccessfully) {
+      notifyListeners();
       return true;
     }
     return false;

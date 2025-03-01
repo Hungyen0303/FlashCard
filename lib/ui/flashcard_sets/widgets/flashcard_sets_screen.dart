@@ -11,6 +11,7 @@ import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icon.dart';
+import 'package:pie_menu/pie_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
@@ -29,11 +30,10 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
   bool isGridView = true;
   Color mainColor = const Color(0xff3F2088);
   TextEditingController nameController = TextEditingController();
-  List<FlashCardSet> flashcardSetList = [];
 
   TextFormField _buildTextFormEnglish(controller) {
     String typeWord = "";
-    OutlineInputBorder border = OutlineInputBorder(
+    OutlineInputBorder border = const OutlineInputBorder(
       borderSide: BorderSide(color: MAIN_THEME_BLUE, width: 5),
     );
     return TextFormField(
@@ -43,7 +43,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
         enabledBorder: border,
         border: const OutlineInputBorder(borderSide: BorderSide(width: 2)),
         alignLabelWithHint: true,
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         hintText: "Enter flashcard Set's name",
       ),
       textInputAction: TextInputAction.next,
@@ -57,8 +57,15 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
 
   late Future<void> _loadData;
 
-  void _showPopUp() {
-    Color pickedColor = MAIN_THEME_PURPLE;
+  void _showPopUp(bool isCreating) {
+    FlashCardSetViewModel flashCardSetViewModel =
+        Provider.of<FlashCardSetViewModel>(context, listen: false);
+    CustomCardProvider customCardProvider =
+        Provider.of<CustomCardProvider>(context, listen: false);
+    if (isCreating) {
+      customCardProvider.setIconData(null);
+    }
+    String oldName = nameController.text;
     QuickAlert.show(
       context: context,
       cancelBtnText: "Discard",
@@ -73,18 +80,16 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
           children: [
             _buildTextFormEnglish(nameController),
             Consumer<CustomCardProvider>(
-                builder: (context, colorProvider, child) {
-              return const Customiconpickerdialog();
+                builder: (context, customCardProvider, child) {
+              return Customiconpickerdialog();
             }),
             SizedBox(
               height: 130,
               width: double.infinity,
               child: BlockPicker(
-                  pickerColor: pickedColor,
+                  pickerColor: customCardProvider.iconColor,
                   onColorChanged: (color) {
-                    pickedColor = color;
-                    Provider.of<CustomCardProvider>(context, listen: false)
-                        .changeColor(color);
+                    customCardProvider.setColor(color);
                   }),
             ),
           ],
@@ -103,28 +108,31 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
 
           return;
         }
-        nameController.clear();
-        LoadingOverlay.show(context);
-        bool addedSuccessfully =
-            await Provider.of<FlashCardSetViewModel>(context, listen: false)
-                .addNewSet(FlashCardSet(
-                    DateTime.now(),
-                    nameController.text,
-                    0,
-                    0,
-                    Provider.of<CustomCardProvider>(context, listen: false)
-                        .iconData,
-                    pickedColor));
-        LoadingOverlay.hide();
 
+        LoadingOverlay.show(context);
+        bool actionSuccessfully = false;
+        if (isCreating) {
+          actionSuccessfully = await flashCardSetViewModel.addNewSet(
+              FlashCardSet(DateTime.now(), nameController.text, 0, 0,
+                  customCardProvider.iconData ?? Icons.book, customCardProvider.iconColor));
+        } else {
+          actionSuccessfully = await flashCardSetViewModel.editASet(
+              flashCardSetViewModel.listFlashCardSets
+                  .firstWhere((a) => a.name == oldName),
+              FlashCardSet(DateTime.now(), nameController.text, 0, 0,
+                  customCardProvider.iconData ?? Icons.book,  customCardProvider.iconColor));
+        }
+
+        LoadingOverlay.hide();
+        nameController.clear();
         if (mounted) {
           context.pop();
           await QuickAlert.show(
             context: context,
-            type: addedSuccessfully
+            type: actionSuccessfully
                 ? QuickAlertType.success
                 : QuickAlertType.error,
-            text: addedSuccessfully
+            text: actionSuccessfully
                 ? "Created new Flashcard Set"
                 : "Failed to create Flashcard Set ",
           );
@@ -134,7 +142,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
   }
 
   void addFlashSet(BuildContext context) {
-    _showPopUp();
+    _showPopUp(true);
   }
 
   void removeFlashcardSet() {}
@@ -190,6 +198,25 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
     nameController.dispose();
   }
 
+  void editASet(FlashCardSet oldSet) {
+    final customCardProvider =
+        Provider.of<CustomCardProvider>(context, listen: false);
+    nameController.text = oldSet.name;
+    customCardProvider
+      ..setIconData(oldSet.iconData)
+      ..setColor(oldSet.color);
+
+    _showPopUp(false);
+  }
+
+  void deleteASet(String name) {
+    LoadingOverlay.show(context);
+    Provider.of<FlashCardSetViewModel>(context, listen: false).deleteASet(name);
+    LoadingOverlay.hide();
+  }
+
+  void shareASet(FlashCardSet set) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -206,18 +233,39 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
               } else {
                 return Consumer<FlashCardSetViewModel>(
                     builder: (context, flashCardSetViewModel, child) {
-                  return isGridView
-                      ? GridView.count(
-                          crossAxisCount: 2,
-                          children: flashCardSetViewModel.listFlashCardSets
-                              .map((a) => Griditem(flashCardSet: a))
-                              .toList(),
-                        )
-                      : ListView(
-                          children: flashCardSetViewModel.listFlashCardSets
-                              .map((a) => Listitem(flashCardSet: a))
-                              .toList(),
-                        );
+                  return PieCanvas(
+                      theme: PieTheme(
+                        buttonSize: 45,
+                        overlayColor: const Color(0x37BBA8FF).withOpacity(0.7),
+                        rightClickShowsMenu: true,
+                        tooltipTextStyle: const TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      child: !isGridView
+                          ? GridView.count(
+                              crossAxisCount: 2,
+                              children: flashCardSetViewModel.listFlashCardSets
+                                  .map((a) => GridItem(
+                                        flashCardSet: a,
+                                        edit: () {
+                                          editASet(a);
+                                        },
+                                        delete: () {
+                                          deleteASet(a.name);
+                                        },
+                                        share: () {
+                                          shareASet(a);
+                                        },
+                                      ))
+                                  .toList(),
+                            )
+                          : ListView(
+                              children: flashCardSetViewModel.listFlashCardSets
+                                  .map((a) => Listitem(flashCardSet: a))
+                                  .toList(),
+                            ));
                 });
               }
             }));

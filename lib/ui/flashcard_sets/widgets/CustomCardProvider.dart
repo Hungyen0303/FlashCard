@@ -7,16 +7,19 @@ class CustomCardProvider extends ChangeNotifier {
 
   Color get iconColor => _iconColor; // Getter để đọc màu hiện tại
 
-  IconData _iconData = Icons.book;
+  IconData? _iconData = Icons.book;
 
-  IconData get iconData => _iconData; // Getter để đọc màu hiện tại
-  void changeColor(Color newColor) {
-    _iconColor = newColor;
+  IconData? get iconData => _iconData; // Getter để đọc màu hiện tại
+
+  void setIconData(IconData? iconData) {
+    _iconData = iconData ;
     notifyListeners();
   }
-
-  void changeIcon(IconData newIcon) {
-    _iconData = newIcon;
+  void setColor(Color color) {
+    _iconColor = color ;
     notifyListeners();
+
   }
+
+
 }

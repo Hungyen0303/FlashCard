@@ -5,7 +5,7 @@ abstract class FlashCardSetRepo {
 
   Future<bool> addNewSet(FlashCardSet newSet);
 
-  Future<bool> updateSet(FlashCardSet newSet);
+  Future<bool> editASet(FlashCardSet oldSet, FlashCardSet newSet);
 
   Future<bool> deleteASet(String name);
 }
