@@ -2,7 +2,7 @@ import 'package:flashcard_learning/domain/models/flashSet.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/CustomCardProvider.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/CustomIconPickerDialog.dart';
-import 'package:flashcard_learning/ui/flashcard_sets/widgets/grid_item_widget.dart';
+import 'package:flashcard_learning/ui/flashcard_sets/widgets/FlashCardSetItem.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +15,7 @@ import 'package:pie_menu/pie_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-
 import '../../../utils/color/AllColor.dart';
-import 'list_item_widget.dart';
 
 class AllFlashCardSet extends StatefulWidget {
   const AllFlashCardSet({super.key});
@@ -113,14 +111,24 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
         bool actionSuccessfully = false;
         if (isCreating) {
           actionSuccessfully = await flashCardSetViewModel.addNewSet(
-              FlashCardSet(DateTime.now(), nameController.text, 0, 0,
-                  customCardProvider.iconData ?? Icons.book, customCardProvider.iconColor));
+              FlashCardSet(
+                  DateTime.now(),
+                  nameController.text,
+                  0,
+                  0,
+                  customCardProvider.iconData ?? Icons.book,
+                  customCardProvider.iconColor));
         } else {
           actionSuccessfully = await flashCardSetViewModel.editASet(
               flashCardSetViewModel.listFlashCardSets
                   .firstWhere((a) => a.name == oldName),
-              FlashCardSet(DateTime.now(), nameController.text, 0, 0,
-                  customCardProvider.iconData ?? Icons.book,  customCardProvider.iconColor));
+              FlashCardSet(
+                  DateTime.now(),
+                  nameController.text,
+                  0,
+                  0,
+                  customCardProvider.iconData ?? Icons.book,
+                  customCardProvider.iconColor));
         }
 
         LoadingOverlay.hide();
@@ -247,7 +255,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
                           ? GridView.count(
                               crossAxisCount: 2,
                               children: flashCardSetViewModel.listFlashCardSets
-                                  .map((a) => GridItem(
+                                  .map((a) => FlashCardSetItem(
                                         flashCardSet: a,
                                         edit: () {
                                           editASet(a);
@@ -258,12 +266,25 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
                                         share: () {
                                           shareASet(a);
                                         },
+                                        isGridView: true,
                                       ))
                                   .toList(),
                             )
                           : ListView(
                               children: flashCardSetViewModel.listFlashCardSets
-                                  .map((a) => Listitem(flashCardSet: a))
+                                  .map((a) => FlashCardSetItem(
+                                        flashCardSet: a,
+                                        edit: () {
+                                          editASet(a);
+                                        },
+                                        delete: () {
+                                          deleteASet(a.name);
+                                        },
+                                        share: () {
+                                          shareASet(a);
+                                        },
+                                        isGridView: false,
+                                      ))
                                   .toList(),
                             ));
                 });
