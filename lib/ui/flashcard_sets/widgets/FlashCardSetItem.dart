@@ -117,18 +117,21 @@ class FlashCardSetItem extends StatelessWidget {
 
   Container _buildListItem() {
     TextStyle textStyle = TextStyle(
-        fontSize: 15, fontWeight: FontWeight.w400, fontFamily: "FontListView ");
+        fontSize: 15,
+        fontWeight: FontWeight.w400,
+        fontFamily: "FontListView",
+        color: flashCardSet.color);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: ListTile(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
-          side: BorderSide(width: 2, color: Colors.grey),
+          side: BorderSide(width: 2, color: flashCardSet.color),
         ),
-        tileColor: flashCardSet.color.withOpacity(0.2),
-        contentPadding: EdgeInsets.symmetric(vertical: 10),
+        tileColor: flashCardSet.color.withOpacity(0.1),
+        contentPadding: const EdgeInsets.symmetric(vertical: 10),
         leading: Container(
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -141,18 +144,23 @@ class FlashCardSetItem extends StatelessWidget {
           ),
         ),
         title: Text(
-          "${flashCardSet.name}",
+          flashCardSet.name,
           style: TextStyle(
-            fontSize: 20,
-          ),
+              fontSize: 20,
+              color: flashCardSet.color,
+              fontWeight: FontWeight.w600),
         ),
         subtitle: Text(
           "${flashCardSet.minute} minutes",
           style: textStyle,
         ),
         trailing: Container(
-          margin: EdgeInsets.only(right: 20),
-          child: Icon(Icons.navigate_next),
+          margin: const EdgeInsets.only(right: 20),
+          child: Icon(
+            flashCardSet.iconData,
+            size: 50,
+            color: flashCardSet.color,
+          ),
         ),
       ),
     );

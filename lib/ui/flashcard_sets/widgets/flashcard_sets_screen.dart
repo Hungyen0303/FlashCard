@@ -25,7 +25,7 @@ class AllFlashCardSet extends StatefulWidget {
 }
 
 class _AllFlashCardSetState extends State<AllFlashCardSet> {
-  bool isGridView = true;
+  bool isGridView = false;
   Color mainColor = const Color(0xff3F2088);
   TextEditingController nameController = TextEditingController();
 
@@ -251,7 +251,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      child: !isGridView
+                      child: isGridView
                           ? GridView.count(
                               crossAxisCount: 2,
                               children: flashCardSetViewModel.listFlashCardSets
