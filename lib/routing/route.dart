@@ -13,6 +13,5 @@ class AppRoute {
 
   static String gotoFlashcardSet(String name) => '/flashcardSet/$name';
 
-
-
+  static String SearchByImagePath = '/searchbyimage';
 }

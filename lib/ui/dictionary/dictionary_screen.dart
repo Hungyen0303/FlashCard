@@ -1,13 +1,22 @@
+import 'dart:io';
+
+import 'package:flashcard_learning/routing/router.dart';
+import 'package:flashcard_learning/ui/dictionary/SearchByVoice.dart';
+import 'package:flashcard_learning/ui/dictionary/SearchByVoiceOverlay.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/ui/search_result/searchResult_screen.dart';
 import 'package:flashcard_learning/ui/dictionary/BoxText.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:line_icons/line_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../domain/models/Word.dart';
+import '../../routing/route.dart';
 import 'DictionaryViewModel.dart';
+import 'SearchByImage.dart';
 
 class DictionaryPage extends StatefulWidget {
   const DictionaryPage({super.key, required this.dictionaryViewModel});
@@ -174,7 +183,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
                 ),
                 Center(
                   child: AnimatedOpacity(
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     opacity: isSearch ? 1 : 0.2,
                     child: Visibility(
                         visible: isSearch,
@@ -207,85 +216,93 @@ class _DictionaryPageState extends State<DictionaryPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      height: 180,
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      width: 180,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
-                              colors: [
-                                Color(0xff2196f3), // Xanh dương sáng
-                                Color(0xff9c27b0), // Tím nhạt
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.mic,
-                            color: Colors.white,
-                            size: 50,
-                          ),
-                          Text(
-                            "Phát âm ",
-                            style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
-                          ),
-                          Text(
-                            "Phát âm cụm từ để kiểm tra phát âm ",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+                    GestureDetector(
+                      onTap: () => SearchByMediaOverlay.show(context),
+                      child: Container(
+                        height: 180,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        width: 180,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                                colors: [
+                                  Color(0xff2196f3),
+                                  Color(0xff9c27b0),
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.mic,
                               color: Colors.white,
+                              size: 50,
                             ),
-                          )
-                        ],
+                            Text(
+                              "Phát âm ",
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
+                            ),
+                            Text(
+                              "Phát âm cụm từ để kiểm tra phát âm ",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                    Container(
-                      height: 180,
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      width: 180,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
-                              colors: [
-                                Color(0xffff6f20), // Cam nhạt
-                                Color(0xffe91e63), // Hồng đậm
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.image,
-                            color: Colors.white,
-                            size: 50,
-                          ),
-                          Text(
-                            textAlign: TextAlign.center,
-                            "Tìm bằng hình ảnh ",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
-                          ),
-                          Text(
-                            "Phát âm cụm từ để kiểm tra phát âm ",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+                    GestureDetector(
+                      onTap: () async {
+                        context.push(AppRoute.SearchByImagePath);
+                      },
+                      child: Container(
+                        height: 180,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        width: 180,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                                colors: [
+                                  Color(0xffff6f20), // Cam nhạt
+                                  Color(0xffe91e63), // Hồng đậm
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.image,
                               color: Colors.white,
+                              size: 50,
                             ),
-                          )
-                        ],
+                            Text(
+                              textAlign: TextAlign.center,
+                              "Tìm bằng hình ảnh ",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
+                            ),
+                            Text(
+                              "Phát âm cụm từ để kiểm tra phát âm ",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -319,7 +336,6 @@ class _DictionaryPageState extends State<DictionaryPage> {
         ));
   }
 
-  // TODO : config navigation's
   Future<void> gotoSearchPage(String text) async {
     LoadingOverlay.show(context);
     Word word = await widget.dictionaryViewModel.getWord(text);

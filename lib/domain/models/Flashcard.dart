@@ -2,7 +2,7 @@
 
 
 class FlashCard {
-  FlashCard(this.vietnamese, this.english, this.example);
+  FlashCard(this.english,this.vietnamese,  this.example);
 
   final String vietnamese;
 

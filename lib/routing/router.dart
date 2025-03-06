@@ -1,8 +1,8 @@
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/ui/auth/forgetpassword/widgets/forgetpassword_screen.dart';
 import 'package:flashcard_learning/ui/auth/register/widgets/register_screen.dart';
+import 'package:flashcard_learning/ui/dictionary/SearchByImage.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/specific_flashcard_screen.dart';
-import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -73,6 +73,11 @@ class AppRouter {
               //routeLogger.info(state.name);
               String name = state.pathParameters['name'] ?? "default";
               return SpecificFlashCardPage(nameOfSet: name);
+            }),
+        GoRoute(
+            path: AppRoute.SearchByImagePath,
+            builder: (context, state) {
+              return SearchByImage();
             }),
       ]);
 }

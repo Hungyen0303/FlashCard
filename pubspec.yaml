@@ -53,6 +53,9 @@ dependencies:
   flutter_iconpicker: ^4.0.1
   pie_menu: ^3.2.7
   font_awesome_flutter: ^10.8.0
+  speech_to_text: ^7.0.0
+  image_picker: ^1.1.2
+  google_mlkit_text_recognition: ^0.14.0
 
 dev_dependencies:
   flutter_test:

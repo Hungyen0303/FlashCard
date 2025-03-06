@@ -8,8 +8,8 @@ class DictionaryViewModel {
   Future<Word> getWord(String text) async {
     return await repo.getWord(text);
   }
+
   Future<List<Word>> getPopularWord() async {
     return await repo.getPopularWord();
   }
-
 }

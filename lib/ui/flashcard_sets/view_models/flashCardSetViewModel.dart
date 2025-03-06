@@ -41,8 +41,8 @@ class FlashCardSetViewModel extends ChangeNotifier {
     return false;
   }
 
-  Future<bool> editASet(FlashCardSet oldSet , FlashCardSet newSet) async {
-    bool editedSuccessfully = await _repo.editASet(oldSet , newSet);
+  Future<bool> editASet(FlashCardSet oldSet, FlashCardSet newSet) async {
+    bool editedSuccessfully = await _repo.editASet(oldSet, newSet);
     if (editedSuccessfully) {
       notifyListeners();
       return true;
@@ -58,4 +58,6 @@ class FlashCardSetViewModel extends ChangeNotifier {
     }
     return false;
   }
+
+
 }
