@@ -25,16 +25,13 @@ class _AccountPageState extends State<AccountPage> {
       widget._index = tab;
     });
   }
-
-
   void _Logout(BuildContext context) {
-    // TODO : give token back
+
 
     context.go(AppRoute.login);
+
   }
-
   void _gotoAccountPage() {}
-
   Container buildActions(Icon icon) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
@@ -96,7 +93,7 @@ class _AccountPageState extends State<AccountPage> {
                       width: MediaQuery
                           .of(context)
                           .size
-                          .width * 0.3,
+                          .width * 0.45,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           color:
@@ -118,7 +115,7 @@ class _AccountPageState extends State<AccountPage> {
                       width: MediaQuery
                           .of(context)
                           .size
-                          .width * 0.3,
+                          .width * 0.45,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           color:
@@ -129,28 +126,6 @@ class _AccountPageState extends State<AccountPage> {
                         style: TextStyle(
                           color:
                           1 == widget._index ? Colors.black : Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => changeTab(2),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.3,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color:
-                          2 == widget._index ? Colors.grey : Colors.black),
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        "Bạn bè",
-                        style: TextStyle(
-                          color:
-                          2 == widget._index ? Colors.black : Colors.white,
                         ),
                       ),
                     ),

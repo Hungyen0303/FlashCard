@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Contentchatcontainer extends StatelessWidget {
-  Contentchatcontainer({super.key, required this.isBot, required this.content});
+class ContentChatContainer extends StatelessWidget {
+  ContentChatContainer({super.key, required this.isBot, required this.content, required this.isLoading});
 
   final bool isBot;
-
   final String content;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -27,26 +27,28 @@ class Contentchatcontainer extends StatelessWidget {
                     ),
                   ),
                 ),
-                IntrinsicWidth(
-                  child: Container(
-                    constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width * 0.7,
-                        minWidth: MediaQuery.of(context).size.width * 0.3),
-                    padding: EdgeInsets.all(8),
-                    margin: EdgeInsets.only(left: 10, top: 20),
-                    decoration: BoxDecoration(
-                      color: MAIN_THEME_YELLOW,
-                      border:
-                          Border.all(width: 1, color: MAIN_THEME_YELLOW_TEXT),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      content,
-
-                    ),
-                  ),
-                ),
+                isLoading || content.isEmpty
+                    ? CircularProgressIndicator()
+                    : IntrinsicWidth(
+                        child: Container(
+                          constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width * 0.7,
+                              minWidth:
+                                  MediaQuery.of(context).size.width * 0.1),
+                          padding: EdgeInsets.all(8),
+                          margin: EdgeInsets.only(left: 10, top: 20),
+                          decoration: BoxDecoration(
+                            color: MAIN_THEME_YELLOW,
+                            border: Border.all(
+                                width: 1, color: MAIN_THEME_YELLOW_TEXT),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            content,
+                          ),
+                        ),
+                      ),
               ],
             ),
           )
@@ -56,7 +58,7 @@ class Contentchatcontainer extends StatelessWidget {
               child: Container(
                 constraints: BoxConstraints(
                     maxWidth: MediaQuery.of(context).size.width * 0.7,
-                    minWidth: MediaQuery.of(context).size.width * 0.3),
+                    minWidth: MediaQuery.of(context).size.width * 0.1),
                 padding: EdgeInsets.all(8),
                 margin: EdgeInsets.only(right: 10, top: 20),
                 decoration: BoxDecoration(
@@ -64,11 +66,10 @@ class Contentchatcontainer extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
-                child: Text(content,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15
-                ),),
+                child: Text(
+                  content,
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
               ),
             ),
           );

@@ -1,9 +1,12 @@
+import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 
 import '../../../utils/color/AllColor.dart';
-import 'ConversationWidget.dart';
+import 'ContentChatContainer.dart';
 
 class ChatWithAIPage extends StatefulWidget {
   const ChatWithAIPage({super.key});
@@ -14,11 +17,13 @@ class ChatWithAIPage extends StatefulWidget {
 
 class _ChatWithAiPageState extends State<ChatWithAIPage> {
   int _selectedIndex = 0;
-  TextEditingController _searchController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
+  final TextEditingController askingController = TextEditingController();
+  late Future<void> data;
+
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    ConversationWidget(),
     Text(
       'Index 0: Home',
       style: optionStyle,
@@ -41,7 +46,85 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
   }
 
   bool isAsking = false;
-  final TextEditingController _askingcontroller = TextEditingController();
+
+  IconThemeData iconThemeData = const IconThemeData(
+    size: 25,
+    color: Color(0xffffbe29),
+  );
+
+  void sendMessage(String text) async {
+    _scrollToFocusedField(1000);
+    ChatWithAIViewModel chatWithAIViewModel =
+        Provider.of<ChatWithAIViewModel>(context, listen: false);
+    bool sentSuccessfully =
+        await chatWithAIViewModel.sendMessage(askingController.text);
+
+    if (!sentSuccessfully) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Error"),
+              contentTextStyle: TextStyle(fontSize: 15, color: Colors.black),
+              titleTextStyle: TextStyle(color: Colors.red, fontSize: 30),
+              content: Text("Check internet connection "),
+            );
+          });
+    }
+  }
+
+  void attachImage() {}
+
+  Future<void> loadData() async {
+    await Provider.of<ChatWithAIViewModel>(context, listen: false).loadData();
+  }
+
+  List<ContentChatContainer> buildChatColumn() {
+    ChatWithAIViewModel chatWithAIViewModel =
+        Provider.of<ChatWithAIViewModel>(context, listen: false);
+    List<ContentChatContainer> listChat = [];
+    for (int i = 0; i < chatWithAIViewModel.botChat.length; i++) {
+      listChat.add(
+        ContentChatContainer(
+          isBot: false,
+          content: chatWithAIViewModel.humanChat[i],
+          isLoading: false,
+        ),
+      );
+      listChat.add(ContentChatContainer(
+        isBot: true,
+        content: chatWithAIViewModel.botChat[i],
+        isLoading: false,
+      ));
+    }
+    return listChat;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    data = loadData();
+  }
+
+  void askByVoice() {}
+  ScrollController _scrollController = ScrollController();
+
+  void _scrollToFocusedField(double offset) {
+    Future.delayed(const Duration(milliseconds: 250), () {
+      _scrollController.animateTo(
+        offset,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.bounceInOut,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    askingController.dispose();
+    searchController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +144,10 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("Receive Plus version "),
-              Icon(CupertinoIcons.plus_app , color: Colors.purple,)
+              Icon(
+                CupertinoIcons.plus_app,
+                color: Colors.purple,
+              )
             ],
           ),
         ),
@@ -70,7 +156,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
           child: ListView(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 10),
                 child: SearchBar(
                   onTap: () {
                     setState(() {
@@ -83,7 +169,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
                       //isSearch = false;
                     });
                   },
-                  controller: _searchController,
+                  controller: searchController,
                   elevation: WidgetStateProperty.all(3.0),
                   shadowColor: WidgetStateProperty.all(
                       MAIN_THEME_PURPLE.withOpacity(0.2)),
@@ -146,11 +232,34 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
         ),
         body: Column(
           children: [
-            Expanded(child: ConversationWidget()),
+            Expanded(
+                child: FutureBuilder(
+                    future: data,
+                    builder: (context, snapshot) {
+                      return Consumer<ChatWithAIViewModel>(
+                          builder: (context, chatWithAIViewModel, child) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: SpinKitFadingFour(
+                            color: Colors.yellowAccent,
+                          ));
+                        }
+                        return SingleChildScrollView(
+                          controller: _scrollController,
+                          child: Column(children: [
+                            ...buildChatColumn(),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.55,
+                            )
+                          ]),
+                        );
+                      });
+                    })),
             Container(
-              padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 15),
-              decoration: BoxDecoration(
-                boxShadow: [] ,
+              padding: const EdgeInsets.only(
+                  left: 10, right: 10, top: 5, bottom: 15),
+              decoration: const BoxDecoration(
                 border: Border(top: BorderSide(width: 2)),
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(10),
@@ -164,13 +273,13 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
                     onTapOutside: (e) {
                       FocusManager.instance.primaryFocus?.unfocus();
                     },
-                    controller: _askingcontroller,
+                    controller: askingController,
                     onTap: () {
                       setState(() {
                         isAsking = true;
                       });
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       disabledBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
@@ -179,27 +288,35 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
                       hintText: 'Type your message...',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Icon(
-                        CupertinoIcons.plus_circle_fill,
-                        size: 25,
-                        color: Color(0xffffbe29),
-                      ),
-                      Icon(
-                        Icons.mic,
-                        size: 25,
-                        color: Color(0xffffbe29),
-                      ),
-                      Icon(
-                        Icons.send,
-                        size: 25,
-                        color: Color(0xffffbe29),
-                      )
+                      IconButton(
+                          onPressed: () {},
+                          icon: IconTheme(
+                            data: iconThemeData,
+                            child: Icon(
+                              CupertinoIcons.plus_circle_fill,
+                            ),
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: IconTheme(
+                            data: iconThemeData,
+                            child: Icon(Icons.mic),
+                          )),
+                      IconButton(
+                          onPressed: () {
+                            sendMessage(askingController.text);
+                            askingController.clear();
+                          },
+                          icon: IconTheme(
+                            data: iconThemeData,
+                            child: const Icon(Icons.send),
+                          )),
                     ],
                   )
                 ],
