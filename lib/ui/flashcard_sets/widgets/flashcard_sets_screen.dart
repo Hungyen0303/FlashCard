@@ -230,10 +230,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           "Are you sure to delete this set",
-          style: TextStyle(
-            color: Colors.blue,
-            fontSize: 19
-          ),
+          style: TextStyle(color: Colors.blue, fontSize: 19),
           textAlign: TextAlign.center,
         ),
       ),
@@ -262,7 +259,9 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
     );
   }
 
-  void shareASet(FlashCardSet set) {}
+  void shareASet(FlashCardSet set) {
+    Provider.of<FlashCardSetViewModel>(context, listen: false).shareNewSet(set);
+  }
 
   @override
   Widget build(BuildContext context) {

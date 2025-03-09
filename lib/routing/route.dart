@@ -16,4 +16,6 @@ class AppRoute {
   static String SearchByImagePath = '/searchbyimage';
 
   static String profile = "/profile";
+
+  static String public_flashcard = '/flashcard-public';
 }

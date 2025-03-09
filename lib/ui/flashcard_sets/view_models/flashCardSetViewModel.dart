@@ -14,26 +14,40 @@ class FlashCardSetViewModel extends ChangeNotifier {
     loadData();
   }
 
-  Logger logger = Logger("FlashCardSetViewModel");
-
   List<FlashCardSet> _listFlashCardSets = [];
+  List<FlashCardSet> _listFlashCardSetsPublic = [];
 
   List<FlashCardSet> get listFlashCardSets => _listFlashCardSets;
+  List<FlashCardSet> get listFlashCardSetsPublic => _listFlashCardSetsPublic;
 
   Future<bool> loadData() async {
     _listFlashCardSets = await getAllSet();
+    _listFlashCardSetsPublic = await getAllSetPublic();
     notifyListeners();
     return true;
   }
 
   final FlashCardSetRepo _repo = FlashCardSetRepoLocal();
 
+
   Future<List<FlashCardSet>> getAllSet() async {
     return _repo.getAll();
   }
 
+  Future<List<FlashCardSet>> getAllSetPublic() async {
+    return _repo.getAllSetPublic();
+  }
+
   Future<bool> addNewSet(FlashCardSet newSet) async {
     bool addedSuccessfully = await _repo.addNewSet(newSet);
+    if (addedSuccessfully) {
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+  Future<bool> shareNewSet(FlashCardSet newSet) async {
+    bool addedSuccessfully = await _repo.addNewSetToPublic(newSet);
     if (addedSuccessfully) {
       notifyListeners();
       return true;
@@ -58,6 +72,4 @@ class FlashCardSetViewModel extends ChangeNotifier {
     }
     return false;
   }
-
-
 }

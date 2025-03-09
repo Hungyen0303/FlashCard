@@ -1,6 +1,9 @@
+import 'package:flashcard_learning/routing/route.dart';
+import 'package:flashcard_learning/routing/router.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import 'AIConversation.dart';
@@ -155,10 +158,10 @@ class _MainflashcardState extends State<Mainflashcard> {
                 _gotoAllCollections(context);
               }),
               buildListtile(listTiles[1], Icon(LineIcons.plusCircle), () {}),
-              buildListtile(listTiles[2], Icon(LineIcons.leanpub), () {}),
-              buildListtile(listTiles[3], Icon(LineIcons.rocketChat), () {
-                widget.onTabChange(2);
+              buildListtile(listTiles[2], Icon(LineIcons.leanpub), () {
+                context.push(AppRoute.public_flashcard);
               }),
+
             ],
           ),
         ),

@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../ui/account/profile_screen.dart';
 import '../ui/auth/login/view_models/login_viewmodel.dart';
 import '../ui/auth/login/widgets/login_screen.dart';
+import '../ui/flashcard_sets/widgets/flashcard_sets_public_screen.dart';
 import '../ui/home/widgets/onboard_screen.dart';
 import '../ui/home/widgets/shell_screen.dart';
 
@@ -84,6 +85,11 @@ class AppRouter {
             path: AppRoute.profile,
             builder: (context, state) {
               return ProfileScreen();
+            }),
+        GoRoute(
+            path: AppRoute.public_flashcard,
+            builder: (context, state) {
+              return AllFlashCardPublicSet();
             }),
       ]);
 }

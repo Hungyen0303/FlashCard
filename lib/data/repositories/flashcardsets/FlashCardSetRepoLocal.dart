@@ -31,6 +31,42 @@ class FlashCardSetRepoLocal extends FlashCardSetRepo {
     );
   });
 
+  List<FlashCardSet> localListFlashCardSetPublic = List.generate(2, (index) {
+    List<IconData> iconData = [
+      Icons.book,
+      LineIcons.star,
+      Icons.abc_outlined,
+      Icons.account_circle_sharp,
+      Icons.accessibility_new_rounded,
+      Icons.add_alert_sharp,
+      LineIcons.line,
+      LineIcons.airFreshener,
+      FontAwesomeIcons.font,
+    ];
+    Random random = Random();
+    return FlashCardSet(
+      DateTime.now().subtract(Duration(hours: random.nextInt(100))),
+      "FlashCard Set PUBLIC  $index",
+      20,
+      random.nextInt(100),
+      iconData[random.nextInt(iconData.length - 1)],
+      Colors.green,
+    );
+  });
+
+  @override
+  Future<bool> addNewSetToPublic(FlashCardSet newSet) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    localListFlashCardSetPublic.add(newSet);
+    return true;
+  }
+
+  @override
+  Future<List<FlashCardSet>> getAllSetPublic() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return localListFlashCardSetPublic;
+  }
+
   @override
   Future<List<FlashCardSet>> getAll() async {
     await Future.delayed(const Duration(milliseconds: 500));
