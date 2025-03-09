@@ -101,7 +101,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
           await QuickAlert.show(
             context: context,
             type: QuickAlertType.error,
-            text: 'Please input something',
+            text: 'Please input name of Set',
           );
 
           return;
@@ -152,8 +152,6 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
   void addFlashSet(BuildContext context) {
     _showPopUp(true);
   }
-
-  void removeFlashcardSet() {}
 
   AppBar _buildAppbar() {
     return AppBar(
@@ -218,9 +216,50 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
   }
 
   void deleteASet(String name) {
-    LoadingOverlay.show(context);
-    Provider.of<FlashCardSetViewModel>(context, listen: false).deleteASet(name);
-    LoadingOverlay.hide();
+    QuickAlert.show(
+      context: context,
+      cancelBtnText: "Discard",
+      showCancelBtn: true,
+      cancelBtnTextStyle: TextStyle(color: Colors.blueGrey, fontSize: 20),
+      type: QuickAlertType.custom,
+      barrierDismissible: true,
+      confirmBtnText: 'Delete',
+      confirmBtnColor: Colors.red,
+      customAsset: 'assets/img-1.jpg',
+      widget: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          "Are you sure to delete this set",
+          style: TextStyle(
+            color: Colors.blue,
+            fontSize: 19
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      onCancelBtnTap: () {
+        context.pop();
+      },
+      onConfirmBtnTap: () async {
+        LoadingOverlay.show(context);
+        bool actionSuccessfully =
+            await Provider.of<FlashCardSetViewModel>(context, listen: false)
+                .deleteASet(name);
+        LoadingOverlay.hide();
+        if (mounted) {
+          context.pop();
+          await QuickAlert.show(
+            context: context,
+            type: actionSuccessfully
+                ? QuickAlertType.success
+                : QuickAlertType.error,
+            text: actionSuccessfully
+                ? "Created new Flashcard Set"
+                : "Failed to create Flashcard Set ",
+          );
+        }
+      },
+    );
   }
 
   void shareASet(FlashCardSet set) {}
@@ -278,6 +317,11 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
                                           editASet(a);
                                         },
                                         delete: () {
+                                          // showDialog(
+                                          //     context: context,
+                                          //     builder: (context) {
+                                          //       return QuickAlert.show(context: context, type: type)
+                                          //     });
                                           deleteASet(a.name);
                                         },
                                         share: () {

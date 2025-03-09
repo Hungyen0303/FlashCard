@@ -1,15 +1,14 @@
-import 'package:flashcard_learning/MainAppUser.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
-import 'package:flashcard_learning/ui/auth/forgetpassword/widgets/forgetpassword_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../logo.dart';
 import '../../../../routing/route.dart';
-import '../../register/widgets/register_screen.dart';
+import '../../../account/account_viewmodel.dart';
 import '../../../test/Testpage.dart';
 
 class Loginpage extends StatefulWidget {
@@ -22,7 +21,7 @@ class Loginpage extends StatefulWidget {
 
 class LoginState extends State<Loginpage> {
   void _gotoRegisterPage(BuildContext context) {
-   context.push(AppRoute.signup);
+    context.push(AppRoute.signup);
   }
 
   void _gotoTest(context) {
@@ -39,27 +38,27 @@ class LoginState extends State<Loginpage> {
 
   final ScrollController _scrollController = ScrollController();
 
-   bool isWrong = false;
+  bool isWrong = false;
+
   Future<void> login(
       GlobalKey<FormState> formState, BuildContext context) async {
     if (formState.currentState!.validate()) {
       LoadingOverlay.show(context);
       bool isValid = await widget.loginViewModel
           .login(_emailController.text, _passwordController.text);
-      if (isValid) {
-
-        MainAppUser.user = await widget.loginViewModel.getUser(_emailController.text);
+      if (isValid && mounted) {
+        Provider.of<AccountViewModel>(context, listen: false).user =
+            await widget.loginViewModel.getUser(_emailController.text);
         context.go('/home');
       } else {
         setState(() {
-          isWrong  = true;
+          isWrong = true;
         });
         print("Login fails ");
       }
       LoadingOverlay.hide();
     }
   }
-
 
   @override
   void initState() {
@@ -80,8 +79,6 @@ class LoginState extends State<Loginpage> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       backgroundColor: COLOR_LOGIN_BACKGROUND,
       body: SingleChildScrollView(
@@ -289,19 +286,21 @@ class LoginState extends State<Loginpage> {
                                 ),
                               ),
                             )),
-
-
                         Visibility(
-                          visible: isWrong,
+                            visible: isWrong,
                             child: Center(
-                          child: Text("The email or password is incorrect" ,
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 15 ,
-                            fontWeight: FontWeight.w600 ,
-                          ),),
-                        )) ,
-                        SizedBox(height: 15,),
+                              child: Text(
+                                "The email or password is incorrect",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            )),
+                        SizedBox(
+                          height: 15,
+                        ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(

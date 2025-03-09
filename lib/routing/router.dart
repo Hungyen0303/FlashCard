@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
+import '../ui/account/profile_screen.dart';
 import '../ui/auth/login/view_models/login_viewmodel.dart';
 import '../ui/auth/login/widgets/login_screen.dart';
 import '../ui/home/widgets/onboard_screen.dart';
@@ -78,6 +79,11 @@ class AppRouter {
             path: AppRoute.SearchByImagePath,
             builder: (context, state) {
               return SearchByImage();
+            }),
+        GoRoute(
+            path: AppRoute.profile,
+            builder: (context, state) {
+              return ProfileScreen();
             }),
       ]);
 }

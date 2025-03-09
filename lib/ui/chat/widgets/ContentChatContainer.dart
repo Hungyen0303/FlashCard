@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ContentChatContainer extends StatelessWidget {
-  ContentChatContainer({super.key, required this.isBot, required this.content, required this.isLoading});
+  const ContentChatContainer({super.key, required this.isBot, required this.content, required this.isLoading});
 
   final bool isBot;
   final String content;
@@ -28,7 +28,7 @@ class ContentChatContainer extends StatelessWidget {
                   ),
                 ),
                 isLoading || content.isEmpty
-                    ? CircularProgressIndicator()
+                    ? const CircularProgressIndicator()
                     : IntrinsicWidth(
                         child: Container(
                           constraints: BoxConstraints(

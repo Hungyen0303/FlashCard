@@ -1,15 +1,12 @@
-
+import 'dart:core';
 
 class User {
+  String name = '';
+  String plan = '';
+  String avatarPath = '';
 
+  User();
 
-  User(this.name, this.avatar, this.plan) ;
-
-  final String name ;
-  final String avatar ;
-  final String plan ;
-
-
-
-
+  User.named(
+      {required this.name, required this.plan, required this.avatarPath});
 }

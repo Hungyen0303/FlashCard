@@ -1,5 +1,6 @@
 import 'package:flashcard_learning/data/repositories/auth/AuthRepositoryLocal.dart';
 import 'package:flashcard_learning/routing/router.dart';
+import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
 import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
 import 'package:flashcard_learning/ui/dictionary/DictionaryViewModel.dart';
@@ -33,6 +34,8 @@ void main() {
           create: (_) => SpecificFlashCardViewModel()),
       ChangeNotifierProvider<ChatWithAIViewModel>(
           create: (_) => ChatWithAIViewModel()),
+      ChangeNotifierProvider<AccountViewModel>(
+          create: (_) => AccountViewModel()),
       Provider<DictionaryViewModel>(create: (context) => DictionaryViewModel()),
     ],
     child: MyApp(),

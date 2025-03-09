@@ -12,8 +12,6 @@ class Authrepositorylocal extends AuthRepository {
 
   @override
   Future<String> login(String username, String password) async {
-
-
     // Fake time for Calling API
     await Future.delayed(const Duration(seconds: 1));
 
@@ -24,10 +22,9 @@ class Authrepositorylocal extends AuthRepository {
     return " fail to login ";
   }
 
-  Future<User> getUser(String username )  async
-  {
-    await Future.delayed(Duration(seconds: 1));
-    return User("John Wick ", "avatar", "Basic");
+  @override
+  Future<User> getUser(String username) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return User.named(name: "John Wick ", avatarPath: "avatar", plan: "Basic");
   }
-
 }

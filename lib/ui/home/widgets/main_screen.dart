@@ -1,9 +1,5 @@
-import 'package:flashcard_learning/MainAppUser.dart';
-import 'package:flashcard_learning/domain/models/user.dart';
-import 'package:flashcard_learning/routing/route.dart';
-import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
+import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
@@ -133,7 +129,10 @@ class _MainflashcardState extends State<Mainflashcard> {
                       style: TextStyle(
                           color: MAIN_THEME_PURPLE_TEXT, fontSize: 18)),
                   TextSpan(
-                      text: MainAppUser.user?.name,
+                      text:
+                          Provider.of<AccountViewModel>(context, listen: false)
+                              .user
+                              .name,
                       style: TextStyle(
                           color: MAIN_THEME_PURPLE_TEXT,
                           fontSize: 25,
