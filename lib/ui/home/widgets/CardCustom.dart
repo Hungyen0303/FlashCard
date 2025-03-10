@@ -2,17 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Cardcustom extends StatefulWidget {
-   Cardcustom({super.key, required this.image, required this.title, required this.start, required this.end, required this.level});
+  Cardcustom(
+      {super.key,
+      required this.image,
+      required this.title,
+      required this.start,
+      required this.end,
+      required this.level});
 
-  final String image ;
-  final String title ;
-  final int start ;
-  final int  end ;
-  final String level ;
-  
-  final Color bg = Color(0xFFF3E5F5) ; 
-  final Color text_color = Color(0xFF6200EE) ;
-  
+  final String image;
+
+  final String title;
+
+  final int start;
+
+  final int end;
+
+  final String level;
+
+  final Color bg = const Color(0xFFF3E5F5);
+
+  final Color textColor = const Color(0xFF6200EE);
+
   @override
   State<Cardcustom> createState() => _CardcustomState();
 }
@@ -52,23 +63,24 @@ class _CardcustomState extends State<Cardcustom> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
               child: Text(
-               widget.title,
+                widget.title,
                 style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w400,
-                    color: widget.text_color),
+                    color: widget.textColor),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 8, right: 8),
               child: Text(
                 "${widget.start}-${widget.end} minutes",
-                style: TextStyle(color: widget.text_color),
+                style: TextStyle(color: widget.textColor),
               ),
             ),
           ]),
         ),
         Align(
+          alignment: Alignment.topLeft,
           child: FittedBox(
             child: Container(
               margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -80,7 +92,6 @@ class _CardcustomState extends State<Cardcustom> {
               ),
             ),
           ),
-          alignment: Alignment.topLeft,
         ),
       ],
     );

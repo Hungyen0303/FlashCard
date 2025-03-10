@@ -1,4 +1,6 @@
 import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
+import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
+import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -16,33 +18,23 @@ class ChatWithAIPage extends StatefulWidget {
 }
 
 class _ChatWithAiPageState extends State<ChatWithAIPage> {
-  int _selectedIndex = 0;
   TextEditingController searchController = TextEditingController();
   final TextEditingController askingController = TextEditingController();
   late Future<void> data;
 
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    Navigator.of(context).pop();
+  Future<void> _onItemTapped(String name) async {
+    LoadingOverlay.show(context);
+
+    await Provider.of<ChatWithAIViewModel>(context, listen: false)
+        .setNameOfConversation(name);
+
+    if (mounted) {
+      LoadingOverlay.hide();
+      Navigator.of(context).pop();
+    }
   }
 
   bool isAsking = false;
@@ -83,19 +75,20 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
     ChatWithAIViewModel chatWithAIViewModel =
         Provider.of<ChatWithAIViewModel>(context, listen: false);
     List<ContentChatContainer> listChat = [];
-    for (int i = 0; i < chatWithAIViewModel.botChat.length; i++) {
-      listChat.add(
-        ContentChatContainer(
-          isBot: false,
-          content: chatWithAIViewModel.humanChat[i],
-          isLoading: false,
-        ),
-      );
-      listChat.add(ContentChatContainer(
-        isBot: true,
-        content: chatWithAIViewModel.botChat[i],
-        isLoading: false,
-      ));
+    for (int i = 0; i < chatWithAIViewModel.chatList.length; i++) {
+      i % 2 == 0
+          ? listChat.add(
+              ContentChatContainer(
+                isBot: false,
+                content: chatWithAIViewModel.chatList[i],
+                isLoading: false,
+              ),
+            )
+          : listChat.add(ContentChatContainer(
+              isBot: true,
+              content: chatWithAIViewModel.chatList[i],
+              isLoading: false,
+            ));
     }
     return listChat;
   }
@@ -124,6 +117,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
     super.dispose();
     askingController.dispose();
     searchController.dispose();
+    
   }
 
   @override
@@ -151,85 +145,82 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
             ],
           ),
         ),
-        drawer: Drawer(
-          backgroundColor: MAIN_THEME_YELLOW,
-          child: ListView(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                child: SearchBar(
-                  onTap: () {
-                    setState(() {
-                      //  isSearch = true;
-                    });
-                  },
-                  onTapOutside: (event) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                    setState(() {
-                      //isSearch = false;
-                    });
-                  },
-                  controller: searchController,
-                  elevation: WidgetStateProperty.all(3.0),
-                  shadowColor: WidgetStateProperty.all(
-                      MAIN_THEME_PURPLE.withOpacity(0.2)),
-                  side: WidgetStateProperty.all(
-                    BorderSide(
-                      color: MAIN_THEME_YELLOW_TEXT,
-                      width: 1.2,
+        drawer: Consumer<ChatWithAIViewModel>(
+            builder: (context, chatWithAIViewModel, child) {
+          return Drawer(
+            backgroundColor: MAIN_THEME_YELLOW,
+            child: ListView(
+              children: [
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  child: SearchBar(
+                    onTap: () {
+                      setState(() {
+                        //  isSearch = true;
+                      });
+                    },
+                    onTapOutside: (event) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      setState(() {
+                        //isSearch = false;
+                      });
+                    },
+                    controller: searchController,
+                    elevation: WidgetStateProperty.all(3.0),
+                    shadowColor: WidgetStateProperty.all(
+                        MAIN_THEME_PURPLE.withOpacity(0.2)),
+                    side: WidgetStateProperty.all(
+                      BorderSide(
+                        color: MAIN_THEME_YELLOW_TEXT,
+                        width: 1.2,
+                      ),
                     ),
-                  ),
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
                     ),
-                  ),
-                  leading: Padding(
-                    padding: const EdgeInsets.only(left: 4, right: 2),
-                    child: Icon(
-                      LineIcons.search,
-                      color: MAIN_THEME_YELLOW_TEXT,
-                      size: 30.0,
+                    leading: Padding(
+                      padding: const EdgeInsets.only(left: 4, right: 2),
+                      child: Icon(
+                        LineIcons.search,
+                        color: MAIN_THEME_YELLOW_TEXT,
+                        size: 30.0,
+                      ),
                     ),
-                  ),
-                  hintText: "Tìm kiếm",
-                  hintStyle: WidgetStateProperty.all(
-                    TextStyle(
-                      color: MAIN_THEME_YELLOW_TEXT,
-                      fontSize: 16.0,
+                    hintText: "Tìm kiếm",
+                    hintStyle: WidgetStateProperty.all(
+                      TextStyle(
+                        color: MAIN_THEME_YELLOW_TEXT,
+                        fontSize: 16.0,
+                      ),
                     ),
-                  ),
-                  textStyle: WidgetStateProperty.all(
-                    TextStyle(
-                      color: MAIN_THEME_PINK_TEXT,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                    textStyle: WidgetStateProperty.all(
+                      TextStyle(
+                        color: MAIN_THEME_PINK_TEXT,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
+                    padding: WidgetStateProperty.all(
+                      const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 5.0),
+                    ),
+                    backgroundColor: WidgetStateProperty.all(
+                      Colors.white.withOpacity(0.95),
+                    ),
+                    surfaceTintColor:
+                        WidgetStateProperty.all(Colors.transparent),
                   ),
-                  padding: WidgetStateProperty.all(
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-                  ),
-                  backgroundColor: WidgetStateProperty.all(
-                    Colors.white.withOpacity(0.95),
-                  ),
-                  surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
                 ),
-              ),
-              ListTile(
-                onTap: () => _onItemTapped(0),
-                title: Text("Conversation 1 "),
-              ),
-              ListTile(
-                onTap: () => _onItemTapped(1),
-                title: Text("Conversation 2 "),
-              ),
-              ListTile(
-                onTap: () => _onItemTapped(2),
-                title: Text("Conversation 3 "),
-              ),
-            ],
-          ),
-        ),
+                ...chatWithAIViewModel.conversationList.map((e) => ListTile(
+                      onTap: () => _onItemTapped(e),
+                      title: Text(e),
+                    )),
+              ],
+            ),
+          );
+        }),
         body: Column(
           children: [
             Expanded(

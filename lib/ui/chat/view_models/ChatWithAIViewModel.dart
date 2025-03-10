@@ -4,35 +4,35 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class ChatWithAIViewModel extends ChangeNotifier {
-  String nameOfConversation = "Conversation 1 ";
-
   final ChatWithAIRepo _repo = ChatWithAIRepoLocal();
+  String nameOfConversation = "";
+  List<String> conversationList = [];
 
-  List<String> botChat = [];
-
-  List<String> humanChat = [];
+  List<String> chatList = [];
 
   bool isLoading = false;
 
-  void setNameOfConversation(String name) {
+  Future<void> setNameOfConversation(String name) async {
     nameOfConversation = name;
+    await loadData();
   }
 
   Future<void> loadData() async {
-    botChat = await _repo.loadBotChat(nameOfConversation);
-    humanChat = await _repo.loadHumanChat(nameOfConversation);
+    chatList = await _repo.loadChat(nameOfConversation);
+    conversationList = await _repo.loadConversationList();
     notifyListeners();
   }
 
   Future<bool> sendMessage(String text) async {
-    humanChat.add(text);
-    botChat.add("");
+    chatList
+      ..add(text)
+      ..add("");
     notifyListeners();
 
-    bool isSuccess = await _repo.sendMessage(text);
+    bool isSuccess = await _repo.sendMessage(text, nameOfConversation);
     if (isSuccess) {
-      humanChat.removeAt(botChat.length - 2);
-      botChat.removeAt(botChat.length - 2);
+      chatList.removeAt(chatList.length - 4);
+      chatList.removeAt(chatList.length - 3);
       notifyListeners();
     }
     return isSuccess;

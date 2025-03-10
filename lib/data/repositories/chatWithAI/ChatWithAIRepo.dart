@@ -1,10 +1,9 @@
-
-
 abstract class ChatWithAIRepo {
-  Future<List<String>> loadBotChat(String nameOfConversation);
-  Future<List<String>> loadHumanChat(String nameOfConversation);
-  Future<bool> sendMessage(String message) ;
-  Future<bool> getMessage(String message) ;
+  Future<List<String>> loadChat(String nameOfConversation);
 
+  Future<List<String>> loadConversationList();
 
+  Future<bool> sendMessage(String message, String nameOfConversation);
+
+  Future<bool> getMessage(String message, String nameOfConversation);
 }

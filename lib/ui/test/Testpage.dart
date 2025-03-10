@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -118,8 +119,7 @@ class _TestPageState extends State<TestPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Scaffold _buildTextRecognitionUI() {
     return Scaffold(
       appBar: AppBar(
         title: Text("Text regconition"),
@@ -135,9 +135,59 @@ class _TestPageState extends State<TestPage> {
           : Column(
               children: [
                 Center(child: Image.file(File(path))),
-                Text(textRecognized) ,
+                Text(textRecognized),
               ],
             ),
     );
+  }
+
+  String API_KEY = "AIzaSyBax0qdrfE8U0TzsW4OISS4VZ3DqLic20s";
+  TextEditingController textEditingController = TextEditingController();
+  String res = " ";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("AI generative "),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                    height: 50,
+                    width: 250,
+                    child: TextField(
+                      controller: textEditingController,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () async {
+                        final model = GenerativeModel(
+                          model: 'gemini-1.5-flash-latest',
+                          apiKey: API_KEY,
+                        );
+          
+                        final content = [
+                          Content.text(textEditingController.text)
+                        ];
+                        final response = await model.generateContent(content);
+          
+                        setState(() {
+                          res = response.text ?? "";
+                        });
+                        print(response.text);
+                      },
+                      icon: Icon(Icons.send_sharp)),
+                ],
+              ),
+              Text("Response: \n $res"),
+            ],
+          ),
+        ));
   }
 }

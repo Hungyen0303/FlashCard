@@ -157,11 +157,13 @@ class _MainflashcardState extends State<Mainflashcard> {
               buildListtile(listTiles[0], Icon(Icons.rate_review_outlined), () {
                 _gotoAllCollections(context);
               }),
-              buildListtile(listTiles[1], Icon(LineIcons.plusCircle), () {}),
+              // buildListtile(listTiles[1], Icon(LineIcons.plusCircle), () {}),
               buildListtile(listTiles[2], Icon(LineIcons.leanpub), () {
                 context.push(AppRoute.public_flashcard);
               }),
-
+              // buildListtile(listTiles[3], Icon(LineIcons.rocketChat), () {
+              //   widget.onTabChange(2);
+              // }),
             ],
           ),
         ),
