@@ -12,9 +12,7 @@ import '../../../account/account_viewmodel.dart';
 import '../../../test/Testpage.dart';
 
 class Loginpage extends StatefulWidget {
-  Loginpage({super.key, required this.loginViewModel});
-
-  final LoginViewModel loginViewModel;
+  Loginpage({super.key});
 
   State<Loginpage> createState() => LoginState();
 }
@@ -38,36 +36,37 @@ class LoginState extends State<Loginpage> {
 
   final ScrollController _scrollController = ScrollController();
 
-  bool isWrong = false;
-
   Future<void> login(
       GlobalKey<FormState> formState, BuildContext context) async {
+    LoginViewModel loginViewModel =
+        Provider.of<LoginViewModel>(context, listen: false);
     if (formState.currentState!.validate()) {
       LoadingOverlay.show(context);
-      bool isValid = await widget.loginViewModel
-          .login(_emailController.text, _passwordController.text);
-      if (isValid && mounted) {
+      await loginViewModel.login(
+          _emailController.text, _passwordController.text);
+      if (mounted && !loginViewModel.hasError) {
         Provider.of<AccountViewModel>(context, listen: false).user =
-            await widget.loginViewModel.getUser(_emailController.text);
+            await loginViewModel.getUser(_emailController.text);
+        LoadingOverlay.hide();
         context.go('/home');
-      } else {
-        setState(() {
-          isWrong = true;
-        });
-        print("Login fails ");
+      } else if (mounted) {
+        LoadingOverlay.hide();
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(content: Text(loginViewModel.errorMessage));
+            });
       }
-      LoadingOverlay.hide();
     }
   }
 
   @override
   void initState() {
-    _emailController.text = "user1@gmail.com";
-    _passwordController.text = "password1";
+    _emailController.text = "user3";
+    _passwordController.text = "123456789";
   }
 
   void _scrollToFocusedField(double offset) {
-    // Đợi một chút để keyboard hiện lên
     Future.delayed(const Duration(milliseconds: 250), () {
       _scrollController.animateTo(
         offset,
@@ -206,9 +205,6 @@ class LoginState extends State<Loginpage> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your email';
-                              } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                                  .hasMatch(value)) {
-                                return 'Please enter a valid email';
                               }
                               return null;
                             },
@@ -283,18 +279,6 @@ class LoginState extends State<Loginpage> {
                                   style: TextStyle(
                                       color: MAIN_COLOR,
                                       fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                            )),
-                        Visibility(
-                            visible: isWrong,
-                            child: Center(
-                              child: Text(
-                                "The email or password is incorrect",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             )),

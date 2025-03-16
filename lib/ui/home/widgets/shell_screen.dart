@@ -1,13 +1,13 @@
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/ui/account/account_screen.dart';
-import 'package:flashcard_learning/ui/dictionary/dictionary_screen.dart';
 import 'package:flashcard_learning/ui/home/widgets/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 import '../../chat/widgets/chatwithAI_screen.dart';
-import '../../dictionary/DictionaryViewModel.dart';
+import '../../dictionary/view_model/DictionaryViewModel.dart';
+import '../../dictionary/widget/dictionary_screen.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -88,7 +88,7 @@ class _HomepageState extends State<Homepage> {
           tabBackgroundColor: bgColor,
           padding: EdgeInsets.symmetric(horizontal: 23, vertical: 17),
           // navigation bar padding
-          tabs: [
+          tabs: const [
             GButton(
               icon: LineIcons.home,
               text: 'Homepage',

@@ -1,8 +1,7 @@
 import 'dart:io';
 
 import 'package:flashcard_learning/routing/router.dart';
-import 'package:flashcard_learning/ui/dictionary/DictionaryViewModel.dart';
-import 'package:flashcard_learning/ui/dictionary/SearchByVoiceOverlay.dart';
+import 'package:flashcard_learning/ui/dictionary/view_model/DictionaryViewModel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +9,11 @@ import 'package:go_router/go_router.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import '../../domain/models/Word.dart';
-import '../../utils/LoadingOverlay.dart';
-import '../search_result/searchResult_screen.dart';
+
+import '../../../domain/models/Word.dart';
+import '../../../utils/LoadingOverlay.dart';
+import '../../search_result/searchResult_screen.dart';
+
 
 class SearchByImage extends StatefulWidget {
   const SearchByImage({super.key});

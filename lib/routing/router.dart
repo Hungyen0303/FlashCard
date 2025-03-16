@@ -1,7 +1,6 @@
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/ui/auth/forgetpassword/widgets/forgetpassword_screen.dart';
 import 'package:flashcard_learning/ui/auth/register/widgets/register_screen.dart';
-import 'package:flashcard_learning/ui/dictionary/SearchByImage.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/specific_flashcard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../ui/account/profile_screen.dart';
 import '../ui/auth/login/view_models/login_viewmodel.dart';
 import '../ui/auth/login/widgets/login_screen.dart';
+import '../ui/dictionary/widget/SearchByImage.dart';
 import '../ui/flashcard_sets/widgets/flashcard_sets_public_screen.dart';
 import '../ui/home/widgets/onboard_screen.dart';
 import '../ui/home/widgets/shell_screen.dart';
@@ -53,7 +53,7 @@ class AppRouter {
         GoRoute(
             path: AppRoute.login,
             builder: (context, state) {
-              return Loginpage(loginViewModel: context.read());
+              return Loginpage();
             }),
         GoRoute(
             path: AppRoute.forgetpassword,

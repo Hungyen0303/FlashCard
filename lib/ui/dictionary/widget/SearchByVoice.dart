@@ -1,6 +1,5 @@
 import 'package:flashcard_learning/routing/router.dart';
-import 'package:flashcard_learning/ui/dictionary/DictionaryViewModel.dart';
-import 'package:flashcard_learning/ui/dictionary/SearchByVoiceOverlay.dart';
+import 'package:flashcard_learning/ui/dictionary/view_model/DictionaryViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,9 +7,11 @@ import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-import '../../domain/models/Word.dart';
-import '../../utils/LoadingOverlay.dart';
-import '../search_result/searchResult_screen.dart';
+import '../../../domain/models/Word.dart';
+import '../../../utils/LoadingOverlay.dart';
+import '../../search_result/searchResult_screen.dart';
+import 'SearchByVoiceOverlay.dart';
+
 
 class SearchByVoice extends StatefulWidget {
   const SearchByVoice({super.key});

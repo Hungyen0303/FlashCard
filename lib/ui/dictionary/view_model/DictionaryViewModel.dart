@@ -1,6 +1,6 @@
-import '../../data/repositories/dictionary/DictionaryRepo.dart';
-import '../../data/repositories/dictionary/DictionaryRepoLocal.dart';
-import '../../domain/models/Word.dart';
+import '../../../data/repositories/dictionary/DictionaryRepo.dart';
+import '../../../data/repositories/dictionary/DictionaryRepoLocal.dart';
+import '../../../domain/models/Word.dart';
 
 class DictionaryViewModel {
   DictionaryRepo repo = DictionaryRepoLocal();

@@ -1,21 +1,20 @@
 import 'dart:io';
 
-import 'package:flashcard_learning/routing/router.dart';
-import 'package:flashcard_learning/ui/dictionary/SearchByVoice.dart';
-import 'package:flashcard_learning/ui/dictionary/SearchByVoiceOverlay.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/ui/search_result/searchResult_screen.dart';
-import 'package:flashcard_learning/ui/dictionary/BoxText.dart';
+import 'package:flashcard_learning/ui/dictionary/widget/BoxText.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:line_icons/line_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../domain/models/Word.dart';
-import '../../routing/route.dart';
-import 'DictionaryViewModel.dart';
+import '../../../domain/models/Word.dart';
+
+import '../../../routing/route.dart';
+import '../view_model/DictionaryViewModel.dart';
+import 'SearchByVoiceOverlay.dart';
 import 'SearchByImage.dart';
 
 class DictionaryPage extends StatefulWidget {
