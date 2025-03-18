@@ -1,6 +1,7 @@
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/routing/router.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
+import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -133,9 +134,7 @@ class _MainflashcardState extends State<Mainflashcard> {
                           color: MAIN_THEME_PURPLE_TEXT, fontSize: 18)),
                   TextSpan(
                       text:
-                          Provider.of<AccountViewModel>(context, listen: false)
-                              .user
-                              .name,
+                          AppManager.getUser()!.name,
                       style: TextStyle(
                           color: MAIN_THEME_PURPLE_TEXT,
                           fontSize: 25,

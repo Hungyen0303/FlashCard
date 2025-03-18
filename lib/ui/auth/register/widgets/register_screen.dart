@@ -1,10 +1,13 @@
-import 'package:flashcard_learning/ui/auth/login/widgets/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:quickalert/quickalert.dart';
 
+import '../../../../utils/LoadingOverlay.dart';
 import '../../../../utils/color/AllColor.dart';
 import '../../../../logo.dart';
+import '../../login/view_models/login_viewmodel.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -14,13 +17,61 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final retypePasswordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.text = "nguyenvana@gmail.com";
+    _usernameController.text = "testUser1";
+    _passwordController.text = "123456";
+    retypePasswordController.text = "123456";
+  }
+
+  Future<void> signUp(
+      GlobalKey<FormState> formState, BuildContext context) async {
+    LoginViewModel loginViewModel =
+        Provider.of<LoginViewModel>(context, listen: false);
+    if (formState.currentState!.validate()) {
+      LoadingOverlay.show(context);
+      await loginViewModel.signUp(_emailController.text,
+          _usernameController.text, _passwordController.text);
+      if (mounted && !loginViewModel.hasError) {
+        LoadingOverlay.hide();
+        QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            title: "Register successfully",
+            onConfirmBtnTap: () {
+              // TODO : login
+              context.go('/home');
+            });
+      } else if (mounted) {
+        LoadingOverlay.hide();
+        QuickAlert.show(
+            context: context,
+            type: QuickAlertType.error,
+            title: loginViewModel.errorMessage,
+            confirmBtnColor: Color(0xFFCB0606),
+            confirmBtnTextStyle: TextStyle(
+              color: Color(0xFFFFFFFF)
+            ),
+            onConfirmBtnTap: () {
+              context.pop();
+            });
+        loginViewModel.hasError = false;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _emailController = TextEditingController();
-    final _passwordController = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     final ScrollController _scrollController = ScrollController();
-    void _scrollToFocusedField(double offset) {
+    void scrollToFocusedField(double offset) {
       // Đợi một chút để keyboard hiện lên
       Future.delayed(const Duration(milliseconds: 250), () {
         _scrollController.animateTo(
@@ -41,12 +92,12 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               Container(
                 padding: EdgeInsets.only(bottom: 25.0),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
                         colors: [COLOR_LOGIN_BACKGROUND, MAIN_COLOR])),
-                child: Column(
+                child: const Column(
                   children: [
                     Logo(),
                     Text(
@@ -68,13 +119,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         topLeft: Radius.circular(25.0),
                         topRight: Radius.circular(25.0))),
                 child: Form(
-                    key: _formKey,
+                    key: formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
+                        const Padding(
+                          padding: EdgeInsets.only(
                               left: 35.0, right: 24.0, bottom: 25.0, top: 0),
                           child: Align(
                             alignment: Alignment.topLeft,
@@ -91,12 +142,59 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                              left: 40, right: 40.0, top: 25.0),
+                              left: 40, right: 40.0, top: 12, bottom: 25),
                           child: TextFormField(
-                            onTap: () => _scrollToFocusedField(300),
+                            onTap: () => scrollToFocusedField(300),
                             textAlign: TextAlign.left,
                             style: TextStyle(fontWeight: FontWeight.bold),
                             controller: _emailController,
+                            decoration: InputDecoration(
+                              labelStyle: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  color: MAIN_COLOR),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 2.0, horizontal: 20.0),
+                              labelText: 'Email',
+                              prefixIcon: Icon(
+                                Icons.lock,
+                                color: MAIN_COLOR,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(
+                                  color: Colors.green[200]!,
+                                  width: 1.5,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(
+                                  color: Colors.green[700]!,
+                                  width: 2.0,
+                                ),
+                              ),
+                              filled: true,
+                              fillColor: Colors.green[50],
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                                  .hasMatch(value)) {
+                                return 'Please enter a valid email';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 40, right: 40.0, top: 25.0),
+                          child: TextFormField(
+                            onTap: () => scrollToFocusedField(300),
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                            controller: _usernameController,
                             keyboardType: TextInputType.emailAddress,
                             canRequestFocus: true,
                             cursorColor: MAIN_COLOR,
@@ -107,10 +205,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                   color: MAIN_COLOR),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 2.0, horizontal: 20.0),
-                              labelText: 'Email',
+                              labelText: 'Username',
 
                               prefixIcon: Icon(
-                                Icons.email,
+                                Icons.account_circle_sharp,
                                 color: MAIN_COLOR,
                               ),
                               enabledBorder: OutlineInputBorder(
@@ -142,9 +240,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your email';
-                              } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                                  .hasMatch(value)) {
-                                return 'Please enter a valid email';
                               }
                               return null;
                             },
@@ -154,7 +249,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           padding: const EdgeInsets.only(
                               left: 40, right: 40.0, top: 12),
                           child: TextFormField(
-                            onTap: () => _scrollToFocusedField(300),
+                            onTap: () => scrollToFocusedField(300),
                             textAlign: TextAlign.left,
                             obscureText: true,
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -190,11 +285,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
-                              } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                                  .hasMatch(value)) {
-                                return 'Please enter a valid email';
-                              }
+                                return 'Please enter your password';
+                              } else if (value.length < 6)
+                                return 'Password must be at least 6 characters';
                               return null;
                             },
                           ),
@@ -203,12 +296,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           padding: const EdgeInsets.only(
                               left: 40, right: 40.0, top: 12, bottom: 25),
                           child: TextFormField(
-                            onTap: () => _scrollToFocusedField(300),
+                            onTap: () => scrollToFocusedField(300),
                             textAlign: TextAlign.left,
                             obscureText: true,
                             style: TextStyle(fontWeight: FontWeight.bold),
-                            controller: _passwordController,
-                            keyboardType: TextInputType.emailAddress,
+                            controller: retypePasswordController,
                             decoration: InputDecoration(
                               labelStyle: TextStyle(
                                   fontWeight: FontWeight.normal,
@@ -238,11 +330,10 @@ class _RegisterPageState extends State<RegisterPage> {
                               fillColor: Colors.green[50],
                             ),
                             validator: (value) {
-                              if (value == null || value.isEmpty) {
+                              if (retypePasswordController.text.isEmpty) {
                                 return 'Please enter your email';
-                              } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                                  .hasMatch(value)) {
-                                return 'Please enter a valid email';
+                              } else if (value != _passwordController.text) {
+                                return 'Confirmed password is not similar to password';
                               }
                               return null;
                             },
@@ -256,7 +347,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 foregroundColor: Colors.white,
                                 animationDuration: Duration(seconds: 5),
                                 elevation: 4.0),
-                            onPressed: () {},
+                            onPressed: () async {
+                              await signUp(formKey, context);
+                            },
                             child: Text(
                               "Sign up",
                               style: TextStyle(color: MAIN_COLOR),

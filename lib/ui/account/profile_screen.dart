@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -64,12 +66,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         Align(
             alignment: Alignment.center,
-            child: accountViewModel.user.avatarPath.isEmpty
+            child: AppManager.getUser()!.avatar.isEmpty
                 ? const Icon(
                     LineIcons.user,
                     size: 50,
                   )
-                : Image.file(File(accountViewModel.user.avatarPath))),
+                : Image.network(AppManager.getUser()!.avatar)),
         Align(
           alignment: Alignment.bottomRight,
           child: Container(
@@ -149,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               keyboardType: TextInputType.name,
                               enabled: false,
                               decoration: InputDecoration(
-                                hintText: accountViewModel.user.name,
+                                hintText: AppManager.getUser()!.name,
                                 // Văn bản gợi ý
                                 hintStyle: TextStyle(color: Colors.grey),
                                 // Màu sắc cho văn bản gợi ý

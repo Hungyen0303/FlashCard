@@ -8,18 +8,31 @@ class AuthRepositoryRemote extends AuthRepository {
   final Dio dio = Dio();
   final Api1 _api1 = Api1Impl();
 
+  User? cachedUser = null;
+
   @override
-  Future<String> login(String username, String password) async {
+  Future<void> login(String username, String password) async {
     try {
-      return await _api1.login((username, password));
+      await _api1.login((username, password));
     } on DioException catch (e) {
       throw Exception(e.response?.data["message"]);
     }
   }
 
   @override
-  Future<User> getUser(String username) async {
-    await Future.delayed(const Duration(seconds: 1));
-    return User.named(name: "John Wick ", avatarPath: "avatar", plan: "Basic");
+  Future<User?> getUser(String username) async {
+    if (cachedUser == null && username != cachedUser!.username) {
+      _api1.getUser();
+    }
+    return cachedUser;
+  }
+
+  @override
+  Future<void> signUp(String email, String username, String password) async {
+    try {
+      await _api1.signUp((email, username, password));
+    } on DioException catch (e) {
+      throw Exception(e.response?.data["message"]);
+    }
   }
 }

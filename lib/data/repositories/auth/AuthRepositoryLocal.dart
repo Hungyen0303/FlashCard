@@ -23,8 +23,13 @@ class Authrepositorylocal extends AuthRepository {
   }
 
   @override
-  Future<User> getUser(String username) async {
-    await Future.delayed(const Duration(seconds: 1));
-    return User.named(name: "John Wick ", avatarPath: "avatar", plan: "Basic");
+  Future<void> getUser(String username) async {
+    // await Future.delayed(const Duration(seconds: 1));
+    // return User.named(
+    //     name: "John Wick ", avatarPath: "avatar", plan: "Basic", username: '');
   }
+
+  @override
+  Future<void> signUp(
+      String username, String password, String retypePassword) async {}
 }

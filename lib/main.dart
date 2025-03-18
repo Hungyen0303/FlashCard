@@ -1,5 +1,6 @@
 import 'package:flashcard_learning/data/repositories/auth/AuthRepositoryLocal.dart';
 import 'package:flashcard_learning/data/repositories/auth/AuthRepositoryRemote.dart';
+import 'package:flashcard_learning/data/services/supabass_service/SupabassService.dart';
 import 'package:flashcard_learning/routing/router.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
@@ -11,10 +12,16 @@ import 'package:flashcard_learning/ui/specific_flashcard/view_models/SpecificFla
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'domain/models/user.dart';
 
-void main() {
+void main() async {
+  await Supabase.initialize(
+    url: SupaBaseService.URL,
+    anonKey: SupaBaseService.anonKey,
+  );
+
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
     print(

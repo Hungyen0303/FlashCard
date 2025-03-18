@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../../../../logo.dart';
 import '../../../../routing/route.dart';
@@ -45,17 +47,21 @@ class LoginState extends State<Loginpage> {
       await loginViewModel.login(
           _emailController.text, _passwordController.text);
       if (mounted && !loginViewModel.hasError) {
-        Provider.of<AccountViewModel>(context, listen: false).user =
-            await loginViewModel.getUser(_emailController.text);
+
         LoadingOverlay.hide();
         context.go('/home');
       } else if (mounted) {
         LoadingOverlay.hide();
-        showDialog(
+        QuickAlert.show(
             context: context,
-            builder: (context) {
-              return AlertDialog(content: Text(loginViewModel.errorMessage));
+            type: QuickAlertType.error,
+            title: loginViewModel.errorMessage,
+            confirmBtnColor: Color(0xFFCB0606),
+            confirmBtnTextStyle: const TextStyle(color: Color(0xFFFFFFFF)),
+            onConfirmBtnTap: () {
+              context.pop();
             });
+        loginViewModel.hasError = false;
       }
     }
   }

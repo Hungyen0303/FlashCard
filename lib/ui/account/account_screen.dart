@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
+import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -98,12 +100,12 @@ class _AccountPageState extends State<AccountPage> {
                     ),
                     Align(
                       alignment: Alignment.center,
-                      child: accountViewModel.user.avatarPath.isEmpty
+                      child: AppManager.getUser()!.avatar.isEmpty
                           ? const Icon(
                               LineIcons.user,
                               size: 50,
                             )
-                          : Image.file(File(accountViewModel.user.avatarPath)),
+                          : Image.network(AppManager.getUser()!.avatar),
                     ),
                     Align(
                       alignment: Alignment.bottomRight,
@@ -126,7 +128,7 @@ class _AccountPageState extends State<AccountPage> {
                 ),
               ),
               title: Text(
-                accountViewModel.user.name,
+                AppManager.getUser()!.name ?? "",
                 style: TextStyle(color: MAIN_THEME_BLUE_TEXT),
               ),
               subtitle: GestureDetector(
@@ -157,7 +159,7 @@ class _AccountPageState extends State<AccountPage> {
                     text: TextSpan(children: [
                   TextSpan(text: "Trạng thái\n", style: textStyle),
                   TextSpan(
-                      text: accountViewModel.user.plan,
+                      text: AppManager.getUser()?.plan,
                       style: textStyle.copyWith(
                           fontSize: 25, fontWeight: FontWeight.bold)),
                 ])),

@@ -18,10 +18,14 @@ class LoginViewModel extends ChangeNotifier {
 
   String get errorMessage => _errorMessage;
 
+  set hasError(value) {
+    _hasError = value;
+  }
+
   Future<void> login(String username, String password) async {
     try {
       await _authRepository.login(username, password);
-      saveToken("", "");
+
     } on Exception catch (e) {
       _hasError = true;
       _errorMessage = e.toString().replaceAll("Exception:", "");
@@ -29,7 +33,15 @@ class LoginViewModel extends ChangeNotifier {
     }
   }
 
-  Future<User> getUser(String username) async {
-    return await _authRepository.getUser(username);
+  Future<void> signUp(String email, String username, String password) async {
+    try {
+      await _authRepository.signUp(email, username, password);
+    } on Exception catch (e) {
+      _hasError = true;
+      _errorMessage = e.toString().replaceAll("Exception:", "");
+      notifyListeners();
+    }
   }
+
+
 }
