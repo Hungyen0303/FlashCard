@@ -61,7 +61,10 @@ dependencies:
   dio: ^5.8.0+1
   elegant_notification: ^2.4.3
   shared_preferences: ^2.5.2
+
   supabase_flutter: ^2.8.4
+  url_launcher: ^6.3.1
+  audioplayers: ^6.4.0
 
 dev_dependencies:
   flutter_test:
@@ -91,6 +94,10 @@ flutter:
     - family: "FontListView"
       fonts:
         - asset: assets/fonts/Trykker-Regular.ttf
+    - family: "Poppins"
+      fonts:
+        - asset: assets/fonts/Poppins-Black.ttf
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

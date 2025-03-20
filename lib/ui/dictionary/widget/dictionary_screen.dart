@@ -9,9 +9,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:line_icons/line_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../../../domain/models/Word.dart';
 
+import '../../../domain/models/WordFromAPI.dart';
 import '../../../routing/route.dart';
 import '../view_model/DictionaryViewModel.dart';
 import 'SearchByVoiceOverlay.dart';
@@ -80,7 +82,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
   @override
   void initState() {
     super.initState();
-    load =  _fetchPopularWords();
+    load = _fetchPopularWords();
   }
 
   Future<void> _fetchPopularWords() async {
@@ -91,16 +93,18 @@ class _DictionaryPageState extends State<DictionaryPage> {
       });
     }
   }
+
   Future<void> gotoSearchPage(String text) async {
     LoadingOverlay.show(context);
-    Word word = await widget.dictionaryViewModel.getWord(text);
+    WordFromAPI wordFromAPI =
+        await Provider.of<DictionaryViewModel>(context, listen: false)
+            .loadWord(text);
     LoadingOverlay.hide();
-    if (mounted) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => Searchresultpage(
-            word: word,
-          )));
-    }
+
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => SearchResultPage(
+              word: wordFromAPI,
+            )));
   }
 
   @override
@@ -209,8 +213,11 @@ class _DictionaryPageState extends State<DictionaryPage> {
                                       ),
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)))),
-                              onPressed: () {
-                                gotoSearchPage(_searchController.text);
+                              onPressed: () async {
+                                if (_searchController.text.isEmpty) {
+                                  return;
+                                }
+                                await gotoSearchPage(_searchController.text);
                               },
                               child: Text(
                                 "Tra cứu",
@@ -328,23 +335,22 @@ class _DictionaryPageState extends State<DictionaryPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: popularWords
-                      .map((word) => Boxtext(
-                          word: word.english,
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => Searchresultpage(
-                                      word: word,
-                                    )));
-                          }))
-                      .toList(),
-                )
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: popularWords
+                //       .map((word) => Boxtext(
+                //           word: word.english,
+                //           onTap: () {
+                //             Navigator.of(context).push(MaterialPageRoute(
+                //                 builder: (_) => SearchResultPage(
+                //                       word: word.english,
+                //                     )));
+                //           }))
+                //       .toList(),
+                // )
               ],
             ),
           ),
         ));
   }
-
 }

@@ -1,19 +1,25 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flashcard_learning/domain/models/Word.dart';
+import 'package:flashcard_learning/domain/models/WordFromAPI.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class Searchresultpage extends StatelessWidget {
-  Searchresultpage({super.key, required this.word});
+import 'package:url_launcher/url_launcher.dart';
 
-  final Word word;
+class SearchResultPage extends StatelessWidget {
+  SearchResultPage({super.key, required this.word});
 
-  void getText() {}
+  final WordFromAPI word;
+
+  // SearchResultViewModel searchResultViewModel = SearchResultViewModel();
 
   Padding _buildText(String text, TextStyle? style) {
     return Padding(
-      padding: EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.only(top: 16),
       child: Text(
+        textAlign: TextAlign.left,
         text,
         style: style,
       ),
@@ -25,47 +31,81 @@ class Searchresultpage extends StatelessWidget {
     fontWeight: FontWeight.bold,
   );
 
+  AudioPlayer audioPlayer = AudioPlayer();
+
+  Future<void> playAudioFromNetWork(String url) async {
+    print(url);
+
+    await audioPlayer.play(UrlSource(url));
+  }
+
   TextStyle submain = TextStyle(
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: FontWeight.bold,
+  );
+  var apiStyle = GoogleFonts.charisSil(
+    textStyle: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.w400,
+    ),
+  );
+
+  var contentStyle = TextStyle(
+    fontSize: 18,
   );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[500],
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-          child: GestureDetector(
-            child: Icon(Icons.navigate_before),
-            onTap: () {
-              Navigator.of(context).pop();
-            },
+        leading: IconButton(
+          icon: Icon(Icons.navigate_before, color: Colors.white),
+          onPressed: () => context.pop(),
+        ),
+        centerTitle: true,
+        title: Text(
+          "Dictionary",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
           ),
         ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF62F576), Color(0xFF1A6724)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        elevation: 4,
+        shadowColor: Colors.black45,
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
         child: Column(
           children: [
-            SizedBox(
-              height: 50,
-            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildText(word.english, mainWord),
-                  _buildText(word.phonetic, null),
+                  _buildText(word.word.toUpperCase(), mainWord),
+                  Text(word.phonetics, style: apiStyle),
                   SizedBox(
                     height: 20,
                   ),
                   Row(
                     children: [
-                      Icon(
-                        CupertinoIcons.volume_down,
-                        color: Colors.blueAccent,
+                      IconButton(
+                        onPressed: () async {
+                          await playAudioFromNetWork(word.linkAudio);
+                        },
+                        icon: Icon(
+                          CupertinoIcons.volume_down,
+                          color: Colors.blueAccent,
+                        ),
                       ),
                       SizedBox(
                         width: 20,
@@ -76,18 +116,43 @@ class Searchresultpage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  _buildText(word.vietnamese, null),
-                  _buildText("Definition", submain),
-                  Text(word.definition),
-                  _buildText("Example", submain),
-                  Text(word.example),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: 1,
+                      itemBuilder: (context, i) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildText("Definition", submain),
+                            Text(
+                              word.meanings[i].definition,
+                              style: contentStyle,
+                            ),
+                            _buildText("Example", submain),
+                            Text(
+                              word.meanings[i].example,
+                              style: contentStyle,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        final Uri url = Uri.parse(
+                            "https://youglish.com/pronounce/${word.word}/english");
+
+                        if (!await launchUrl(url)) {
+                          throw Exception('Could not launch $url');
+                        }
+                      },
                       child: Text(
                         "Xem người khác thực hành >",
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: Colors.blue, fontSize: 18),
                       ),
                     ),
                   )
