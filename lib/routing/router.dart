@@ -1,4 +1,5 @@
 import 'package:flashcard_learning/routing/route.dart';
+import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flashcard_learning/ui/auth/forgetpassword/widgets/forgetpassword_screen.dart';
 import 'package:flashcard_learning/ui/auth/register/widgets/register_screen.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/specific_flashcard_screen.dart';
@@ -19,8 +20,12 @@ import '../ui/home/widgets/shell_screen.dart';
 class AppRouter {
   final routeLogger = Logger('ROUTE');
 
+  // First time use : Boarding
+  // Not login : Logging
+  // Login and token not expired : Home
+
   static final GoRouter route = GoRouter(
-      initialLocation: '/boarding',
+      initialLocation: AppManager.firstRoute,
       errorBuilder: (context, state) => Scaffold(
             appBar: AppBar(),
             body: Column(

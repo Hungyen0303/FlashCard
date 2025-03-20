@@ -10,4 +10,8 @@ abstract class Api1 {
   Future<void> getUser();
 
   Future<void> updateUser(User newUser);
+
+  Future<void> verifyToken(String token, String refreshToken);
+
+  Future<void> refresh();
 }

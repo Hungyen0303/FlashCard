@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/services/supabass_service/SupabassService.dart';
 
@@ -111,16 +112,21 @@ class _TestPageState extends State<TestPage> {
   String API_KEY = "AIzaSyBax0qdrfE8U0TzsW4OISS4VZ3DqLic20s";
   TextEditingController textEditingController = TextEditingController();
   String res = " ";
-  String imagePath = "" ;
+  String imagePath = "";
+
   Future<String> uploadImage() async {
     ImagePicker imagePicker = ImagePicker();
     XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
 
-    return await SupaBaseService.uploadImageToSupabase(image!.path, image!.name);
-
+    return await SupaBaseService.uploadImageToSupabase(
+        image!.path, image!.name);
   }
 
-  Api1 api = Api1Impl();
+  Future<bool?> isFirstTime() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.getBool("isFirstTime");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,15 +171,10 @@ class _TestPageState extends State<TestPage> {
               Text("Response: \n $res"),
               ElevatedButton(
                 onPressed: () async {
-
-                  imagePath = await uploadImage();
-                  setState(() {});
+                  print(await isFirstTime());
                 },
                 child: Text("Get images "),
               ),
-              imagePath.isNotEmpty
-                  ? Image.network(imagePath)
-                  : SizedBox.shrink()
             ],
           ),
         ));

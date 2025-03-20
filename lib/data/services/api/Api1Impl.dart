@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flashcard_learning/data/services/AppInterceptor.dart';
 import 'package:flashcard_learning/data/services/api/Api1.dart';
 import 'package:flashcard_learning/data/services/api/Status.dart';
 import 'package:flashcard_learning/ui/auth/AppManager.dart';
@@ -6,8 +7,14 @@ import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import '../../../domain/models/user.dart';
 import '../../URL.dart';
 
+Dio setupDio() {
+  final dio = Dio();
+  dio.interceptors.add(AppInterceptor(dio));
+  return dio;
+}
+
 class Api1Impl extends Api1 {
-  final Dio dio = Dio();
+  final Dio dio = setupDio();
 
   @override
   Future<void> login((String, String) credentials) async {
@@ -29,6 +36,7 @@ class Api1Impl extends Api1 {
         if (response.data["status"] == Status.success.value) {
           final token = response.data["data"]["token"] as String;
           final refreshToken = response.data["data"]["refreshToken"] as String;
+
           AppManager.saveToken(token, refreshToken);
           AppManager.setUser(
               User.fromJson(response.data["data"]["userInfoRes"]));
@@ -82,9 +90,7 @@ class Api1Impl extends Api1 {
           options: Options(
             headers: {
               "Content-Type": "application/json",
-              "Authorization":
-                  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodW5neWVuIiwic3ViIjoidXNlcjMiLCJleHAiOjE3NDIyODQ5NDksImlhdCI6MTc0MjI4MTM0OSwic2NvcGUiOiJyZWZyZXNoVG9rZW4ifQ.FlSYdAqp8SBk-JJHIUW0tlHII33Bl05w7FIfE47R9hFsd_yCbQ4E4a1-Rk3dxrRw-WhUKr3RrZFtoeTa_Tbr_g",
-              // Thêm Bear
+              "Authorization": "Bearer ${AppManager.getToken()}",
             },
           ),
           data: newUser.toJson());
@@ -104,12 +110,14 @@ class Api1Impl extends Api1 {
 
   @override
   Future<void> getUser() async {
+    print("LOAD USER ") ;
     try {
       final response = await dio.get(
         URL.info,
         options: Options(
           headers: {
             "Content-Type": "application/json",
+            "Authorization": "Bearer ${AppManager.getToken()}",
           },
         ),
       );
@@ -125,5 +133,38 @@ class Api1Impl extends Api1 {
     } on DioException catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<void> verifyToken(String token, String refreshToken) async {
+    try {
+      Response res = await dio.post(URL.verify,
+          data: {"token": token, "refreshToken": refreshToken},
+          options: Options(
+            headers: {
+              "Content-Type": "application/json",
+            },
+          ));
+      if (res.statusCode == 200) {
+        if (res.data["data"]["valid"]) {
+          AppManager.saveToken(res.data["data"]["newToken"], refreshToken);
+        } else {
+          throw Exception(res.data["message"]);
+        }
+      }
+    } on DioException catch (e) {}
+  }
+
+  @override
+  Future<void> refresh() async {
+    try {
+      Response res = await dio.post(URL.refresh,
+          options: Options(headers: {"Content-Type": "application/json"}),
+          data: {"refreshToken": AppManager.getRefreshToken()});
+      if (res.statusCode == 200) {
+        AppManager.saveToken(
+            res.data["data"]["token"], AppManager.getRefreshToken());
+      }
+    } on DioException catch (e) {}
   }
 }

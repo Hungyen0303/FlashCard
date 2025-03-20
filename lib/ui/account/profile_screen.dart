@@ -1,13 +1,11 @@
-import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:flashcard_learning/ui/auth/AppManager.dart';
+import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:quickalert/quickalert.dart';
 
 import 'account_viewmodel.dart';
 
@@ -33,8 +31,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  TextStyle subTextStyle = TextStyle(color: MAIN_THEME_BLUE_TEXT);
-  TextStyle mainTextStyle = TextStyle(color: MAIN_THEME_BLUE_TEXT);
+  TextStyle titleText = TextStyle(
+      color: MAIN_THEME_BLUE_TEXT, fontSize: 15, fontWeight: FontWeight.w700);
+  TextStyle contentTextStyle = TextStyle(
+      color: Color(0xFF6C88E5), fontSize: 25, fontWeight: FontWeight.bold);
+  TextStyle buttonTextStyle =
+      const TextStyle(color: MAIN_THEME_BLUE_TEXT, fontWeight: FontWeight.bold);
+  TextEditingController nameController = TextEditingController();
+
+  Color boxColor = const Color(0xFFBDDDEA);
 
   AppBar _buildAppbar() {
     return AppBar(
@@ -56,40 +61,157 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget containerAvatar(AccountViewModel accountViewModel) {
     return Container(
-      width: 60,
-      height: 60,
-      child: Stack(children: [
-        Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(50000)),
-              color: Colors.greenAccent),
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: AppManager.getUser()!.avatar.isEmpty
-                ? const Icon(
-                    LineIcons.user,
-                    size: 50,
-                  )
-                : Image.network(AppManager.getUser()!.avatar)),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.all(Radius.circular(5000))),
-              child: GestureDetector(
+      decoration: BoxDecoration(
+          border: Border.all(width: 1, color: Colors.green),
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(50000)),
+      height: 80,
+      width: 80,
+      child: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          ClipOval(
+            child: Container(
+              child: accountViewModel.currentUser.avatar.isEmpty
+                  ? const Icon(LineIcons.user, size: 40, color: Colors.white)
+                  : Image.network(
+                      alignment: Alignment.topCenter,
+                      accountViewModel.currentUser.avatar,
+                      fit: BoxFit.cover,
+                      width: 80,
+                      height: 80,
+                    ),
+            ),
+          ),
+          Align(
+            alignment: const Alignment(1.4, 1.4),
+            child: GestureDetector(
+              onTap: () async {
+                await accountViewModel.changeAvatar();
+              },
+              child: Container(
+                padding: EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 2),
+                ),
                 child: Icon(
                   CupertinoIcons.camera_viewfinder,
-                  size: 20,
+                  size: 16,
+                  color: Colors.white,
                 ),
-                onTap: () async {
-                  await accountViewModel.pickImageLocal();
-                },
-              )),
-        )
-      ]),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
+  }
+
+  Container _buildBox(String name, Icon icon, Function ontap) {
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      decoration: BoxDecoration(
+          color: boxColor, borderRadius: BorderRadius.circular(5)),
+      child: GestureDetector(
+        onTap: () => ontap,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            IconTheme(
+                data: IconThemeData(color: MAIN_THEME_BLUE_TEXT), child: icon),
+            SizedBox(
+              width: 15,
+            ),
+            Text(
+              name,
+              style: titleText,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container _buildBoxInfo(AccountViewModel accountViewModel) {
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+          color: boxColor, borderRadius: BorderRadius.circular(5)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Tên người dùng",
+                style: titleText,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: 160,
+                child: Text(
+                  accountViewModel.currentUser.name,
+                  style: contentTextStyle,
+                ),
+              ),
+            ],
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF80E886),
+            ),
+            onPressed: () async {
+              await changeName(context, accountViewModel);
+            },
+            child: Text(
+              "Modify",
+              style: buttonTextStyle,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> changeName(
+      BuildContext context, AccountViewModel accountViewModel) async {
+    TextEditingController controller = TextEditingController();
+
+    QuickAlert.show(
+        context: context,
+        type: QuickAlertType.custom,
+        showConfirmBtn: true,
+        showCancelBtn: true,
+        confirmBtnText: "Confirm",
+        confirmBtnColor: Colors.blue,
+        title: "Please enter your name",
+        animType: QuickAlertAnimType.scale,
+        cancelBtnText: "Cancel",
+        widget: SizedBox(
+          child: TextField(
+            controller: controller,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20),
+            keyboardType: TextInputType.name,
+            decoration: InputDecoration(
+                border: OutlineInputBorder(borderSide: BorderSide(width: 1))),
+          ),
+        ),
+        onConfirmBtnTap: () async {
+          if (accountViewModel.currentUser.name != controller.text) {
+            LoadingOverlay.show(context);
+            await accountViewModel.updateName(controller.text);
+            LoadingOverlay.hide();
+            context.pop();
+          }
+        });
   }
 
   @override
@@ -98,7 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         appBar: _buildAppbar(),
         body: Consumer<AccountViewModel>(
             builder: (context, accountViewModel, child) {
-          return Padding(
+          return SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,72 +229,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Container(
                   margin: const EdgeInsets.only(top: 20),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(5)),
+                      color: boxColor, borderRadius: BorderRadius.circular(5)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Trạng thái "),
-                          Text("Miễn Phí "),
-                        ],
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(text: "Plan\n", style: titleText),
+                            TextSpan(
+                              text: accountViewModel.currentUser.plan,
+                              style: contentTextStyle,
+                            ),
+                          ],
+                        ),
                       ),
                       ElevatedButton(
-                        child: Text("Nâng cấp"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFF80E886),
+                        ),
                         onPressed: () {},
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Tên người dùng"),
-                          SizedBox(
-                            width: 160,
-                            child: TextField(
-                              minLines: 1,
-                              maxLines: 1,
-                              keyboardType: TextInputType.name,
-                              enabled: false,
-                              decoration: InputDecoration(
-                                hintText: AppManager.getUser()!.name,
-                                // Văn bản gợi ý
-                                hintStyle: TextStyle(color: Colors.grey),
-                                // Màu sắc cho văn bản gợi ý
-                                border:
-                                    OutlineInputBorder(), // Đường viền cho TextField
-                              ),
-                            ),
-                          ),
-                        ],
+                        child: Text(
+                          "Upgrade",
+                          style: buttonTextStyle,
+                        ),
                       ),
-                      TextButton(onPressed: () {}, child: Text("Chỉnh sửa ")),
                     ],
                   ),
                 ),
-                Expanded(
-                    child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: TextButton(
-                      onPressed: () {},
-                      child: Text("Xóa hoàn toàn tài khoản ")),
-                ))
+                _buildBoxInfo(accountViewModel),
+                _buildBox("Chính sách ", Icon(CupertinoIcons.book), () {}),
+                _buildBox("Điều khoản ", Icon(CupertinoIcons.book), () {}),
+                _buildBox("Thông báo ", Icon(CupertinoIcons.bell), () {}),
+                // Expanded(
+                //     child: Align(
+                //   alignment: Alignment.bottomCenter,
+                //   child: TextButton(
+                //       onPressed: () {},
+                //       child: Text("Xóa hoàn toàn tài khoản ")),
+                // ))
               ],
             ),
           );

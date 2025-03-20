@@ -1,35 +1,23 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
-import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
 class AccountPage extends StatefulWidget {
-  AccountPage({super.key});
+  const AccountPage({super.key});
 
   @override
   State<AccountPage> createState() => _AccountPageState();
 }
 
 class _AccountPageState extends State<AccountPage> {
-  int index = 0;
-
-  void changeTab(int tab) {
-    setState(() {
-      index = tab;
-    });
-  }
-
-  void logout(BuildContext context) {
+  Future<void> logout(BuildContext context) async {
+    Provider.of<AccountViewModel>(context, listen: false).logout();
     context.go(AppRoute.login);
   }
 
@@ -39,12 +27,13 @@ class _AccountPageState extends State<AccountPage> {
 
   Container buildActions(Icon icon) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-          color: Color(0xffe8a90e), borderRadius: BorderRadius.circular(10)),
+          color: const Color(0xffe8a90e),
+          borderRadius: BorderRadius.circular(10)),
       child: IconTheme(
-          data: IconThemeData(
+          data: const IconThemeData(
             color: Color(0xFF6200EE),
           ),
           child: icon),
@@ -54,8 +43,10 @@ class _AccountPageState extends State<AccountPage> {
   TextStyle textStyle = const TextStyle(color: MAIN_THEME_BLUE_TEXT);
   BoxDecoration boxDecoration = BoxDecoration(
     borderRadius: BorderRadius.circular(25),
-    color: Colors.grey[500],
+    color: Color(0xFF80E886),
   );
+  TextStyle textStyleForDuration = TextStyle(
+      color: Color(0xFF12A799), fontWeight: FontWeight.bold, fontSize: 18);
 
   AppBar _buildAppbar() {
     return AppBar(
@@ -75,253 +66,297 @@ class _AccountPageState extends State<AccountPage> {
     );
   }
 
-  Consumer buildProfilePanel() {
+  Consumer<AccountViewModel> buildProfilePanel() {
+    return Consumer<AccountViewModel>(
+      builder: (context, accountViewModel, child) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Color(0xffd0eff3),
+          ),
+          child: Column(
+            children: [
+              ListTile(
+                leading: SizedBox(
+                  height: 60,
+                  width: 60,
+                  child: Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      ClipOval(
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          color: Colors.blueGrey,
+                          child: accountViewModel.currentUser.avatar.isEmpty
+                              ? const Icon(LineIcons.user,
+                                  size: 40, color: Colors.white)
+                              : Image.network(
+                                  alignment: Alignment.topCenter,
+                                  accountViewModel.currentUser.avatar,
+                                  fit: BoxFit.cover,
+                                  width: 60,
+                                  height: 60,
+                                ),
+                        ),
+                      ),
+                      Align(
+                        alignment: const Alignment(1.4, 1.4),
+                        child: GestureDetector(
+                          onTap: () async {
+                            await accountViewModel.changeAvatar();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white, width: 2),
+                            ),
+                            child: Icon(
+                              CupertinoIcons.camera_viewfinder,
+                              size: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                title: Text(
+                  accountViewModel.currentUser.name,
+                  style: TextStyle(color: MAIN_THEME_BLUE_TEXT),
+                ),
+                subtitle: GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      "Edit Profile",
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Color(0xFFDE2D2D)),
+                    )),
+                trailing: IconButton(
+                  color: const Color(0xFFC93030),
+                  padding: EdgeInsets.only(left: 30),
+                  iconSize: 30,
+                  focusColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  icon: const Icon(Icons.navigate_next),
+                  onPressed: _gotoAccountPage,
+                ),
+              ),
+              Divider(height: 2, color: Colors.red),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: "Plan\n",
+                              style: textStyle.copyWith(fontSize: 15)),
+                          TextSpan(
+                            text: accountViewModel.currentUser.plan,
+                            style: textStyle.copyWith(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF80E886),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      "Upgrade",
+                      style: textStyle.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Consumer<AccountViewModel> buildActivityPanel() {
     return Consumer<AccountViewModel>(
         builder: (context, accountViewModel, child) {
       return Container(
+        margin: const EdgeInsets.only(top: 30),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           color: Color(0xffd0eff3),
         ),
-        child: Column(
-          children: [
-            ListTile(
-              leading: IntrinsicWidth(
-                child: Container(
-                  width: 60,
-                  height: 60,
-                  child: Stack(children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(50000)),
-                          color: Colors.greenAccent),
-                    ),
-                    Align(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Activities",
+                style: textStyle.copyWith(
+                    fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "Track your progress",
+                style: textStyle,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              const Divider(
+                height: 1,
+                color: Colors.grey,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      await accountViewModel.setCountBy(true);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
                       alignment: Alignment.center,
-                      child: AppManager.getUser()!.avatar.isEmpty
-                          ? const Icon(
-                              LineIcons.user,
-                              size: 50,
-                            )
-                          : Image.network(AppManager.getUser()!.avatar),
+                      decoration:
+                          accountViewModel.countByDay ? boxDecoration : null,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      child: Text(
+                        "Last 7 days",
+                        style: textStyleForDuration,
+                      ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5000))),
-                          child: GestureDetector(
-                            child: Icon(
-                              CupertinoIcons.camera_viewfinder,
-                              size: 20,
-                            ),
-                            onTap: () async {
-                              await accountViewModel.pickImageLocal();
-                            },
-                          )),
-                    )
-                  ]),
-                ),
-              ),
-              title: Text(
-                AppManager.getUser()!.name ?? "",
-                style: TextStyle(color: MAIN_THEME_BLUE_TEXT),
-              ),
-              subtitle: GestureDetector(
-                child: Text(
-                  "Chỉnh sửa hồ sơ",
-                  style: TextStyle(color: MAIN_THEME_BLUE_TEXT),
-                ),
-                onTap: () {
-                  _gotoAccountPage();
-                },
-              ),
-              trailing: IconButton(
-                icon: Icon(Icons.navigate_next),
-                onPressed: _gotoAccountPage,
-              ),
-            ),
-            Divider(
-              height: 2,
-              color: Colors.red,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "Trạng thái\n", style: textStyle),
-                  TextSpan(
-                      text: AppManager.getUser()?.plan,
-                      style: textStyle.copyWith(
-                          fontSize: 25, fontWeight: FontWeight.bold)),
-                ])),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.greenAccent,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      await accountViewModel.setCountBy(false);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      alignment: Alignment.center,
+                      decoration:
+                          !accountViewModel.countByDay ? boxDecoration : null,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      child: Text(
+                        "Last 12 months",
+                        style: textStyleForDuration,
+                      ),
                     ),
-                    onPressed: () {},
-                    child: Text(
-                      "Nâng cấp",
-                      style: textStyle.copyWith(fontWeight: FontWeight.bold),
-                    )),
-              ],
-            )
-          ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 35,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    height: 150,
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                            colors: [
+                              Color(0xff2196f3), // Xanh dương sáng
+                              Color(0xff9c27b0), // Tím nhạt
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.book_sharp,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        Text(
+                          "0",
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
+                        Text(
+                          "BÀI HỌC ĐÃ HOÀN THÀNH",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 150,
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                            colors: [
+                              Color(0xffff6f20), // Cam nhạt
+                              Color(0xffe91e63), // Hồng đậm
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.lock_clock,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        Text(
+                          textAlign: TextAlign.center,
+                          "0",
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
+                        Text(
+                          "ĐOẠN HỘI THOẠI ĐÃ HOÀN THÀNH",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       );
     });
   }
 
-  Container buildActivityPanel() {
-    return Container(
-      margin: const EdgeInsets.only(top: 30),
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: Color(0xffd0eff3),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            "Hoạt động",
-            style:
-                textStyle.copyWith(fontSize: 25, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            "Theo dõi tiến độ học nào",
-            style: textStyle,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Divider(
-            height: 1,
-            color: Colors.grey,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GestureDetector(
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  alignment: Alignment.center,
-                  decoration: boxDecoration,
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  child: Text("7 ngày qua"),
-                ),
-              ),
-              GestureDetector(
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  alignment: Alignment.center,
-                  decoration: boxDecoration,
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  child: Text("1 tháng qua"),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 35,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                height: 150,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                width: 180,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: LinearGradient(
-                        colors: [
-                          Color(0xff2196f3), // Xanh dương sáng
-                          Color(0xff9c27b0), // Tím nhạt
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.book_sharp,
-                      color: Colors.white,
-                      size: 25,
-                    ),
-                    Text(
-                      "0",
-                      style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    ),
-                    Text(
-                      "BÀI HỌC ĐÃ HOÀN THÀNH",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                height: 150,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                width: 180,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: LinearGradient(
-                        colors: [
-                          Color(0xffff6f20), // Cam nhạt
-                          Color(0xffe91e63), // Hồng đậm
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.lock_clock,
-                      color: Colors.white,
-                      size: 25,
-                    ),
-                    Text(
-                      textAlign: TextAlign.center,
-                      "0",
-                      style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    ),
-                    Text(
-                      "ĐOẠN HỘI THOẠI ĐÃ HOÀN THÀNH",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ],
-      ),
-    );
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -392,8 +427,8 @@ class _AccountPageState extends State<AccountPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xfffe3030),
                     ),
-                    onPressed: () {
-                      logout(context);
+                    onPressed: () async {
+                      await logout(context);
                     },
                     child: Text(
                       "Đăng xuất",

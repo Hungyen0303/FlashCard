@@ -3,6 +3,7 @@ import 'package:flashcard_learning/data/repositories/auth/AuthRepositoryRemote.d
 import 'package:flashcard_learning/data/services/supabass_service/SupabassService.dart';
 import 'package:flashcard_learning/routing/router.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
+import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
 import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
 import 'package:flashcard_learning/ui/dictionary/view_model/DictionaryViewModel.dart';
@@ -27,11 +28,11 @@ void main() async {
     print(
         '${record.time}: [${record.level.name}] ${record.loggerName} - ${record.message}');
   });
+  await AppManager.initialize();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<CustomCardProvider>(
           create: (_) => CustomCardProvider()),
-
       Provider<AuthRepositoryRemote>(create: (_) => AuthRepositoryRemote()),
       ChangeNotifierProvider<LoginViewModel>(
           create: (context) => LoginViewModel(

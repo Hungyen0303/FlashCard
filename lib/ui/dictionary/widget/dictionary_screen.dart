@@ -36,6 +36,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
     fontSize: 20,
   );
   bool isSearch = false;
+  late Future load;
 
   AppBar buildAppBar() {
     return AppBar(
@@ -79,7 +80,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
   @override
   void initState() {
     super.initState();
-    _fetchPopularWords();
+    load =  _fetchPopularWords();
   }
 
   Future<void> _fetchPopularWords() async {
@@ -88,6 +89,17 @@ class _DictionaryPageState extends State<DictionaryPage> {
       setState(() {
         popularWords = words;
       });
+    }
+  }
+  Future<void> gotoSearchPage(String text) async {
+    LoadingOverlay.show(context);
+    Word word = await widget.dictionaryViewModel.getWord(text);
+    LoadingOverlay.hide();
+    if (mounted) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => Searchresultpage(
+            word: word,
+          )));
     }
   }
 
@@ -335,15 +347,4 @@ class _DictionaryPageState extends State<DictionaryPage> {
         ));
   }
 
-  Future<void> gotoSearchPage(String text) async {
-    LoadingOverlay.show(context);
-    Word word = await widget.dictionaryViewModel.getWord(text);
-    LoadingOverlay.hide();
-    if (mounted) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => Searchresultpage(
-                word: word,
-              )));
-    }
-  }
 }
