@@ -57,7 +57,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
 
   void _showPopUp(bool isCreating) {
     FlashCardSetViewModel flashCardSetViewModel =
-        Provider.of<FlashCardSetViewModel>(context, listen: false);
+        context.read<FlashCardSetViewModel>();
     CustomCardProvider customCardProvider =
         Provider.of<CustomCardProvider>(context, listen: false);
     if (isCreating) {
@@ -112,23 +112,20 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
         if (isCreating) {
           actionSuccessfully = await flashCardSetViewModel.addNewSet(
               FlashCardSet(
-                  DateTime.now(),
                   nameController.text,
                   0,
-                  0,
                   customCardProvider.iconData ?? Icons.book,
-                  customCardProvider.iconColor));
+                  customCardProvider.iconColor,
+                  false));
         } else {
           actionSuccessfully = await flashCardSetViewModel.editASet(
-              flashCardSetViewModel.listFlashCardSets
-                  .firstWhere((a) => a.name == oldName),
+              oldName,
               FlashCardSet(
-                  DateTime.now(),
                   nameController.text,
                   0,
-                  0,
                   customCardProvider.iconData ?? Icons.book,
-                  customCardProvider.iconColor));
+                  customCardProvider.iconColor,
+                  false));
         }
 
         LoadingOverlay.hide();
@@ -194,8 +191,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
   @override
   void initState() {
     super.initState();
-    _loadData =
-        Provider.of<FlashCardSetViewModel>(context, listen: false).loadData();
+    _loadData = context.read<FlashCardSetViewModel>().loadData();
   }
 
   @override
@@ -215,7 +211,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
     _showPopUp(false);
   }
 
-  void deleteASet(String name) {
+  Future<void> deleteASet(String name)  async {
     QuickAlert.show(
       context: context,
       cancelBtnText: "Discard",
@@ -240,8 +236,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
       onConfirmBtnTap: () async {
         LoadingOverlay.show(context);
         bool actionSuccessfully =
-            await Provider.of<FlashCardSetViewModel>(context, listen: false)
-                .deleteASet(name);
+            await context.read<FlashCardSetViewModel>().deleteASet(name);
         LoadingOverlay.hide();
         if (mounted) {
           context.pop();

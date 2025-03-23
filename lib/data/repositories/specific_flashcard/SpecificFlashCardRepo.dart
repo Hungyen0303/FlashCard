@@ -4,7 +4,7 @@ abstract class SpecificFlashCardRepo {
 
   void setNameOfSet(String newName) ;
 
-  Future<List<FlashCard>> getAll();
+  Future<List<FlashCard>> getAll(String nameOfSet);
 
   Future<bool> addNewCard(FlashCard flashcard);
 

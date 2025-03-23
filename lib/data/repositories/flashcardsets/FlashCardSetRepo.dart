@@ -12,7 +12,7 @@ abstract class FlashCardSetRepo {
   Future<bool> addNewSetToPublic(FlashCardSet newSet);
 
 
-  Future<bool> editASet(FlashCardSet oldSet, FlashCardSet newSet);
+  Future<bool> editASet(String nameOfSet, FlashCardSet newSet);
 
   Future<bool> deleteASet(String name);
 }

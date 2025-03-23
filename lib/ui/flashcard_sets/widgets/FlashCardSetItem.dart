@@ -52,7 +52,7 @@ class FlashCardSetItem extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Text(
-                "#${flashCardSet.numberOfCard}",
+                "#${flashCardSet.numOfCard}",
                 style: TextStyle(fontSize: 16, color: flashCardSet.color),
               ),
             ),
@@ -73,10 +73,10 @@ class FlashCardSetItem extends StatelessWidget {
                     SizedBox(
                       width: 5,
                     ),
-                    Text(
-                      "${flashCardSet.minute} minutes",
-                      style: TextStyle(color: flashCardSet.color),
-                    ),
+                    // Text(
+                    //   "${flashCardSet.minute} minutes",
+                    //   style: TextStyle(color: flashCardSet.color),
+                    // ),
                   ],
                 ),
               )),
@@ -136,7 +136,7 @@ class FlashCardSetItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "${flashCardSet.numberOfCard}\nPairs",
+                "${flashCardSet.numOfCard}\nPairs",
                 style: textStyle,
                 textAlign: TextAlign.center,
               ),
@@ -150,10 +150,10 @@ class FlashCardSetItem extends StatelessWidget {
               color: flashCardSet.color,
               fontWeight: FontWeight.w600),
         ),
-        subtitle: Text(
-          "${flashCardSet.minute} minutes",
-          style: textStyle,
-        ),
+        // subtitle: Text(
+        //   "${flashCardSet.minute} minutes",
+        //   style: textStyle,
+        // ),
         trailing: Container(
           margin: const EdgeInsets.only(right: 20),
           child: Icon(

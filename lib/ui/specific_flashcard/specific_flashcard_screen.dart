@@ -154,12 +154,14 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
         LoadingOverlay.show(context);
         bool actionSuccessfully = false;
         if (isCreating) {
-          actionSuccessfully = await specificFlashCardViewModel
-              .addACard(FlashCard(english.text, vietnamese.text, example.text));
+          actionSuccessfully = await specificFlashCardViewModel.addACard(
+              FlashCard(english.text, vietnamese.text, example.text),
+              widget.nameOfSet);
         } else {
           actionSuccessfully = await specificFlashCardViewModel.editACard(
               specificFlashCardViewModel.flashcardList[_index],
-              FlashCard(english.text, vietnamese.text, example.text));
+              FlashCard(english.text, vietnamese.text, example.text),
+              widget.nameOfSet);
         }
         LoadingOverlay.hide();
 
@@ -198,8 +200,8 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
   @override
   void initState() {
     super.initState();
-    loadData = Provider.of<SpecificFlashCardViewModel>(context, listen: false)
-        .getAll(widget.nameOfSet);
+    loadData =
+        context.read<SpecificFlashCardViewModel>().loadData(widget.nameOfSet);
     initTts();
   }
 
@@ -582,7 +584,7 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
 
   /* FLUTTER TEXT TO SPEECH */
   // page when there is no flashcard
-  Widget _buildBlackPage() {
+  Widget _buildBlankPage() {
     return Center(
       child: ElevatedButton(
           onPressed: () {
@@ -618,8 +620,8 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
       },
       onConfirmBtnTap: () async {
         LoadingOverlay.show(context);
-        bool actionSuccessfully = await specificFlashCardViewModel
-            .deleteACard(specificFlashCardViewModel.flashcardList[_index]);
+        bool actionSuccessfully = await specificFlashCardViewModel.deleteACard(
+            specificFlashCardViewModel.flashcardList[_index], widget.nameOfSet);
         LoadingOverlay.hide();
         if (mounted) {
           context.pop();
@@ -653,7 +655,7 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                 return Consumer<SpecificFlashCardViewModel>(
                     builder: (context, specificFlashCardViewModel, child) {
                   return specificFlashCardViewModel.flashcardList.isEmpty
-                      ? _buildBlackPage()
+                      ? _buildBlankPage()
                       : SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -667,7 +669,7 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                                 child: Text(
                                     "${_index + 1} / ${specificFlashCardViewModel.flashcardList.length}"),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 50,
                               ),
                               Align(

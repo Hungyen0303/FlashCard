@@ -6,4 +6,6 @@ class URL {
   static String info = "$baseURL/info";
   static String verify = "$baseURL/auth/verify";
   static String refresh = "$baseURL/auth/refresh";
+
+  static String flashCardSet = "$baseURL/FlashcardSet";
 }
