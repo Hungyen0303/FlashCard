@@ -17,9 +17,6 @@ abstract class Api1 {
 
   Future<void> refresh();
 
-
-
-
   /*----------------Flashcard SET -----------------------*/
 
   Future<List<FlashCardSet>> getAllFlashcardSet();
@@ -28,19 +25,17 @@ abstract class Api1 {
 
   Future<bool> addNewSet(FlashCardSet f);
 
-  Future<bool> updateSet(String flashcardName , FlashCardSet f);
+  Future<bool> updateSet(String flashcardName, FlashCardSet f);
 
   Future<bool> deleteSet(String name);
-
 
 /*----------------Flashcard-----------------------*/
   Future<List<FlashCard>> getAllFlashcard(String name);
 
+  Future<bool> addNewCard(FlashCard f, String nameOfSet);
 
-  Future<bool> addNewCard(FlashCard f , String nameOfSet  );
+  Future<bool> updateCard(FlashCard fOld, FlashCard fNew, String nameOfSet);
 
-  Future<bool> updateCard(FlashCard fOld , FlashCard fNew , String nameOfSet);
-
-  Future<bool> deleteFlashcard(FlashCard f , String nameOfSet);
+  Future<bool> deleteFlashcard(FlashCard f, String nameOfSet);
 
 }

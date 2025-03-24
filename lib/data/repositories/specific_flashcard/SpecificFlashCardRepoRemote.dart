@@ -74,4 +74,18 @@ class SpecificFlashCardRepoRemote extends SpecificFlashCardRepo {
       return false;
     }
   }
+
+  @override
+  Future<bool> markDone(int index) async {
+    try {
+      FlashCard newFlashcard = cachedList[index];
+      newFlashcard.done = !newFlashcard.done;
+      bool success =
+          await api1.updateCard(cachedList[index], newFlashcard, nameOfSet);
+      cachedList[index].done = !cachedList[index].done;
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

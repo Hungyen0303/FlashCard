@@ -260,26 +260,80 @@ class Api1Impl extends Api1 {
   }
 
   @override
-  Future<bool> addNewCard(FlashCard f, String nameOfSet) {
-    // TODO: implement addNewCard
-    throw UnimplementedError();
+  Future<bool> addNewCard(FlashCard f, String nameOfSet) async {
+    try {
+      // String encodedName = Uri.encodeComponent(nameOfSet);
+      // print(encodedName);
+
+      Response res = await dio.post(URL.flashCard(nameOfSet),
+          data: f.toJson(),
+          options: Options(headers: {
+            "Authorization": "Bearer ${AppManager.getToken()}",
+            "Content-Type": "application/json"
+          }));
+      if (res.statusCode == 200) {
+        return true;
+      } else
+        return false;
+    } on DioException catch (e) {
+      return false;
+    }
   }
 
   @override
-  Future<bool> deleteFlashcard(FlashCard f, String nameOfSet) {
-    // TODO: implement deleteFlashcard
-    throw UnimplementedError();
+  Future<bool> deleteFlashcard(FlashCard f, String nameOfSet) async {
+    try {
+      Response res =
+          await dio.delete(URL.flashCardUpdateOrDelete(nameOfSet, f.id),
+              options: Options(headers: {
+                "Authorization": "Bearer ${AppManager.getToken()}",
+                "Content-Type": "application/json"
+              }));
+      if (res.statusCode == 200) {
+        return true;
+      } else
+        return false;
+    } on DioException catch (e) {
+      return false;
+    }
   }
 
   @override
-  Future<List<FlashCard>> getAllFlashcard(String name) {
-    // TODO: implement getAllFlashcard
-    throw UnimplementedError();
+  Future<List<FlashCard>> getAllFlashcard(String name) async {
+    try {
+      Response res = await dio.get(URL.flashCard(name),
+          options: Options(headers: {
+            "Authorization": "Bearer ${AppManager.getToken()}",
+            "Content-Type": "application/json"
+          }));
+      if (res.statusCode == 200) {
+        List<dynamic> rawData = res.data["data"];
+        return rawData.map((e) => FlashCard.fromJson(e)).toList();
+      } else
+        return [];
+    } on DioException catch (e) {
+      return [];
+    }
   }
 
   @override
-  Future<bool> updateCard(FlashCard fOld, FlashCard fNew, String nameOfSet) {
-    // TODO: implement updateCard
-    throw UnimplementedError();
+  Future<bool> updateCard(
+      FlashCard fOld, FlashCard fNew, String nameOfSet) async {
+    try {
+      String url = URL.flashCardUpdateOrDelete(nameOfSet, fOld.id);
+      Response res =
+          await dio.patch(URL.flashCardUpdateOrDelete(nameOfSet, fOld.id),
+              data: fNew.toJson(),
+              options: Options(headers: {
+                "Authorization": "Bearer ${AppManager.getToken()}",
+                "Content-Type": "application/json"
+              }));
+      if (res.statusCode == 200) {
+        return true;
+      } else
+        return false;
+    } on DioException catch (e) {
+      return false;
+    }
   }
 }

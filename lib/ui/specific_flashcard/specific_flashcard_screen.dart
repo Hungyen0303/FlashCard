@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flashcard_learning/domain/models/Flashcard.dart';
+import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/view_models/SpecificFlashCardViewModel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
@@ -173,8 +174,8 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                 ? QuickAlertType.success
                 : QuickAlertType.error,
             text: actionSuccessfully
-                ? "Created new Flashcard Set"
-                : "Failed to create Flashcard Set ",
+                ? "Created new Flashcard "
+                : "Failed to create Flashcard  ",
           );
         }
       },
@@ -185,6 +186,17 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
     return AppBar(
       title: Text("${widget.nameOfSet}"),
       centerTitle: true,
+      leading: IconButton(
+        icon: Icon(Icons.navigate_before),
+        onPressed: () async {
+          int numOfDone = context.read<SpecificFlashCardViewModel>().numOfDone;
+
+          await context
+              .read<FlashCardSetViewModel>()
+              .checkDone(widget.nameOfSet, numOfDone);
+          if (mounted) context.pop();
+        },
+      ),
       actions: [
         GestureDetector(
           onTap: () => _showPopUp(true),
@@ -714,6 +726,44 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                               ),
                               const SizedBox(
                                 height: 120,
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 2),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        gradient: LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              Color(0xffFF7E5F),
+                                              Color(0xfff67916)
+                                            ])),
+                                    child: TextButton(
+                                        onPressed: () async {
+                                          await specificFlashCardViewModel
+                                              .markDone(_index);
+
+                                          setState(() {
+                                            specificFlashCardViewModel
+                                                    .flashcardList[_index]
+                                                    .done =
+                                                !specificFlashCardViewModel
+                                                    .flashcardList[_index].done;
+                                          });
+                                        },
+                                        child: Text(
+                                          specificFlashCardViewModel
+                                                  .flashcardList[_index].done
+                                              ? "Undone"
+                                              : "Done",
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                        )),
+                                  )
+                                ],
                               ),
                               Visibility(
                                   visible: !showExample,

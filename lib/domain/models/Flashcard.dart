@@ -1,12 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part "Flashcard.g.dart"  ;
+part "Flashcard.g.dart";
 
 @JsonSerializable()
 class FlashCard {
-  FlashCard(this.english, this.vietnamese, this.example, this.id);
+  FlashCard(this.english, this.vietnamese, this.example);
 
-  final String id;
+  String id = "";
 
   final String vietnamese;
 
@@ -14,11 +14,10 @@ class FlashCard {
 
   final String example;
 
+  bool done = false;
 
-  FlashCard fromJson(Map<String, dynamic> json) => _$FlashCardFromJson(json);
+  factory FlashCard.fromJson(Map<String, dynamic> json) =>
+      _$FlashCardFromJson(json);
 
-  Map<String, dynamic> toJson(FlashCard flashcard) =>
-      _$FlashCardToJson(this);
-
-
+  Map<String, dynamic> toJson() => _$FlashCardToJson(this);
 }

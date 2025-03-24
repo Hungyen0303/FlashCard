@@ -8,4 +8,8 @@ class URL {
   static String refresh = "$baseURL/auth/refresh";
 
   static String flashCardSet = "$baseURL/FlashcardSet";
+
+  static String flashCard(nameOfSet) => "$baseURL/FlashcardSet/$nameOfSet";
+
+  static String flashCardUpdateOrDelete(nameOfSet, id) => "$baseURL/FlashcardSet/$nameOfSet/$id";
 }
