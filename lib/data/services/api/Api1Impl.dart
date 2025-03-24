@@ -5,6 +5,8 @@ import 'package:flashcard_learning/data/services/api/Status.dart';
 import 'package:flashcard_learning/domain/models/Flashcard.dart';
 import 'package:flashcard_learning/ui/auth/AppManager.dart';
 
+import '../../../domain/models/Conversation.dart';
+import '../../../domain/models/Message.dart';
 import '../../../domain/models/flashSet.dart';
 import '../../../domain/models/user.dart';
 import '../../URL.dart';
@@ -192,7 +194,6 @@ class Api1Impl extends Api1 {
   @override
   Future<List<FlashCardSet>> getAllFlashcardSetPublic() async {
     try {
-      String token = AppManager.getToken();
       Response res = await dio.get(URL.flashCardSet,
           options: Options(headers: {
             "Authorization": "Bearer ${AppManager.getToken()}",
@@ -320,7 +321,6 @@ class Api1Impl extends Api1 {
   Future<bool> updateCard(
       FlashCard fOld, FlashCard fNew, String nameOfSet) async {
     try {
-      String url = URL.flashCardUpdateOrDelete(nameOfSet, fOld.id);
       Response res =
           await dio.patch(URL.flashCardUpdateOrDelete(nameOfSet, fOld.id),
               data: fNew.toJson(),
@@ -336,4 +336,139 @@ class Api1Impl extends Api1 {
       return false;
     }
   }
+
+  @override
+  Future<Message> editMessage(
+      Message newMessage, String idOfConversation, String idOfMessage) async {
+    try {
+      Response res = await dio.post(
+          options: Options(headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer ${AppManager.getToken()}"
+          }),
+          URL.editMessage(idOfConversation, idOfMessage),
+          data: newMessage.toJson());
+      if (res.statusCode == 200) {
+        return Message.fromJson(res.data["data"]);
+      }
+      return Message();
+    } on DioException catch (e) {
+      return Message();
+    }
+  }
+
+  @override
+  Future<Message> saveMessage(
+      Message newMessage, String idOfConversation) async {
+    try {
+      Response res = await dio.post(URL.createNewMessage(idOfConversation),
+          options: Options(headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer ${AppManager.getToken()}"
+          }),
+          data: newMessage.toJson());
+      if (res.statusCode == 200) {
+        return Message.fromJson(res.data["data"]);
+      }
+      return Message();
+    } on DioException catch (e) {
+      return Message();
+    }
+  }
+
+  @override
+  Future<List<Message>> getAllMessage(String idOfConversation) async {
+    try {
+      Response res = await dio.get(URL.getAllMessage(idOfConversation),
+          options: Options(headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer ${AppManager.getToken()}"
+          }));
+      if (res.statusCode == 200) {
+        List<dynamic> rawData = res.data["data"];
+        return rawData.map((e) => Message.fromJson(e)).toList();
+      }
+      return [];
+    } on DioException catch (e) {
+      return [];
+    }
+  }
+
+  @override
+  Future<Conversation> createConversation(Conversation c) async {
+    try {
+      Response res = await dio.post(
+          options: Options(headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer ${AppManager.getToken()}"
+          }),
+          URL.createConversation(),
+          data: c.toJson());
+      if (res.statusCode == 200) {
+        return Conversation.fromJson(res.data["data"]);
+      }
+      return Conversation(name: 'null');
+    } on DioException catch (e) {
+      return Conversation(name: 'null');
+    }
+  }
+
+  @override
+  Future<bool> deleteConversation(String idOfConversation) async {
+    try {
+      Response res = await dio.post(
+        options: Options(headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${AppManager.getToken()}"
+        }),
+        URL.deleteConversation(idOfConversation),
+      );
+      if (res.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } on DioException catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<Conversation> editConversation(
+      Conversation c, String idOfConversation) async {
+    try {
+      Response res = await dio.post(
+          options: Options(headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer ${AppManager.getToken()}"
+          }),
+          URL.editConversation(idOfConversation),
+          data: c.toJson());
+      if (res.statusCode == 200) {
+        return Conversation.fromJson(res.data["data"]);
+      }
+      return Conversation(name: "null");
+    } on DioException catch (e) {
+      return Conversation(name: "null");
+    }
+  }
+
+  @override
+  Future<List<Conversation>> getConversations() async {
+    try {
+      Response res = await dio.get(URL.getAllConversation,
+          options: Options(headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer ${AppManager.getToken()}"
+          }));
+      if (res.statusCode == 200) {
+        List<dynamic> rawData = res.data["data"];
+        return rawData.map((e) => Conversation.fromJson(e)).toList();
+      }
+      return [];
+    } on DioException catch (e) {
+      return [];
+    }
+  }
+
+/*---------------------------------------------------------------*/
 }

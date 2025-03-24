@@ -1,9 +1,19 @@
+import '../../../domain/models/Conversation.dart';
+import '../../../domain/models/Message.dart';
+
 abstract class ChatWithAIRepo {
-  Future<List<String>> loadChat(String nameOfConversation);
+  Future<List<Conversation>> getConversations();
 
-  Future<List<String>> loadConversationList();
+  Future<bool> editConversation(Conversation c, String idOfConversation);
 
-  Future<bool> sendMessage(String message, String nameOfConversation);
+  Future<bool> deleteConversation(String idOfConversation);
 
-  Future<bool> getMessage(String message, String nameOfConversation);
+  Future<bool> createConversation(Conversation c);
+
+  Future<List<Message>> getAllMessage(String idOfConversation);
+
+  Future<bool> saveMessage(Message newMessage, String idOfConversation);
+
+  Future<bool> editMessage(
+      Message newMessage, String idOfConversation, String idOfMessage);
 }

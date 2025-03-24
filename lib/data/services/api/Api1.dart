@@ -2,6 +2,9 @@ import 'package:flashcard_learning/domain/models/Flashcard.dart';
 import 'package:flashcard_learning/domain/models/flashSet.dart';
 import 'package:flashcard_learning/domain/models/user.dart';
 
+import '../../../domain/models/Conversation.dart';
+import '../../../domain/models/Message.dart';
+
 /// API1 using spring boot for backend
 
 abstract class Api1 {
@@ -38,4 +41,20 @@ abstract class Api1 {
 
   Future<bool> deleteFlashcard(FlashCard f, String nameOfSet);
 
+/*----------------Conversation -----------------------*/
+
+  Future<List<Conversation>> getConversations();
+
+  Future<Conversation> editConversation(Conversation c, String idOfConversation);
+
+  Future<bool> deleteConversation(String idOfConversation);
+
+  Future<Conversation> createConversation(Conversation c);
+
+  Future<List<Message>> getAllMessage(String idOfConversation);
+
+  Future<Message> saveMessage(Message newMessage, String idOfConversation);
+
+  Future<Message> editMessage(
+      Message newMessage, String idOfConversation, String idOfMessage);
 }
