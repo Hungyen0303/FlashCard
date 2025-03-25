@@ -2,8 +2,10 @@ import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/routing/router.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/auth/AppManager.dart';
+import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +27,9 @@ class _MainflashcardState extends State<Mainflashcard> {
         context, MaterialPageRoute(builder: (_) => const AllFlashCardSet()));
   }
 
-  Padding buildListtile(String title, Icon leadingIcon, Function callback) {
+  late Future loadData;
+
+  Padding buildListTile(String title, Icon leadingIcon, Function callback) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListTile(
@@ -95,6 +99,12 @@ class _MainflashcardState extends State<Mainflashcard> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    loadData = context.read<MainScreenViewModel>().getListConversation();
+  }
+
   AppBar _buildAppbar() {
     return AppBar(
       leading: Icon(
@@ -110,63 +120,75 @@ class _MainflashcardState extends State<Mainflashcard> {
 
   List<String> listTiles = [
     "Ôn lại từ trong flashcard ",
-    "Thêm từ mới vào flashcard ",
     "Học flashcard của cộng đồng",
-    "Giao tiếp với AI "
+    "Conversations đã hoàn thành",
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffF8F9FA),
-      appBar: _buildAppbar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: "Chào mừng bạn trở lại, \n",
-                      style: TextStyle(
-                          color: MAIN_THEME_PURPLE_TEXT, fontSize: 18)),
-                  TextSpan(
-                      text:
-                          AppManager.getUser()!.name,
-                      style: TextStyle(
-                          color: MAIN_THEME_PURPLE_TEXT,
+    return FutureBuilder(
+        future: loadData,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return SpinKitFadingFour(
+              color: Colors.white,
+            );
+
+          return Scaffold(
+            backgroundColor: Color(0xffF8F9FA),
+            appBar: _buildAppbar(),
+            body: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                            text: "Chào mừng bạn trở lại, \n",
+                            style: TextStyle(
+                                color: MAIN_THEME_PURPLE_TEXT, fontSize: 18)),
+                        TextSpan(
+                            text: AppManager.getUser()!.name,
+                            style: TextStyle(
+                                color: MAIN_THEME_PURPLE_TEXT,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w500))
+                      ]),
+                    ),
+                    AIConversation(
+                      conversations:
+                          context.read<MainScreenViewModel>().conversation,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Hôm nay chúng ta nên làm gì ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF6200EE),
                           fontSize: 25,
-                          fontWeight: FontWeight.w500))
-                ]),
-              ),
-              Aiconversation(),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Hôm nay chúng ta nên làm gì ",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF6200EE),
-                    fontSize: 25,
-                  ),
+                        ),
+                      ),
+                    ),
+                    buildListTile(
+                        listTiles[0], Icon(Icons.rate_review_outlined), () {
+                      _gotoAllCollections(context);
+                    }),
+                    buildListTile(listTiles[1], Icon(LineIcons.plusCircle), () {
+                      context.push(AppRoute.public_flashcard);
+                    }),
+                    buildListTile(listTiles[2], Icon(LineIcons.leanpub), () {}),
+                    // buildListtile(listTiles[3], Icon(LineIcons.rocketChat), () {
+                    //   widget.onTabChange(2);
+                    // }),
+                  ],
                 ),
               ),
-              buildListtile(listTiles[0], Icon(Icons.rate_review_outlined), () {
-                _gotoAllCollections(context);
-              }),
-              // buildListtile(listTiles[1], Icon(LineIcons.plusCircle), () {}),
-              buildListtile(listTiles[2], Icon(LineIcons.leanpub), () {
-                context.push(AppRoute.public_flashcard);
-              }),
-              // buildListtile(listTiles[3], Icon(LineIcons.rocketChat), () {
-              //   widget.onTabChange(2);
-              // }),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 }

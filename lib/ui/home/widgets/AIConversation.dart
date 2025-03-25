@@ -4,17 +4,24 @@ import 'package:flashcard_learning/ui/home/widgets/CardCustom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Aiconversation extends StatefulWidget {
-  const Aiconversation({super.key});
+import 'conversation_ai_screen.dart';
+
+class AIConversation extends StatefulWidget {
+  AIConversation({super.key, required this.conversations});
+
+  List<String> conversations;
 
   @override
-  State<Aiconversation> createState() => _AiconversationState();
+  State<AIConversation> createState() => _AIConversationState();
 }
 
-class _AiconversationState extends State<Aiconversation> {
+class _AIConversationState extends State<AIConversation> {
   TextStyle style = TextStyle(
     color: MAIN_THEME_PURPLE_TEXT,
   );
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,26 +60,35 @@ class _AiconversationState extends State<Aiconversation> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    Cardcustom(
-                      title: "English at School ",
+                    CardCustom(
+                      title: widget.conversations[0],
                       image: "assets/img-1.jpg",
-                      end: 5,
+                      end: 3,
                       start: 2,
                       level: LEVEL.EASY.level,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ConversationAIScreen(
+                                  title: widget.conversations[0],
+                                  level: LEVEL.EASY.level,
+                                )));
+                      },
                     ),
-                    Cardcustom(
-                      title: "Ask professor for final  ",
+                    CardCustom(
+                      title: widget.conversations[1],
                       image: "assets/img-2.jpg",
                       end: 5,
-                      start: 2,
+                      start: 4,
                       level: LEVEL.MEDIUM.level,
+                      onTap: () {},
                     ),
-                    Cardcustom(
-                      title: "Join the show of Taylor ",
+                    CardCustom(
+                      title: widget.conversations[2],
                       image: "assets/img-3.jpg",
-                      end: 5,
-                      start: 2,
+                      end: 8,
+                      start: 7,
                       level: LEVEL.HARD.level,
+                      onTap: () {},
                     )
                   ],
                 ),

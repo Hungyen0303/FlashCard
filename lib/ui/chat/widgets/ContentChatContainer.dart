@@ -19,25 +19,6 @@ class ContentChatContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return PieMenu(
         onPressed: () {},
-        actions: [
-          PieAction(
-            tooltip: const Text('Edit'),
-            onSelect: () => () {},
-            child: Padding(
-              padding: const EdgeInsets.only(left: 4),
-              child: FaIcon(FontAwesomeIcons.penToSquare),
-            ),
-          ),
-          PieAction(
-            buttonTheme: PieButtonTheme(
-                backgroundColor: Colors.red, iconColor: Colors.white),
-            tooltip: const Text('Delete'),
-            onSelect: () => () {},
-            child: const FaIcon(
-              FontAwesomeIcons.trash,
-            ),
-          ),
-        ],
         child: isBot
             ? Align(
                 alignment: Alignment.centerLeft,

@@ -8,6 +8,12 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 
 class ChatWithAIViewModel extends ChangeNotifier {
   final ChatWithAIRepo _repo = ChatWithAIRepoRemote();
+  final model = GenerativeModel(
+    model: 'gemini-1.5-flash-latest',
+    apiKey: "AIzaSyBax0qdrfE8U0TzsW4OISS4VZ3DqLic20s",
+  );
+
+  String API_KEY = "AIzaSyBax0qdrfE8U0TzsW4OISS4VZ3DqLic20s";
 
   // TODO : has Error
   // TODO Error message
@@ -44,8 +50,6 @@ class ChatWithAIViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String API_KEY = "AIzaSyBax0qdrfE8U0TzsW4OISS4VZ3DqLic20s";
-
 // TODO : Hide API_KEY
   Future<bool> saveMessage(String humanChat) async {
     if (indexOfCurrentConversation == -1) {
@@ -61,10 +65,6 @@ class ChatWithAIViewModel extends ChangeNotifier {
 
     chatList.add(Message(humanChat: humanChat, botChat: ""));
     notifyListeners();
-    final model = GenerativeModel(
-      model: 'gemini-1.5-flash-latest',
-      apiKey: API_KEY,
-    );
 
     String prompt = Prompt.getPromptForChat();
     String finalContent = prompt + ". Content is " + humanChat;
@@ -106,9 +106,4 @@ class ChatWithAIViewModel extends ChangeNotifier {
     return success;
   }
 
-// Future<bool> editMessage(int index, Message newMessage) async {
-//   bool success = await _repo.editMessage(newMessage ,
-//     conversationList[index].id ?? "" ,   );
-//   return success;
-// }
 }

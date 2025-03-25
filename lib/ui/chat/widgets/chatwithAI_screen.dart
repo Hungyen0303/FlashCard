@@ -49,12 +49,11 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
   );
 
   Future<void> sendMessage(String text) async {
-    _scrollToFocusedField(1000);
+    _scrollToBottom();
     ChatWithAIViewModel chatWithAIViewModel =
         context.read<ChatWithAIViewModel>();
-    bool sentSuccessfully =
-        await chatWithAIViewModel.saveMessage(text);
-
+    bool sentSuccessfully = await chatWithAIViewModel.saveMessage(text);
+    _scrollToBottom();
     if (!sentSuccessfully) {
       showDialog(
           context: context,
@@ -241,13 +240,14 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
 
   void _scrollToFocusedField(double offset) {
     if (_scrollController != null && _scrollController!.hasClients) {
-    Future.delayed(const Duration(milliseconds: 250), () {
-      _scrollController.animateTo(
-        offset,
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.bounceInOut,
-      );
-    });}
+      Future.delayed(const Duration(milliseconds: 250), () {
+        _scrollController.animateTo(
+          offset,
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.bounceInOut,
+        );
+      });
+    }
   }
 
   void _scrollToBottom() {
@@ -613,7 +613,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
                 ),
                 onPressed: () async {
                   if (askingController.text.isNotEmpty) {
-                    String content = askingController.text ;
+                    String content = askingController.text;
                     askingController.clear();
 
                     await sendMessage(content);
@@ -670,14 +670,12 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
                                           controller: _scrollController,
                                           child: Column(children: [
                                             ...buildChatColumn(),
-                                           SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.05,
-                                                  )
-
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.05,
+                                            )
                                           ]),
                                         )
                                       : _buildBlank();
