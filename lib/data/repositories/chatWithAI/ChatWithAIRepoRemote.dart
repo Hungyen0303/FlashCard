@@ -68,10 +68,9 @@ class ChatWithAIRepoRemote extends ChatWithAIRepo {
   }
 
   @override
-  Future<bool> createConversation(Conversation c) async {
-    await api1.createConversation(c);
-    cachedConversation.add(c);
-    return true;
+  Future<Conversation> createConversation(Conversation c) async {
+    Conversation newC = await api1.createConversation(c);
+    return newC;
   }
 
   @override

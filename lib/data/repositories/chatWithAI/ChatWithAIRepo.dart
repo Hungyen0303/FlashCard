@@ -8,7 +8,7 @@ abstract class ChatWithAIRepo {
 
   Future<bool> deleteConversation(String idOfConversation);
 
-  Future<bool> createConversation(Conversation c);
+  Future<Conversation> createConversation(Conversation c);
 
   Future<List<Message>> getAllMessage(String idOfConversation);
 

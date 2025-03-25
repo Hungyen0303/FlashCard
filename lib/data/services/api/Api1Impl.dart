@@ -416,7 +416,7 @@ class Api1Impl extends Api1 {
   @override
   Future<bool> deleteConversation(String idOfConversation) async {
     try {
-      Response res = await dio.post(
+      Response res = await dio.delete(
         options: Options(headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer ${AppManager.getToken()}"
@@ -436,7 +436,7 @@ class Api1Impl extends Api1 {
   Future<Conversation> editConversation(
       Conversation c, String idOfConversation) async {
     try {
-      Response res = await dio.post(
+      Response res = await dio.patch(
           options: Options(headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer ${AppManager.getToken()}"
