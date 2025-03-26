@@ -124,12 +124,12 @@ class SearchResultPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _buildText("Definition", submain),
+                            _buildText("📘 Definition", submain),
                             Text(
                               word.meanings[i].definition,
                               style: contentStyle,
                             ),
-                            _buildText("Example", submain),
+                            _buildText("✅ Example", submain),
                             Text(
                               word.meanings[i].example,
                               style: contentStyle,

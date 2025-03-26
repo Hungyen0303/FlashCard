@@ -20,7 +20,6 @@ class FlashCardSetViewModel extends ChangeNotifier {
   List<FlashCardSet> get listFlashCardSetsPublic => _listFlashCardSetsPublic;
 
   bool hasError = false;
-
   String errorMessage = " ";
 
   Future<bool> loadData() async {
@@ -30,24 +29,24 @@ class FlashCardSetViewModel extends ChangeNotifier {
     return true;
   }
 
-  Future<void> checkDone(String nameOfSet, int numOfDone) async {
-    int index = listFlashCardSets.indexWhere((e) => e.name == nameOfSet);
-    if (numOfDone == _listFlashCardSets.length &&
-        _listFlashCardSets[index].done != true) {
-      _listFlashCardSets[index].done = true;
-      FlashCardSet newSet = _listFlashCardSets[index];
-      newSet.done = true;
-      await _repo.editASet(newSet.name, newSet);
-    }
-
-    // if (numOfDone == _listFlashCardSets.length &&
-    //     _listFlashCardSets[index].done != true) {
-    //   _listFlashCardSets[index].done = true;
-    //   FlashCardSet newSet = _listFlashCardSets[index];
-    //   newSet.done = true;
-    //   await _repo.editASet(newSet.name, newSet);
-    // }
-  }
+  // Future<void> checkDone(String nameOfSet, int numOfDone) async {
+  //   int index = listFlashCardSets.indexWhere((e) => e.name == nameOfSet);
+  //   if (numOfDone == _listFlashCardSets.length && _listFlashCardSets[index].done != true) {
+  //     _listFlashCardSets[index].done = true;
+  //     FlashCardSet oldSet = _listFlashCardSets[index];
+  //     FlashCardSet newSet = FlashCardSet(oldSet.name, numOfCard, iconData, color, !oldSet.done) ;
+  //
+  //     await _repo.editASet(newSet.name, newSet);
+  //   }
+  //
+  //   // if (numOfDone == _listFlashCardSets.length &&
+  //   //     _listFlashCardSets[index].done != true) {
+  //   //   _listFlashCardSets[index].done = true;
+  //   //   FlashCardSet newSet = _listFlashCardSets[index];
+  //   //   newSet.done = true;
+  //   //   await _repo.editASet(newSet.name, newSet);
+  //   // }
+  // }
 
   final FlashCardSetRepo _repo = FlashCardSetRepoRemote();
 

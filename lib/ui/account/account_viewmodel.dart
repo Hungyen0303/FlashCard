@@ -6,6 +6,7 @@ import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flashcard_learning/data/repositories/account/AccountRepositoryRemote.dart';
+import 'package:line_icons/line_icon.dart';
 
 class AccountViewModel extends ChangeNotifier {
   User get currentUser => _currentUser;
@@ -15,10 +16,6 @@ class AccountViewModel extends ChangeNotifier {
   AccountViewModel();
 
   final AccountRepository _repo = AccountRepositoryRemote();
-
-  int numOfCompletedLesson = 0;
-
-  int numOfCompletedConversation = 0;
 
   bool countByDay = true;
 
@@ -75,5 +72,27 @@ class AccountViewModel extends ChangeNotifier {
     } catch (e) {
       return false;
     }
+  }
+
+  int numOfCompleteFlashcard = -1;
+  int numOfCompleteConversation = -1;
+
+  Future<void> loadTrackData() async {
+    if (numOfCompleteConversation == -1) {
+      Map<String, int> trackData = await _repo.getTrackData();
+      numOfCompleteFlashcard = trackData['flashcard'] ?? -1;
+      numOfCompleteConversation = trackData['conversation'] ?? -1;
+      notifyListeners();
+    }
+  }
+
+  void changeNumOfCompleteFlashcard(int change) {
+    numOfCompleteFlashcard += change;
+    notifyListeners();
+  }
+
+  void changeNumOfCompleteConversation() {
+    numOfCompleteConversation += 1;
+    notifyListeners();
   }
 }

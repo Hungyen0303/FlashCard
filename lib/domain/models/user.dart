@@ -17,9 +17,9 @@ class User {
       required this.avatar});
 
   User.fromJson(Map<String, dynamic> user) {
-    name = user["name"];
-    plan = user["plan"];
-    avatar = user["avatarPath"];
+    name = user["name"] ?? "";
+    plan = user["plan"] ?? "";
+    avatar = user["avatarPath"] ??"" ;
   }
 
   Map<String, dynamic> toJson() {

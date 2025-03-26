@@ -48,9 +48,9 @@ class Prompt {
       
       ''';
 
-  static String promptForGetScoreAndQuestion(String answer, String question,
-      String nextQuestion) =>
-      ''' 
+  static String promptForGetScoreAndQuestion(
+          String answer, String question, String nextQuestion) =>
+      '''
       I want you to do this thing for me. 
       First lets grade this answer {I like fish }  for this question : {What is you favorites animals }
       in scale 1 to 10.
@@ -61,8 +61,7 @@ class Prompt {
       {question back }
       ''';
 
-  static String promptForLastQuestion(String humanChat, String question) =>
-      ''' 
+  static String promptForLastQuestion(String humanChat, String question) => '''
       I want you to do this thing for me. 
       First lets grade this answer {I like fish }  for this question : {What is you favorites animals }
       in scale 1 to 10.
@@ -70,4 +69,11 @@ class Prompt {
       Score : your_score 
       ''';
 
+  static String promptForGettingPopularWord() =>
+      '''
+      I want you to recommend for me four english word in order to learning english
+      the level is middle , there are just a word like eligible , constant , ... 
+      Please answer follows this format : 
+      word1%word2%word3%word4
+      ''';
 }

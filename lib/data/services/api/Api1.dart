@@ -45,7 +45,8 @@ abstract class Api1 {
 
   Future<List<Conversation>> getConversations();
 
-  Future<Conversation> editConversation(Conversation c, String idOfConversation);
+  Future<Conversation> editConversation(
+      Conversation c, String idOfConversation);
 
   Future<bool> deleteConversation(String idOfConversation);
 
@@ -57,4 +58,8 @@ abstract class Api1 {
 
   Future<Message> editMessage(
       Message newMessage, String idOfConversation, String idOfMessage);
+
+/*----------------Tracking  -----------------------*/
+
+  Future<Map<String, int>> getTrackData();
 }

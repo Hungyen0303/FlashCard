@@ -470,5 +470,40 @@ class Api1Impl extends Api1 {
     }
   }
 
-/*---------------------------------------------------------------*/
+/*---------------------------Tracking --------------------------*/
+  @override
+  Future<Map<String, int>> getTrackData() async {
+    try {
+      Response res = await dio.get(URL.track,
+          options: Options(headers: {
+            'Content-Type': "application/json",
+            "Authorization": "Bearer ${AppManager.getToken()}"
+          }));
+
+      if (res.statusCode == 200) {
+        Map<String, dynamic> rawData = res.data["data"];
+        Map<String, int> parsedData = {};
+
+        rawData.forEach((key, value) {
+          if (value is int) {
+            parsedData[key] = value;
+          } else {
+            parsedData[key] =  -1 ;
+          }
+        });
+
+        return parsedData;
+      } else {
+        return {
+          "flashcard": -1,
+          "conversation": -1,
+        };
+      }
+    } on DioException catch (e) {
+      return {
+        "flashcard": -1,
+        "conversation": -1,
+      };
+    }
+  }
 }

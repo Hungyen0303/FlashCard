@@ -8,6 +8,10 @@ import '../../../domain/models/user.dart';
 class AccountRepositoryRemote extends AccountRepository {
   Map<String, dynamic> cachedData = {};
 
+  int cachedNumOfCompleteFlashcardSet = -1;
+
+  int cachedNumOfCompleteConversation = -1;
+
   Api1 api1 = Api1Impl();
 
   @override
@@ -35,4 +39,11 @@ class AccountRepositoryRemote extends AccountRepository {
     else
       return null;
   }
+
+  @override
+  Future<Map<String, int>> getTrackData() {
+    return api1.getTrackData() ;
+  }
+
+
 }

@@ -11,6 +11,7 @@ import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icon.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:pie_menu/pie_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
@@ -211,7 +212,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
     _showPopUp(false);
   }
 
-  Future<void> deleteASet(String name)  async {
+  Future<void> deleteASet(String name) async {
     QuickAlert.show(
       context: context,
       cancelBtnText: "Discard",
@@ -258,6 +259,92 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
     Provider.of<FlashCardSetViewModel>(context, listen: false).shareNewSet(set);
   }
 
+  Widget _buildBlankPage() {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFFFDFFFF),
+            Color(0xFFF8F8F8),
+          ],
+        ),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Icon lớn
+            AnimatedContainer(
+              duration: Duration(milliseconds: 800),
+              curve: Curves.easeInOut,
+              child: Icon(
+                LineIcons.bookOpen,
+                size: 120,
+                color: Colors.yellowAccent.withOpacity(0.9),
+              ),
+            ),
+            SizedBox(height: 25),
+            // Tiêu đề
+            Text(
+              "No Flashcard Sets Yet",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.yellowAccent,
+                letterSpacing: 1.2,
+                shadows: [
+                  Shadow(
+                    color: Colors.black45,
+                    offset: Offset(2, 2),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 15),
+            // Mô tả
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                "Start your learning journey by creating your first flashcard set!",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white70,
+                  height: 1.5,
+                ),
+              ),
+            ),
+            SizedBox(height: 35),
+            // Nút tạo mới
+            ElevatedButton.icon(
+              onPressed: () {
+                addFlashSet(context); // Gọi hàm tạo flashcard set
+              },
+              icon: Icon(CupertinoIcons.plus_circle_fill, size: 26),
+              label: Text(
+                "Create New Set",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Color(0xFF123456),
+                backgroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                elevation: 6,
+                shadowColor: Colors.black54,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -274,57 +361,62 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
               } else {
                 return Consumer<FlashCardSetViewModel>(
                     builder: (context, flashCardSetViewModel, child) {
-                  return PieCanvas(
-                      theme: PieTheme(
-                        buttonSize: 45,
-                        overlayColor: const Color(0x37BBA8FF).withOpacity(0.7),
-                        rightClickShowsMenu: true,
-                        tooltipTextStyle: const TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      child: isGridView
-                          ? GridView.count(
-                              crossAxisCount: 2,
-                              children: flashCardSetViewModel.listFlashCardSets
-                                  .map((a) => FlashCardSetItem(
-                                        flashCardSet: a,
-                                        edit: () {
-                                          editASet(a);
-                                        },
-                                        delete: () {
-                                          deleteASet(a.name);
-                                        },
-                                        share: () {
-                                          shareASet(a);
-                                        },
-                                        isGridView: true,
-                                      ))
-                                  .toList(),
-                            )
-                          : ListView(
-                              children: flashCardSetViewModel.listFlashCardSets
-                                  .map((a) => FlashCardSetItem(
-                                        flashCardSet: a,
-                                        edit: () {
-                                          editASet(a);
-                                        },
-                                        delete: () {
-                                          // showDialog(
-                                          //     context: context,
-                                          //     builder: (context) {
-                                          //       return QuickAlert.show(context: context, type: type)
-                                          //     });
-                                          deleteASet(a.name);
-                                        },
-                                        share: () {
-                                          shareASet(a);
-                                        },
-                                        isGridView: false,
-                                      ))
-                                  .toList(),
-                            ));
+                  return flashCardSetViewModel.listFlashCardSets.isNotEmpty
+                      ? PieCanvas(
+                          theme: PieTheme(
+                            buttonSize: 45,
+                            overlayColor:
+                                const Color(0x37BBA8FF).withOpacity(0.7),
+                            rightClickShowsMenu: true,
+                            tooltipTextStyle: const TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          child: isGridView
+                              ? GridView.count(
+                                  crossAxisCount: 2,
+                                  children:
+                                      flashCardSetViewModel.listFlashCardSets
+                                          .map((a) => FlashCardSetItem(
+                                                flashCardSet: a,
+                                                edit: () {
+                                                  editASet(a);
+                                                },
+                                                delete: () {
+                                                  deleteASet(a.name);
+                                                },
+                                                share: () {
+                                                  shareASet(a);
+                                                },
+                                                isGridView: true,
+                                              ))
+                                          .toList(),
+                                )
+                              : ListView(
+                                  children:
+                                      flashCardSetViewModel.listFlashCardSets
+                                          .map((a) => FlashCardSetItem(
+                                                flashCardSet: a,
+                                                edit: () {
+                                                  editASet(a);
+                                                },
+                                                delete: () {
+                                                  // showDialog(
+                                                  //     context: context,
+                                                  //     builder: (context) {
+                                                  //       return QuickAlert.show(context: context, type: type)
+                                                  //     });
+                                                  deleteASet(a.name);
+                                                },
+                                                share: () {
+                                                  shareASet(a);
+                                                },
+                                                isGridView: false,
+                                              ))
+                                          .toList(),
+                                ))
+                      : _buildBlankPage();
                 });
               }
             }));

@@ -14,6 +14,14 @@ class AppInterceptor extends Interceptor {
   List<RequestOptions> pendingRequests = [];
 
   @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    options.connectTimeout = Duration(seconds: 10);
+    options.receiveTimeout = Duration(seconds: 10);
+
+    handler.next(options);
+  }
+
+  @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     Logger logger = Logger("ON REFRESHING");
     logger.info("refreshing ...");
@@ -31,8 +39,9 @@ class AppInterceptor extends Interceptor {
         final refreshResponse = await Dio().post(
           URL.verify,
           data: {
-            "token" : AppManager.getRefreshToken() ,
-            "refreshToken": AppManager.getRefreshToken()},
+            "token": AppManager.getRefreshToken(),
+            "refreshToken": AppManager.getRefreshToken()
+          },
         );
         if (refreshResponse.data["status"] == "SUCCESS") {
           String newAccessToken = refreshResponse.data["data"]["newToken"];

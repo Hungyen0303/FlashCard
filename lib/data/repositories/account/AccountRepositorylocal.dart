@@ -19,4 +19,15 @@ class AccountRepositoryLocal extends AccountRepository {
 
   @override
   Future<User?> getUser() async {}
+
+  @override
+  Future<Map<String, int>> getTrackData() async {
+    return {};
+  }
+
+  @override
+  Future<void> updateTrackData(
+      int numOfCompleteFlashcard, int numOfCompleteConversation) async {
+//
+  }
 }

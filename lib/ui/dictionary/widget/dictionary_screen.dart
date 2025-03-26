@@ -30,7 +30,7 @@ class DictionaryPage extends StatefulWidget {
 
 class _DictionaryPageState extends State<DictionaryPage> {
   final TextEditingController _searchController = TextEditingController();
-  List<Word> popularWords = [];
+  List<String> popularWords = [];
 
   TextStyle titleStyle = TextStyle(
     fontWeight: FontWeight.w600,
@@ -67,13 +67,9 @@ class _DictionaryPageState extends State<DictionaryPage> {
       ),
       leading: SizedBox.shrink(),
       centerTitle: true,
-      // Căn giữa tiêu đề
       backgroundColor: MAIN_THEME_PINK,
-      // Màu nền AppBar
       elevation: 6,
-      // Hiệu ứng độ nổi của AppBar
       shape: const RoundedRectangleBorder(
-        // Bo góc phía dưới AppBar
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
       ),
     );
@@ -335,19 +331,16 @@ class _DictionaryPageState extends State<DictionaryPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: popularWords
-                //       .map((word) => Boxtext(
-                //           word: word.english,
-                //           onTap: () {
-                //             Navigator.of(context).push(MaterialPageRoute(
-                //                 builder: (_) => SearchResultPage(
-                //                       word: word.english,
-                //                     )));
-                //           }))
-                //       .toList(),
-                // )
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: popularWords
+                      .map((word) => Boxtext(
+                          word: word,
+                          onTap: () async {
+                            gotoSearchPage(word);
+                          }))
+                      .toList(),
+                )
               ],
             ),
           ),

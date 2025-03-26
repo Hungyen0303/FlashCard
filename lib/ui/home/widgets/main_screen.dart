@@ -103,6 +103,11 @@ class _MainflashcardState extends State<Mainflashcard> {
   void initState() {
     super.initState();
     loadData = context.read<MainScreenViewModel>().getListConversation();
+    final mainScreenViewModel = Provider.of<MainScreenViewModel>(context, listen: false);
+    final accountViewModel = Provider.of<AccountViewModel>(context, listen: false);
+    mainScreenViewModel.onDoneChanged = () {
+      accountViewModel.changeNumOfCompleteConversation();
+    };
   }
 
   AppBar _buildAppbar() {

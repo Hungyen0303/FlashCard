@@ -9,7 +9,6 @@ import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart'
 import 'package:flashcard_learning/ui/dictionary/view_model/DictionaryViewModel.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/CustomCardProvider.dart';
-import 'package:flashcard_learning/ui/home/view_models/ConversationAiViewModel.dart';
 import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/view_models/SpecificFlashCardViewModel.dart';
 import 'package:flutter/material.dart';
@@ -50,8 +49,6 @@ void main() async {
           create: (_) => AccountViewModel()),
       ChangeNotifierProvider<MainScreenViewModel>(
           create: (_) => MainScreenViewModel()),
-      ChangeNotifierProvider<ConversationAiViewModel>(
-          create: (_) => ConversationAiViewModel()),
       Provider<DictionaryViewModel>(create: (context) => DictionaryViewModel()),
     ],
     child: MyApp(),

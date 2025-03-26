@@ -17,7 +17,7 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   Future<void> logout(BuildContext context) async {
-    Provider.of<AccountViewModel>(context, listen: false).logout();
+  //   Provider.of<AccountViewModel>(context, listen: false).logout();
     context.go(AppRoute.login);
   }
 
@@ -291,7 +291,7 @@ class _AccountPageState extends State<AccountPage> {
                           size: 25,
                         ),
                         Text(
-                          "0",
+                          "${accountViewModel.numOfCompleteConversation}",
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w500,
@@ -330,7 +330,7 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                         Text(
                           textAlign: TextAlign.center,
-                          "0",
+                          "${accountViewModel.numOfCompleteFlashcard}",
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w500,
@@ -357,6 +357,7 @@ class _AccountPageState extends State<AccountPage> {
   @override
   void initState() {
     super.initState();
+    context.read<AccountViewModel>().loadTrackData();
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:pie_menu/pie_menu.dart';
 import 'package:provider/provider.dart';
 
 import '../../chat/widgets/ContentChatContainer.dart';
-import '../view_models/ConversationAiViewModel.dart';
 
 class ConversationAIScreen extends StatefulWidget {
   const ConversationAIScreen(
@@ -34,8 +34,8 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
 
   Future<void> sendMessage(String text) async {
     _scrollToBottom();
-    ConversationAiViewModel conversationAiViewModel =
-        context.read<ConversationAiViewModel>();
+    MainScreenViewModel conversationAiViewModel =
+        context.read<MainScreenViewModel>();
     bool sentSuccessfully = await conversationAiViewModel.saveMessage(text, "");
 
     if (!sentSuccessfully) {
@@ -53,8 +53,8 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
   }
 
   List<Widget> buildChatColumn() {
-    ConversationAiViewModel conversationAiViewModel =
-        context.read<ConversationAiViewModel>();
+    MainScreenViewModel conversationAiViewModel =
+        context.read<MainScreenViewModel>();
     List<Widget> listChat = [];
     for (int i = 0; i < conversationAiViewModel.chatList.length; i++) {
       listChat
@@ -78,7 +78,7 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
   void initState() {
     super.initState();
     data = context
-        .read<ConversationAiViewModel>()
+        .read<MainScreenViewModel>()
         .initialize(widget.title, widget.level);
   }
 
@@ -121,7 +121,7 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
       elevation: 8,
       leading: IconButton(
           onPressed: () {
-            context.read<ConversationAiViewModel>().clear();
+            context.read<MainScreenViewModel>().clear();
             context.pop();
           },
           icon: Icon(Icons.navigate_before)),
@@ -248,7 +248,7 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
       future: data,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return Consumer<ConversationAiViewModel>(
+          return Consumer<MainScreenViewModel>(
               builder: (context, conversationAiViewModel, child) {
             return PieCanvas(
               child: Scaffold(
@@ -259,7 +259,7 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
                           child: FutureBuilder(
                               future: data,
                               builder: (context, snapshot) {
-                                return Consumer<ConversationAiViewModel>(
+                                return Consumer<MainScreenViewModel>(
                                     builder:
                                         (context, chatWithAIViewModel, child) {
                                   if (snapshot.connectionState ==
@@ -282,7 +282,7 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
                                   );
                                 });
                               })),
-                      context.read<ConversationAiViewModel>().isDone
+                      context.read<MainScreenViewModel>().isDone
                           ? Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 0, vertical: 10),
@@ -294,7 +294,7 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
                               child: Text(
                                 "Congratulation 🎉🎉 "
                                 "\n You just completed this conversation"
-                                "\n Average Score:  ${context.read<ConversationAiViewModel>().averageScore} ",
+                                "\n Average Score:  ${context.read<MainScreenViewModel>().averageScore} ",
                                 style: TextStyle(
                                     fontSize: 20, color: Color(0xFF09411A)),
                                 textAlign: TextAlign.center,

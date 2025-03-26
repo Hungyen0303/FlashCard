@@ -8,4 +8,9 @@ abstract class AccountRepository {
   Future<void> updateUser(User newUser);
 
   Future<User?> getUser();
+
+
+  Future<Map<String, int>> getTrackData();
+
+
 }
