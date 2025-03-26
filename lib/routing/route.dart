@@ -12,7 +12,7 @@ class AppRoute {
 
   static String flashCardSet = '/flashcardSet/:name';
 
-  static String gotoFlashcardSet(String name) => '/flashcardSet/$name';
+  static String gotoFlashcardSet(String name , String isPublic ) => '/flashcardSet?name=$name&isPublic=${isPublic.toString()}';
 
   static String SearchByImagePath = '/searchbyimage';
 

@@ -13,6 +13,9 @@ class URL {
   /*-------------Flashcard-----------------*/
 
   static String flashCardSet = "$baseURL/FlashcardSet";
+  static String flashCardSetPublic = "$baseURL/FlashcardSet/public";
+
+
 
   static String flashCard(nameOfSet) => "$baseURL/FlashcardSet/$nameOfSet";
 

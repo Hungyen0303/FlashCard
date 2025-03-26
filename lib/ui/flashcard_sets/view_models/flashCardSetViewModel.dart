@@ -24,10 +24,16 @@ class FlashCardSetViewModel extends ChangeNotifier {
 
   Future<bool> loadData() async {
     _listFlashCardSets = await getAllSet();
+    notifyListeners();
+    return true;
+  }
+  Future<bool> loadDataPublic () async {
     _listFlashCardSetsPublic = await getAllSetPublic();
     notifyListeners();
     return true;
   }
+
+
 
   // Future<void> checkDone(String nameOfSet, int numOfDone) async {
   //   int index = listFlashCardSets.indexWhere((e) => e.name == nameOfSet);

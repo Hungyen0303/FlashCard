@@ -24,9 +24,11 @@ import '../account/account_viewmodel.dart';
 enum TtsState { playing, stopped, paused, continued }
 
 class SpecificFlashCardPage extends StatefulWidget {
-  const SpecificFlashCardPage({super.key, required this.nameOfSet});
+  const SpecificFlashCardPage(
+      {super.key, required this.nameOfSet, required this.isPublic});
 
   final String nameOfSet;
+  final bool isPublic;
 
   @override
   State<SpecificFlashCardPage> createState() => _SpecificFlashCardPageState();
@@ -185,10 +187,10 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
 
   AppBar _buildAppbar() {
     return AppBar(
-      title: Text("${widget.nameOfSet}"),
+      title: Text(widget.nameOfSet),
       centerTitle: true,
       leading: IconButton(
-        icon: Icon(Icons.navigate_before),
+        icon: const Icon(Icons.navigate_before),
         onPressed: () async {
           // TODO use this way
           // int numOfDone = context.read<SpecificFlashCardViewModel>().numOfDone;
@@ -199,13 +201,15 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
         },
       ),
       actions: [
-        GestureDetector(
-          onTap: () => _showPopUp(true),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(CupertinoIcons.plus),
-          ),
-        )
+        widget.isPublic
+            ? const SizedBox.shrink()
+            : GestureDetector(
+                onTap: () => _showPopUp(true),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(CupertinoIcons.plus),
+                ),
+              )
       ],
     );
   }
@@ -213,15 +217,16 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
   @override
   void initState() {
     super.initState();
-    final specificFlashCardViewModel = Provider.of<SpecificFlashCardViewModel>(context, listen: false);
-    final accountViewModel = Provider.of<AccountViewModel>(context, listen: false);
+    final specificFlashCardViewModel =
+        Provider.of<SpecificFlashCardViewModel>(context, listen: false);
+    final accountViewModel =
+        Provider.of<AccountViewModel>(context, listen: false);
 
     specificFlashCardViewModel.onDoneChanged = (num) {
       accountViewModel.changeNumOfCompleteFlashcard(num);
     };
     loadData =
         context.read<SpecificFlashCardViewModel>().loadData(widget.nameOfSet);
-
     initTts();
   }
 
@@ -844,7 +849,7 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
+                                    widget.isPublic ? SizedBox.shrink() : Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 4),
                                       decoration: BoxDecoration(
@@ -951,7 +956,7 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    IconButton(
+                                    widget.isPublic ? SizedBox.shrink() :  IconButton(
                                       onPressed: () async {
                                         await deleteAFlashCard();
                                       },
@@ -968,7 +973,7 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                                           size: 28, color: Color(0xff609fde)),
                                       tooltip: "Speak",
                                     ),
-                                    IconButton(
+                                    widget.isPublic ? SizedBox.shrink() : IconButton(
                                       onPressed: () {
                                         _showPopUp(false);
                                       },

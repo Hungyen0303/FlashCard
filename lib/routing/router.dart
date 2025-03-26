@@ -76,12 +76,18 @@ class AppRouter {
               return const RegisterPage();
             }),
         GoRoute(
-            path: AppRoute.flashCardSet,
-            builder: (context, state) {
-              //routeLogger.info(state.name);
-              String name = state.pathParameters['name'] ?? "default";
-              return SpecificFlashCardPage(nameOfSet: name);
-            }),
+          path: '/flashcardSet',
+          builder: (context, state) {
+            String name = state.uri.queryParameters['name'] ?? "default";
+            bool isPublic = state.uri.queryParameters['isPublic'] == "true";
+
+            return SpecificFlashCardPage(
+              nameOfSet: name,
+              isPublic: isPublic,
+            );
+          },
+        ),
+
         GoRoute(
             path: AppRoute.SearchByImagePath,
             builder: (context, state) {
@@ -95,7 +101,7 @@ class AppRouter {
         GoRoute(
             path: AppRoute.public_flashcard,
             builder: (context, state) {
-              return AllFlashCardPublicSet();
+              return const AllFlashCardPublicSet();
             }),
         GoRoute(
             path: AppRoute.upgrade,

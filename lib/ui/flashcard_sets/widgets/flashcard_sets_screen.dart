@@ -390,6 +390,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
                                                   shareASet(a);
                                                 },
                                                 isGridView: true,
+                                                isPublic: false,
                                               ))
                                           .toList(),
                                 )
@@ -413,6 +414,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
                                                   shareASet(a);
                                                 },
                                                 isGridView: false,
+                                                isPublic: false,
                                               ))
                                           .toList(),
                                 ))

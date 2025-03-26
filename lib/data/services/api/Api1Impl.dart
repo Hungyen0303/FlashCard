@@ -194,7 +194,7 @@ class Api1Impl extends Api1 {
   @override
   Future<List<FlashCardSet>> getAllFlashcardSetPublic() async {
     try {
-      Response res = await dio.get(URL.flashCardSet,
+      Response res = await dio.get(URL.flashCardSetPublic,
           options: Options(headers: {
             "Authorization": "Bearer ${AppManager.getToken()}",
             "Content-Type": "application/json"

@@ -128,7 +128,6 @@ class _MainflashcardState extends State<Mainflashcard> {
   List<String> listTiles = [
     "Ôn lại từ trong flashcard ",
     "Học flashcard của cộng đồng",
-    "Conversations đã hoàn thành",
   ];
 
   @override
@@ -181,13 +180,13 @@ class _MainflashcardState extends State<Mainflashcard> {
                       ),
                     ),
                     buildListTile(
-                        listTiles[0], Icon(Icons.rate_review_outlined), () {
+                        listTiles[0], const Icon(Icons.rate_review_outlined), () {
                       _gotoAllCollections(context);
                     }),
-                    buildListTile(listTiles[1], Icon(LineIcons.plusCircle), () {
+                    buildListTile(listTiles[1], const Icon(LineIcons.plusCircle), () {
                       context.push(AppRoute.public_flashcard);
                     }),
-                    buildListTile(listTiles[2], Icon(LineIcons.leanpub), () {}),
+
                     // buildListtile(listTiles[3], Icon(LineIcons.rocketChat), () {
                     //   widget.onTabChange(2);
                     // }),

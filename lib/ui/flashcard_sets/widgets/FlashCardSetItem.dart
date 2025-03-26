@@ -22,7 +22,7 @@ class FlashCardSetItem extends StatelessWidget {
     required this.edit,
     required this.delete,
     required this.share,
-    required this.isGridView,
+    required this.isGridView, required this.isPublic,
   });
 
   final FlashCardSet flashCardSet;
@@ -30,9 +30,10 @@ class FlashCardSetItem extends StatelessWidget {
   final Function delete;
   final Function share;
   bool isGridView = true;
+  final bool isPublic;
 
   void _goToSpecificFlashCardSet(String nameOfSet, BuildContext context) {
-    context.push(AppRoute.gotoFlashcardSet(nameOfSet));
+    context.push(AppRoute.gotoFlashcardSet(nameOfSet, isPublic.toString()));
   }
 
   Container _buildGridItem(BuildContext context) {
@@ -52,7 +53,8 @@ class FlashCardSetItem extends StatelessWidget {
               Expanded(
                 flex: 5,
                 child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Text(
                     "#${flashCardSet.numOfCard}",
                     style: TextStyle(fontSize: 16, color: flashCardSet.color),
@@ -129,25 +131,25 @@ class FlashCardSetItem extends StatelessWidget {
       duration: Duration(milliseconds: 300),
       child: flashCardSet.done
           ? Container(
-        key: ValueKey("complete"),
-        padding: EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 4,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Icon(
-          Icons.check_circle,
-          color: Colors.green,
-          size: 24,
-        ),
-      )
+              key: ValueKey("complete"),
+              padding: EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 24,
+              ),
+            )
           : SizedBox.shrink(key: ValueKey("empty")),
     );
   }
@@ -167,7 +169,8 @@ class FlashCardSetItem extends StatelessWidget {
           side: BorderSide(width: 2, color: flashCardSet.color),
         ),
         tileColor: flashCardSet.color.withOpacity(0.1),
-        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         leading: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
