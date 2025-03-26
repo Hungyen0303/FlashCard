@@ -105,7 +105,9 @@ class _MainflashcardState extends State<Mainflashcard> {
     loadData = context.read<MainScreenViewModel>().getListConversation();
     final mainScreenViewModel = Provider.of<MainScreenViewModel>(context, listen: false);
     final accountViewModel = Provider.of<AccountViewModel>(context, listen: false);
+    accountViewModel.loadTrackData();
     mainScreenViewModel.onDoneChanged = () {
+
       accountViewModel.changeNumOfCompleteConversation();
     };
   }

@@ -62,4 +62,7 @@ abstract class Api1 {
 /*----------------Tracking  -----------------------*/
 
   Future<Map<String, int>> getTrackData();
+  Future<void> postTrack();
+
+
 }

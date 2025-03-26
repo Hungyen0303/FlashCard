@@ -488,7 +488,7 @@ class Api1Impl extends Api1 {
           if (value is int) {
             parsedData[key] = value;
           } else {
-            parsedData[key] =  -1 ;
+            parsedData[key] = -1;
           }
         });
 
@@ -505,5 +505,19 @@ class Api1Impl extends Api1 {
         "conversation": -1,
       };
     }
+  }
+
+  @override
+  Future<void> postTrack() async {
+    try {
+      Response res = await dio.post(URL.track,
+          options: Options(headers: {
+            'Content-Type': "application/json",
+            "Authorization": "Bearer ${AppManager.getToken()}"
+          }));
+
+      if (res.statusCode == 200) {
+      } else {}
+    } on DioException catch (e) {}
   }
 }

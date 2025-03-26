@@ -9,8 +9,7 @@ abstract class AccountRepository {
 
   Future<User?> getUser();
 
-
   Future<Map<String, int>> getTrackData();
 
-
+  Future<void> postTrack();
 }

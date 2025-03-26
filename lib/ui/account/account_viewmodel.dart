@@ -91,8 +91,9 @@ class AccountViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeNumOfCompleteConversation() {
+  Future<void> changeNumOfCompleteConversation() async {
     numOfCompleteConversation += 1;
+    await _repo.postTrack();
     notifyListeners();
   }
 }

@@ -3,6 +3,7 @@ import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flashcard_learning/ui/auth/forgetpassword/widgets/forgetpassword_screen.dart';
 import 'package:flashcard_learning/ui/auth/register/widgets/register_screen.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/specific_flashcard_screen.dart';
+import 'package:flashcard_learning/ui/upgrade.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -95,6 +96,11 @@ class AppRouter {
             path: AppRoute.public_flashcard,
             builder: (context, state) {
               return AllFlashCardPublicSet();
+            }),
+        GoRoute(
+            path: AppRoute.upgrade,
+            builder: (context, state) {
+              return UpgradePlanScreen();
             }),
       ]);
 }

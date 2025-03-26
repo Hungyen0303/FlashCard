@@ -30,4 +30,9 @@ class AccountRepositoryLocal extends AccountRepository {
       int numOfCompleteFlashcard, int numOfCompleteConversation) async {
 //
   }
+
+  @override
+  Future<void> postTrack() async {
+
+  }
 }

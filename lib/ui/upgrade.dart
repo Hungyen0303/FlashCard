@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(home: UpgradePlanScreen()));
-}
-
 class UpgradePlanScreen extends StatefulWidget {
+  const UpgradePlanScreen({super.key});
+
   @override
   _UpgradePlanScreenState createState() => _UpgradePlanScreenState();
 }
@@ -55,6 +53,20 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
           child: SingleChildScrollView(
             child: Column(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back, color: Colors.black87, size: 30),
+                        onPressed: () {
+                          Navigator.pop(context); // Quay lại trang trước
+                        },
+                      ),
+                    ),
+                  ],
+                ),
                 _buildHeader(),
                 SizedBox(height: 30),
                 _buildPlanCards(),
@@ -141,6 +153,7 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
     );
   }
 
+  // Các hàm khác giữ nguyên: _buildPlanCard, _buildFeatureRow, _buildUpgradeButton
   Widget _buildPlanCard({
     required String title,
     required String price,
@@ -242,7 +255,6 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
       curve: Curves.easeInOut,
       child: ElevatedButton(
         onPressed: () {
-          // Xử lý nâng cấp plan
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Upgrading...")),
           );

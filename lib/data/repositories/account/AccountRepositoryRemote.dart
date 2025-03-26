@@ -46,4 +46,10 @@ class AccountRepositoryRemote extends AccountRepository {
   }
 
 
+  @override
+  Future<void> postTrack() async {
+    await api1.postTrack() ;
+  }
+
+
 }

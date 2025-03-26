@@ -4,6 +4,7 @@ class AppRoute {
   static String login = '/login';
 
   static String signup = '/signup';
+  static String upgrade = '/upgrade';
 
   static String boarding = '/boarding';
 

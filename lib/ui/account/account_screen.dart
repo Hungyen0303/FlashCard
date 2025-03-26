@@ -17,7 +17,7 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   Future<void> logout(BuildContext context) async {
-  //   Provider.of<AccountViewModel>(context, listen: false).logout();
+    //   Provider.of<AccountViewModel>(context, listen: false).logout();
     context.go(AppRoute.login);
   }
 
@@ -175,7 +175,9 @@ class _AccountPageState extends State<AccountPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF80E886),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.push(AppRoute.upgrade);
+                    },
                     child: Text(
                       "Upgrade",
                       style: textStyle.copyWith(fontWeight: FontWeight.bold),
