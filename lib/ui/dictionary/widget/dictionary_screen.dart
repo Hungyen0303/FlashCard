@@ -33,9 +33,11 @@ class _DictionaryPageState extends State<DictionaryPage> {
   List<String> popularWords = [];
 
   TextStyle titleStyle = TextStyle(
-    fontWeight: FontWeight.w600,
-    color: Color(0xffdb0d46),
+    fontWeight: FontWeight.w700,
+    color: Color(0xFF045FB4),
     fontSize: 20,
+
+    
   );
   bool isSearch = false;
   late Future load;
@@ -45,33 +47,18 @@ class _DictionaryPageState extends State<DictionaryPage> {
       title: Row(
         mainAxisSize: MainAxisSize.min, // Để Row chỉ chiếm không gian vừa đủ
         children: [
-          Icon(Icons.book, color: MAIN_THEME_PINK_TEXT, size: 30),
-          SizedBox(width: 10),
           Text(
-            "Dictionary",
+            "📖 Dictionary",
             style: GoogleFonts.poppins(
-              color: MAIN_THEME_PINK_TEXT,
+              color: MAIN_TITLE_COLOR,
               fontSize: 28,
-              fontWeight: FontWeight.w400,
-              shadows: [
-                Shadow(
-                  // Hiệu ứng bóng
-                  color: Colors.black38,
-                  offset: Offset(2, 2),
-                  blurRadius: 3,
-                ),
-              ],
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
       ),
-      leading: SizedBox.shrink(),
       centerTitle: true,
-      backgroundColor: MAIN_THEME_PINK,
-      elevation: 6,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
-      ),
+
     );
   }
 
@@ -88,6 +75,8 @@ class _DictionaryPageState extends State<DictionaryPage> {
         popularWords = words;
       });
     }
+    print(popularWords);
+
   }
 
   Future<void> gotoSearchPage(String text) async {
@@ -106,7 +95,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(),
+      appBar: buildAppBar(),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: SingleChildScrollView(
@@ -120,16 +109,6 @@ class _DictionaryPageState extends State<DictionaryPage> {
                     style: titleStyle,
                   ),
                 ),
-                // if (isSearch)
-                //   SizedBox(
-                //     width: double.infinity,
-                //     //height: double.infinity,
-                //     child: Container(
-                //       width: 100,
-                //       height: 100,
-                //       color: Colors.black.withOpacity(0.5),
-                //     ),
-                //   ),
                 SearchBar(
                   onTap: () {
                     setState(() {
@@ -148,7 +127,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
                       MAIN_THEME_PURPLE.withOpacity(0.2)),
                   side: WidgetStateProperty.all(
                     BorderSide(
-                      color: MAIN_THEME_PINK_TEXT,
+                      color: MAIN_TITLE_COLOR,
                       width: 1.2,
                     ),
                   ),
@@ -161,20 +140,20 @@ class _DictionaryPageState extends State<DictionaryPage> {
                     padding: const EdgeInsets.only(left: 4, right: 2),
                     child: Icon(
                       LineIcons.search,
-                      color: MAIN_THEME_PINK_TEXT,
+                      color: MAIN_TITLE_COLOR,
                       size: 30.0,
                     ),
                   ),
                   hintText: "Nhập cụm từ mà bạn muốn tìm kiếm",
                   hintStyle: WidgetStateProperty.all(
                     TextStyle(
-                      color: MAIN_THEME_PINK_TEXT,
+                      color: MAIN_TITLE_COLOR,
                       fontSize: 16.0,
                     ),
                   ),
                   textStyle: WidgetStateProperty.all(
                     TextStyle(
-                      color: MAIN_THEME_PINK_TEXT,
+                      color: MAIN_TITLE_COLOR,
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                     ),
@@ -205,7 +184,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
                                   padding: EdgeInsets.symmetric(vertical: 20),
                                   shape: RoundedRectangleBorder(
                                       side: BorderSide(
-                                        color: MAIN_THEME_PINK_TEXT,
+                                        color: MAIN_TITLE_COLOR,
                                       ),
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)))),

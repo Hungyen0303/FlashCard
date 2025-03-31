@@ -153,6 +153,9 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
 
   AppBar _buildAppbar() {
     return AppBar(
+      leading: BackButton(
+        color: darkBlue,
+      ),
       centerTitle: true,
       title: Text(
         "Flashcard",
@@ -160,30 +163,29 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
             fontSize: 25,
             letterSpacing: 2,
             fontWeight: FontWeight.bold,
-            color: mainColor),
+            color: darkBlue),
       ),
       foregroundColor: mainColor,
       actions: [
         GestureDetector(
-          child: Icon(CupertinoIcons.plus),
+          child: Icon(
+            CupertinoIcons.plus,
+            color: darkBlue,
+          ),
           onTap: () {
             addFlashSet(context);
           },
         ),
         GestureDetector(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: isGridView
-                ? Icon(
-                    Icons.list,
-                  )
-                : Icon(Icons.grid_view_sharp),
-          ),
           onTap: () {
             setState(() {
               isGridView = !isGridView;
             });
           },
+          child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Icon(isGridView ? Icons.list : Icons.grid_view_sharp,
+                  color: darkBlue)),
         ),
       ],
     );
@@ -266,8 +268,8 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFFFDFFFF),
-            Color(0xFFF8F8F8),
+            Color(0xFF529CE5),
+            Color(0xFF86B3E0),
           ],
         ),
       ),
@@ -279,11 +281,9 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
             AnimatedContainer(
               duration: Duration(milliseconds: 800),
               curve: Curves.easeInOut,
-              child: Icon(
-                LineIcons.bookOpen,
-                size: 120,
-                color: Colors.yellowAccent.withOpacity(0.9),
-              ),
+              child: Text("🎲"  , style: TextStyle(
+                fontSize: 100
+              ),),
             ),
             SizedBox(height: 25),
             // Tiêu đề
@@ -292,7 +292,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: Colors.yellowAccent,
+                color: white,
                 letterSpacing: 1.2,
                 shadows: [
                   Shadow(
@@ -403,11 +403,6 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
                                                   editASet(a);
                                                 },
                                                 delete: () {
-                                                  // showDialog(
-                                                  //     context: context,
-                                                  //     builder: (context) {
-                                                  //       return QuickAlert.show(context: context, type: type)
-                                                  //     });
                                                   deleteASet(a.name);
                                                 },
                                                 share: () {

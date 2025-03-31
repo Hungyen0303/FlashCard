@@ -67,7 +67,7 @@ class SpecificFlashCardViewModel extends ChangeNotifier {
       bool success = await _repo.addNewCard(newCard);
       flashcardList = await _repo.getAll(nameOfSet);
       if (success) {
-        getAll(nameOfSet);
+        await getAll(nameOfSet);
         notifyListeners();
         return true;
       } else {

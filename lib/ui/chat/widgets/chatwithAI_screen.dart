@@ -268,13 +268,12 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
   }
 
   Color mainColor = const Color(0xFF726D14);
-  Color mainColorIcon = const Color(0xFFD9CD14);
+  Color mainColorIcon = darkBlue;
 
   AppBar _buildAppbar() {
     return AppBar(
       centerTitle: true,
       elevation: 8,
-      // Thêm bóng nhẹ
       shadowColor: Colors.black.withOpacity(0.3),
       // Màu bóng
       flexibleSpace: Container(
@@ -298,14 +297,14 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
             style: TextStyle(
               fontSize: 20, // Tăng kích thước chữ
               fontWeight: FontWeight.bold, // Chữ đậm
-              color: Color(0xFF726D14),
+              color: darkBlue,
               letterSpacing: 1.2, // Khoảng cách chữ
             ),
           ),
           SizedBox(width: 8), // Khoảng cách giữa text và icon
           Icon(
             CupertinoIcons.plus_app,
-            color: Color(0xFF726D14), // Đổi màu trắng cho đồng bộ
+            color: mainColorIcon, // Đổi màu trắng cho đồng bộ
             size: 28, // Tăng kích thước icon
             // shadows: [
             //   Shadow(
@@ -334,7 +333,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
               child: FaIcon(
                 FontAwesomeIcons.penToSquare,
                 size: 22,
-                color: mainColor,
+                color: mainColorIcon,
               ),
             ),
           ),
@@ -345,7 +344,8 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
 
   Drawer _buildDrawer(ChatWithAIViewModel chatWithAIViewModel) {
     return Drawer(
-      backgroundColor: MAIN_THEME_YELLOW, // Nền vàng chủ đạo
+
+      backgroundColor: Color(0xFFC5DDF5), // Nền vàng chủ đạo
       child: SafeArea(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -357,7 +357,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
               child: Text(
                 "Conversations",
                 style: TextStyle(
-                  color: mainColor,
+                  color: darkBlue,
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
@@ -369,23 +369,21 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
               child: SearchBar(
                 onTap: () {
                   setState(() {
-                    // isSearch = true; (nếu cần)
                   });
                 },
                 onTapOutside: (event) {
                   FocusManager.instance.primaryFocus?.unfocus();
                   setState(() {
-                    // isSearch = false; (nếu cần)
                   });
                 },
                 controller: searchController,
                 elevation: WidgetStateProperty.all(3.0),
                 shadowColor: WidgetStateProperty.all(
-                  MAIN_THEME_PURPLE.withOpacity(0.2),
+                  darkBlue.withOpacity(0.2),
                 ),
                 side: WidgetStateProperty.all(
                   BorderSide(
-                    color: MAIN_THEME_YELLOW_TEXT,
+                    color: darkBlue,
                     width: 1.2,
                   ),
                 ),
@@ -398,20 +396,20 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
                   padding: const EdgeInsets.only(left: 4, right: 2),
                   child: Icon(
                     LineIcons.search,
-                    color: MAIN_THEME_YELLOW_TEXT,
+                    color: darkBlue,
                     size: 30.0,
                   ),
                 ),
                 hintText: "Search",
                 hintStyle: WidgetStateProperty.all(
                   TextStyle(
-                    color: MAIN_THEME_YELLOW_TEXT,
+                    color: darkBlue,
                     fontSize: 16.0,
                   ),
                 ),
                 textStyle: WidgetStateProperty.all(
                   TextStyle(
-                    color: MAIN_THEME_PINK_TEXT,
+                    color: darkText,
                     fontSize: 16.0,
                     fontWeight: FontWeight.w500,
                   ),
@@ -440,8 +438,8 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color(0xFF9B961D),
-            Color(0xFFB4B26B),
+           darkBlue,
+            Color(0xFF4E7BA2),
           ],
         ),
       ),

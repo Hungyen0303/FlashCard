@@ -9,6 +9,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pie_menu/pie_menu.dart';
 import 'package:provider/provider.dart';
 
+import '../../../utils/color/AllColor.dart';
+
 class AllFlashCardPublicSet extends StatefulWidget {
   const AllFlashCardPublicSet({super.key});
 
@@ -24,35 +26,36 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
 
   AppBar _buildAppbar() {
     return AppBar(
+      leading: BackButton(
+        color: darkBlue,
+      ),
       centerTitle: true,
       title: Text(
         "Flashcard Public",
         style: TextStyle(
-            fontSize: 25,
+            fontSize: 22,
             letterSpacing: 2,
             fontWeight: FontWeight.bold,
-            color: mainColor),
+            color: darkBlue),
       ),
       foregroundColor: mainColor,
       actions: [
+
         GestureDetector(
-          child: Padding(
-            padding: const EdgeInsets.only(right: 30.0),
-            child: isGridView
-                ? Icon(
-                    Icons.list,
-                  )
-                : Icon(Icons.grid_view_sharp),
-          ),
           onTap: () {
             setState(() {
               isGridView = !isGridView;
             });
           },
+          child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Icon(isGridView ? Icons.list : Icons.grid_view_sharp,
+                  color: darkBlue)),
         ),
       ],
     );
   }
+
 
   @override
   void initState() {

@@ -3,6 +3,7 @@ import 'package:flashcard_learning/routing/router.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
+import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -27,8 +28,6 @@ class _MainflashcardState extends State<Mainflashcard> {
         context, MaterialPageRoute(builder: (_) => const AllFlashCardSet()));
   }
 
-  late Future loadData;
-
   Padding buildListTile(String title, Icon leadingIcon, Function callback) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -37,7 +36,7 @@ class _MainflashcardState extends State<Mainflashcard> {
         splashColor: Colors.deepPurpleAccent,
         focusColor: Colors.blue,
         iconColor: Colors.red,
-        tileColor: MAIN_THEME_PURPLE,
+        tileColor: MAIN_BOX_COLOR,
         trailing: Container(
           width: 45,
           height: 45,
@@ -57,20 +56,16 @@ class _MainflashcardState extends State<Mainflashcard> {
         onTap: () => callback(),
         leading: Padding(
             padding: const EdgeInsets.only(left: 8),
-            child: IconTheme(
-              data: IconThemeData(
-                color: Color(0xffa16eeb),
-              ),
-              child: leadingIcon,
+            child: Text(
+              "📗",
+              style: TextStyle(fontSize: 25),
             )),
-        title: Container(
-          child: Text(
-            title,
-            style: styleOfList,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            softWrap: true, // Cho phép xuống dòng
-          ),
+        title: Text(
+          title,
+          style: styleOfList,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          softWrap: true, // Cho phép xuống dòng
         ),
         contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
         textColor: MAIN_THEME_PURPLE_TEXT,
@@ -81,46 +76,49 @@ class _MainflashcardState extends State<Mainflashcard> {
     );
   }
 
-  Color bg_color = Color(0xFFebdfee);
-  final TextStyle styleOfList = TextStyle(
-      color: MAIN_THEME_PURPLE_TEXT, fontSize: 20, fontWeight: FontWeight.w500);
+  final TextStyle styleOfList = const TextStyle(
+      letterSpacing: 0.4,
+      color: lightText,
+      fontSize: 20,
+      fontWeight: FontWeight.w600);
 
-  Container buildActions(Icon icon) {
+  Container buildActions(String text) {
     return Container(
-      child: IconTheme(
-          data: IconThemeData(
-            color: Color(0xFF6200EE),
-          ),
-          child: icon),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 18),
+      ),
       margin: EdgeInsets.symmetric(horizontal: 5),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-          color: Color(0xffe8a90e), borderRadius: BorderRadius.circular(10)),
+          color: Color(0xFF1986F3), borderRadius: BorderRadius.circular(10)),
     );
   }
 
   @override
   void initState() {
     super.initState();
-    loadData = context.read<MainScreenViewModel>().getListConversation();
-    final mainScreenViewModel = Provider.of<MainScreenViewModel>(context, listen: false);
-    final accountViewModel = Provider.of<AccountViewModel>(context, listen: false);
+
+    final mainScreenViewModel =
+        Provider.of<MainScreenViewModel>(context, listen: false);
+    final accountViewModel =
+        Provider.of<AccountViewModel>(context, listen: false);
     accountViewModel.loadTrackData();
     mainScreenViewModel.onDoneChanged = () {
-
       accountViewModel.changeNumOfCompleteConversation();
     };
   }
 
   AppBar _buildAppbar() {
     return AppBar(
-      leading: Icon(
-        LineIcons.userShield,
-        color: Color(0xFF6200EE),
+      title: Text(
+        "🏠 ",
+        style: TextStyle(
+            color: MAIN_TITLE_COLOR, fontSize: 25, fontWeight: FontWeight.bold),
       ),
       actions: [
-        buildActions(Icon(LineIcons.lightningBolt)),
-        buildActions(Icon(LineIcons.fire)),
+        buildActions("⚡"),
+        buildActions("🔥"),
       ],
     );
   }
@@ -132,69 +130,56 @@ class _MainflashcardState extends State<Mainflashcard> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: loadData,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting)
-            return SpinKitFadingFour(
-              color: Colors.white,
-            );
-
-          return Scaffold(
-            backgroundColor: Color(0xffF8F9FA),
-            appBar: _buildAppbar(),
-            body: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                            text: "Chào mừng bạn trở lại, \n",
-                            style: TextStyle(
-                                color: MAIN_THEME_PURPLE_TEXT, fontSize: 18)),
-                        TextSpan(
-                            text: AppManager.getUser()!.name,
-                            style: TextStyle(
-                                color: MAIN_THEME_PURPLE_TEXT,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w500))
-                      ]),
-                    ),
-                    AIConversation(
-                      conversations:
-                          context.read<MainScreenViewModel>().conversation,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Hôm nay chúng ta nên làm gì ",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF6200EE),
+    return Scaffold(
+      backgroundColor: Color(0xffF8F9FA),
+      appBar: _buildAppbar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: "Chào mừng bạn trở lại, \n",
+                      style: TextStyle(color: MAIN_TITLE_COLOR, fontSize: 18)),
+                  TextSpan(
+                      text: AppManager.getUser()!.name,
+                      style: TextStyle(
+                          color: MAIN_TITLE_COLOR,
                           fontSize: 25,
-                        ),
-                      ),
-                    ),
-                    buildListTile(
-                        listTiles[0], const Icon(Icons.rate_review_outlined), () {
-                      _gotoAllCollections(context);
-                    }),
-                    buildListTile(listTiles[1], const Icon(LineIcons.plusCircle), () {
-                      context.push(AppRoute.public_flashcard);
-                    }),
+                          fontWeight: FontWeight.w500))
+                ]),
+              ),
 
-                    // buildListtile(listTiles[3], Icon(LineIcons.rocketChat), () {
-                    //   widget.onTabChange(2);
-                    // }),
-                  ],
+              AIConversation(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Hôm nay chúng ta nên làm gì ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF2489EE),
+                    fontSize: 25,
+                  ),
                 ),
               ),
-            ),
-          );
-        });
+              buildListTile(
+                  listTiles[0], const Icon(Icons.rate_review_outlined), () {
+                _gotoAllCollections(context);
+              }),
+              buildListTile(listTiles[1], const Icon(LineIcons.plusCircle), () {
+                context.push(AppRoute.public_flashcard);
+              }),
+
+              // buildListtile(listTiles[3], Icon(LineIcons.rocketChat), () {
+              //   widget.onTabChange(2);
+              // }),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -19,27 +19,16 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   List<Widget> widgets = [];
   int currentPageIndex = 0;
-  List<Color> color_bg_btn = [
-    MAIN_THEME_PURPLE_TEXT,
-    MAIN_THEME_PURPLE,
-    MAIN_THEME_PINK_TEXT,
-    MAIN_THEME_PINK,
-    MAIN_THEME_YELLOW_TEXT,
-    MAIN_THEME_YELLOW,
-    MAIN_THEME_BLUE_TEXT,
-    MAIN_THEME_BLUE,
-  ];
+
 
   void changeTab(int tab) {
     setState(() {
       currentPageIndex = tab;
-      bgColor = color_bg_btn[tab * 2 + 1];
-      textColor = color_bg_btn[tab * 2];
     });
   }
 
-  Color textColor = MAIN_THEME_PURPLE_TEXT;
-  Color bgColor = MAIN_THEME_PURPLE;
+  Color textColor = Color(0xFFE2E6EA);
+  Color bgColor = darkBlue;
 
   @override
   void initState() {
@@ -50,7 +39,7 @@ class _HomepageState extends State<Homepage> {
         dictionaryViewModel: DictionaryViewModel(),
       ),
       const ChatWithAIPage(),
-      AccountPage(),
+      const AccountPage(),
     ];
   }
 
@@ -67,7 +56,7 @@ class _HomepageState extends State<Homepage> {
           // tab button hover color
           haptic: true,
           // haptic feedback
-          tabBorderRadius: 50,
+          tabBorderRadius: 30,
 
           //tabActiveBorder: Border.all(color: Colors.black, width: 1), // tab button border
           //tabBorder: Border.all(color: Colors.grey, width: 1), // tab button border

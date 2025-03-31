@@ -33,7 +33,8 @@ class DictionaryViewModel {
       final content = [Content.text(prompt)];
       final response = await model.generateContent(content);
       String text = response.text ?? "";
-      return text.split("%").toList();
+      popularWords = text.split("%").toList();
+      popularWords.removeLast();
     }
     return popularWords;
   }

@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,8 @@ class CardCustom extends StatefulWidget {
       required this.title,
       required this.start,
       required this.end,
-      required this.level, required this.onTap});
+      required this.level,
+      required this.onTap});
 
   final String image;
 
@@ -20,11 +22,11 @@ class CardCustom extends StatefulWidget {
 
   final String level;
 
-  final Color bg = const Color(0xFFF3E5F5);
+  final Color bg = const Color(0xFFFFFFFF);
 
-  final Color textColor = const Color(0xFF6200EE);
+  final Color textColor = MAIN_TITLE_COLOR;
 
-  final Function onTap ;
+  final Function onTap;
 
   @override
   State<CardCustom> createState() => _CardCustomState();
@@ -67,6 +69,8 @@ class _CardCustomState extends State<CardCustom> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
                 child: Text(
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   widget.title,
                   style: TextStyle(
                       fontSize: 19,
@@ -77,7 +81,7 @@ class _CardCustomState extends State<CardCustom> {
               Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
                 child: Text(
-                  "${widget.start}-${widget.end} minutes",
+                  "⏰ ${widget.start}-${widget.end} minutes",
                   style: TextStyle(color: widget.textColor),
                 ),
               ),
@@ -97,7 +101,6 @@ class _CardCustomState extends State<CardCustom> {
               ),
             ),
           ),
-
         ],
       ),
     );

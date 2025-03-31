@@ -73,7 +73,8 @@ class Prompt {
       '''
       I want you to recommend for me four english word in order to learning english
       the level is middle , there are just a word like eligible , constant , ... 
-      Please answer follows this format : 
-      word1%word2%word3%word4
+      
+      Please answer follows this format and remove  in the end : 
+      word1%word2%word3%word4%
       ''';
 }

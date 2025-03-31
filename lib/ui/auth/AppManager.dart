@@ -36,7 +36,7 @@ class AppManager {
   /// if both is not valid => login
   ///
 
-  static Api1 _api1 = Api1Impl();
+  static final Api1 _api1 = Api1Impl();
 
   static Future<bool> isLogged() async {
     if (_token.isEmpty) {
@@ -53,12 +53,13 @@ class AppManager {
 
   static Future<void> initialize() async {
     prefs = await SharedPreferences.getInstance();
+    prefs.remove("isFirstTime");
+
     loadToken();
 
     firstRoute = await getInitialRoute();
     if (firstRoute == AppRoute.home) {
       await loadUser();
-
     }
   }
 

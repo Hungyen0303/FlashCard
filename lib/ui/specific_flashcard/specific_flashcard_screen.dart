@@ -187,10 +187,16 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
 
   AppBar _buildAppbar() {
     return AppBar(
-      title: Text(widget.nameOfSet),
+      title: Text(
+        widget.nameOfSet,
+        style: TextStyle(color: darkBlue),
+      ),
       centerTitle: true,
       leading: IconButton(
-        icon: const Icon(Icons.navigate_before),
+        icon: const Icon(
+          Icons.navigate_before,
+          color: darkBlue,
+        ),
         onPressed: () async {
           // TODO use this way
           // int numOfDone = context.read<SpecificFlashCardViewModel>().numOfDone;
@@ -206,8 +212,8 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
             : GestureDetector(
                 onTap: () => _showPopUp(true),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(CupertinoIcons.plus),
+                  padding: const EdgeInsets.all(16.0),
+                  child: Icon(CupertinoIcons.plus, color: darkBlue),
                 ),
               )
       ],
@@ -615,10 +621,7 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            MAIN_THEME_BLUE.withOpacity(0.9),
-            MAIN_THEME_PURPLE.withOpacity(0.7),
-          ],
+          colors: [Color(0xFF082D4F), Color(0xFFE7D9C8)],
         ),
       ),
       child: Center(
@@ -677,10 +680,17 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
               onPressed: () {
                 _showPopUp(true); // Gọi hàm thêm flashcard mới
               },
-              icon: Icon(CupertinoIcons.plus_circle_fill, size: 26),
+              icon: Icon(
+                CupertinoIcons.plus_circle_fill,
+                size: 26,
+                color: Color(0xFF123456),
+              ),
               label: Text(
                 "Add First Flashcard",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF123456)),
               ),
               style: ElevatedButton.styleFrom(
                 foregroundColor: MAIN_THEME_YELLOW,
@@ -728,6 +738,11 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
         bool actionSuccessfully = await specificFlashCardViewModel.deleteACard(
             specificFlashCardViewModel.flashcardList[_index], widget.nameOfSet);
         LoadingOverlay.hide();
+        setState(() {
+          if (_index  >= 1 ){
+            _index-- ;
+          }
+        });
         if (mounted) {
           context.pop();
           await QuickAlert.show(
@@ -788,12 +803,12 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                                     "${_index + 1} / ${specificFlashCardViewModel.flashcardList.length}",
                                     style: TextStyle(
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 30),
+                              SizedBox(height: 40),
 
                               // Flashcard
                               Container(
@@ -808,7 +823,7 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                                         width: size,
                                         height: size,
                                         decoration: BoxDecoration(
-                                          color: Color(0xff83dfc2),
+                                          color: Color(0xff12b9a2),
                                           borderRadius:
                                               BorderRadius.circular(20),
                                           boxShadow: [
@@ -849,36 +864,6 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    widget.isPublic ? SizedBox.shrink() : Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [
-                                            Color(0xffFF7E5F),
-                                            Color(0xfff67916)
-                                          ],
-                                        ),
-                                      ),
-                                      child: TextButton(
-                                        onPressed: () async {
-                                          await specificFlashCardViewModel
-                                              .markDone(_index);
-                                        },
-                                        child: Text(
-                                          specificFlashCardViewModel
-                                                  .flashcardList[_index].done
-                                              ? "Undone"
-                                              : "Done",
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        ),
-                                      ),
-                                    ),
                                     SizedBox(width: 20),
                                     Visibility(
                                       visible: !showExample,
@@ -946,9 +931,36 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                                   ),
                                 ),
                               ),
+
+                              widget.isPublic
+                                  ? SizedBox.shrink()
+                                  : Container(
+                                margin: EdgeInsets.only(top: 10),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 100, vertical: 4),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Color(0xff15b036)),
+                                      child: TextButton(
+                                        onPressed: () async {
+                                          await specificFlashCardViewModel
+                                              .markDone(_index);
+                                        },
+                                        child: Text(
+                                          specificFlashCardViewModel
+                                                  .flashcardList[_index].done
+                                              ? "Undone"
+                                              : "Done",
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
+                              // Nút điều khiển
                               SizedBox(height: 30),
 
-                              // Nút điều khiển
                               Container(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 20),
@@ -956,14 +968,17 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    widget.isPublic ? SizedBox.shrink() :  IconButton(
-                                      onPressed: () async {
-                                        await deleteAFlashCard();
-                                      },
-                                      icon: Icon(CupertinoIcons.trash,
-                                          size: 28, color: Color(0xff187ee1)),
-                                      tooltip: "Delete",
-                                    ),
+                                    widget.isPublic
+                                        ? SizedBox.shrink()
+                                        : IconButton(
+                                            onPressed: () async {
+                                              await deleteAFlashCard();
+                                            },
+                                            icon: Icon(CupertinoIcons.trash,
+                                                size: 28,
+                                                color: Color(0xff187ee1)),
+                                            tooltip: "Delete",
+                                          ),
                                     IconButton(
                                       onPressed: () async {
                                         await _speak(specificFlashCardViewModel
@@ -973,14 +988,18 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
                                           size: 28, color: Color(0xff609fde)),
                                       tooltip: "Speak",
                                     ),
-                                    widget.isPublic ? SizedBox.shrink() : IconButton(
-                                      onPressed: () {
-                                        _showPopUp(false);
-                                      },
-                                      icon: Icon(FontAwesomeIcons.penToSquare,
-                                          size: 28, color: Color(0xff609fde)),
-                                      tooltip: "Edit",
-                                    ),
+                                    widget.isPublic
+                                        ? SizedBox.shrink()
+                                        : IconButton(
+                                            onPressed: () {
+                                              _showPopUp(false);
+                                            },
+                                            icon: Icon(
+                                                FontAwesomeIcons.penToSquare,
+                                                size: 28,
+                                                color: Color(0xff609fde)),
+                                            tooltip: "Edit",
+                                          ),
                                     IconButton(
                                       onPressed: () {
                                         if (_index == 0) return;

@@ -1,10 +1,10 @@
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
+import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +16,10 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
+  // Define color palette based on the dominant color 0xFFA6C7E7
+
   Future<void> logout(BuildContext context) async {
-    //   Provider.of<AccountViewModel>(context, listen: false).logout();
+    AppManager.clearToken();
     context.go(AppRoute.login);
   }
 
@@ -25,44 +27,56 @@ class _AccountPageState extends State<AccountPage> {
     context.push(AppRoute.profile);
   }
 
-  Container buildActions(Icon icon) {
+  Container buildActions(String text) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 18, color: white),
+      ),
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-          color: const Color(0xffe8a90e),
+          color: dominantColor.withOpacity(0.8),
           borderRadius: BorderRadius.circular(10)),
-      child: IconTheme(
-          data: const IconThemeData(
-            color: Color(0xFF6200EE),
-          ),
-          child: icon),
     );
   }
 
-  TextStyle textStyle = const TextStyle(color: MAIN_THEME_BLUE_TEXT);
+  TextStyle textStyle = const TextStyle(color: darkText);
   BoxDecoration boxDecoration = BoxDecoration(
     borderRadius: BorderRadius.circular(25),
-    color: Color(0xFF80E886),
+    color: dominantColor.withOpacity(0.2),
+    border: Border.all(color: dominantColor, width: 1.5),
   );
-  TextStyle textStyleForDuration = TextStyle(
-      color: Color(0xFF12A799), fontWeight: FontWeight.bold, fontSize: 18);
+  TextStyle textStyleForDuration =
+      TextStyle(color: darkBlue, fontWeight: FontWeight.bold, fontSize: 18);
 
   AppBar _buildAppbar() {
     return AppBar(
-      leading: Icon(
-        LineIcons.userShield,
-        color: Color(0xFF6200EE),
-      ),
-      title: Text(
-        "Account",
-        style: TextStyle(color: MAIN_THEME_BLUE_TEXT),
-      ),
       centerTitle: true,
-      actions: [
-        buildActions(Icon(LineIcons.lightningBolt)),
-        buildActions(Icon(LineIcons.fire)),
-      ],
+      backgroundColor: white,
+      elevation: 0,
+      title: Text(
+        "👳🏽‍♀️ Account",
+        style: TextStyle(
+          color: darkBlue,
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+          shadows: [
+            Shadow(
+              // Bottom shadow
+              color: Colors.black.withOpacity(0.2),
+              offset: Offset(0, 3.0),
+              blurRadius: 6.0,
+            ),
+            Shadow(
+              // Top highlight
+              color: Colors.white.withOpacity(0.6),
+              offset: Offset(0, -2.0),
+              blurRadius: 2.0,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -72,13 +86,25 @@ class _AccountPageState extends State<AccountPage> {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: Color(0xffd0eff3),
+            border: Border.all(color: lightBlue, width: 1),
+            borderRadius: BorderRadius.circular(15),
+            color: white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 3,
+                blurRadius: 7,
+                offset: Offset(0, 3),
+              ),
+            ],
           ),
           child: Column(
             children: [
               ListTile(
-                leading: SizedBox(
+                leading: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: darkBlue),
+                      borderRadius: BorderRadius.circular(500)),
                   height: 60,
                   width: 60,
                   child: Stack(
@@ -88,10 +114,10 @@ class _AccountPageState extends State<AccountPage> {
                         child: Container(
                           width: 60,
                           height: 60,
-                          color: Colors.blueGrey,
+                          color: dominantColor,
                           child: accountViewModel.currentUser.avatar.isEmpty
                               ? const Icon(LineIcons.user,
-                                  size: 40, color: Colors.white)
+                                  size: 40, color: white)
                               : Image.network(
                                   alignment: Alignment.topCenter,
                                   accountViewModel.currentUser.avatar,
@@ -110,14 +136,14 @@ class _AccountPageState extends State<AccountPage> {
                           child: Container(
                             padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              color: Colors.grey,
+                              color: darkBlue,
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 2),
+                              border: Border.all(color: white, width: 2),
                             ),
                             child: Icon(
                               CupertinoIcons.camera_viewfinder,
                               size: 16,
-                              color: Colors.white,
+                              color: white,
                             ),
                           ),
                         ),
@@ -127,18 +153,19 @@ class _AccountPageState extends State<AccountPage> {
                 ),
                 title: Text(
                   accountViewModel.currentUser.name,
-                  style: TextStyle(color: MAIN_THEME_BLUE_TEXT),
+                  style:
+                      TextStyle(color: darkText, fontWeight: FontWeight.bold),
                 ),
                 subtitle: GestureDetector(
-                    onTap: () {},
+                    onTap: _gotoAccountPage,
                     child: Text(
                       "Edit Profile",
                       style: TextStyle(
                           decoration: TextDecoration.underline,
-                          color: Color(0xFFDE2D2D)),
+                          color: darkBlue),
                     )),
                 trailing: IconButton(
-                  color: const Color(0xFFC93030),
+                  color: darkBlue,
                   padding: EdgeInsets.only(left: 30),
                   iconSize: 30,
                   focusColor: Colors.transparent,
@@ -149,7 +176,7 @@ class _AccountPageState extends State<AccountPage> {
                   onPressed: _gotoAccountPage,
                 ),
               ),
-              Divider(height: 2, color: Colors.red),
+              Divider(height: 2, color: dominantColor.withOpacity(0.3)),
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,11 +188,14 @@ class _AccountPageState extends State<AccountPage> {
                         children: [
                           TextSpan(
                               text: "Plan\n",
-                              style: textStyle.copyWith(fontSize: 15)),
+                              style: textStyle.copyWith(
+                                  fontSize: 15, color: lightText)),
                           TextSpan(
                             text: accountViewModel.currentUser.plan,
                             style: textStyle.copyWith(
-                                fontSize: 25, fontWeight: FontWeight.bold),
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: darkBlue),
                           ),
                         ],
                       ),
@@ -173,14 +203,22 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF80E886),
+                      backgroundColor: darkBlue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     ),
                     onPressed: () {
                       context.push(AppRoute.upgrade);
                     },
                     child: Text(
                       "Upgrade",
-                      style: textStyle.copyWith(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: white,
+                          fontSize: 16),
                     ),
                   ),
                 ],
@@ -199,8 +237,17 @@ class _AccountPageState extends State<AccountPage> {
         margin: const EdgeInsets.only(top: 30),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          color: Color(0xffd0eff3),
+          border: Border.all(color: lightBlue, width: 1),
+          borderRadius: BorderRadius.circular(15),
+          color: white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 3,
+              blurRadius: 7,
+              offset: Offset(0, 3),
+            ),
+          ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -210,19 +257,19 @@ class _AccountPageState extends State<AccountPage> {
             children: [
               Text(
                 "Activities",
-                style: textStyle.copyWith(
-                    fontSize: 25, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: darkBlue, fontSize: 25, fontWeight: FontWeight.bold),
               ),
               Text(
                 "Track your progress",
-                style: textStyle,
+                style: TextStyle(color: lightText),
               ),
               SizedBox(
                 height: 5,
               ),
-              const Divider(
+              Divider(
                 height: 1,
-                color: Colors.grey,
+                color: dominantColor.withOpacity(0.3),
               ),
               SizedBox(
                 height: 20,
@@ -278,8 +325,8 @@ class _AccountPageState extends State<AccountPage> {
                         borderRadius: BorderRadius.circular(10),
                         gradient: LinearGradient(
                             colors: [
-                              Color(0xff2196f3), // Xanh dương sáng
-                              Color(0xff9c27b0), // Tím nhạt
+                              dominantColor,
+                              darkBlue,
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter)),
@@ -289,7 +336,7 @@ class _AccountPageState extends State<AccountPage> {
                       children: [
                         Icon(
                           Icons.book_sharp,
-                          color: Colors.white,
+                          color: white,
                           size: 25,
                         ),
                         Text(
@@ -297,12 +344,12 @@ class _AccountPageState extends State<AccountPage> {
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white),
+                              color: white),
                         ),
                         Text(
                           "BÀI HỌC ĐÃ HOÀN THÀNH",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: white.withOpacity(0.9),
                           ),
                         )
                       ],
@@ -316,8 +363,8 @@ class _AccountPageState extends State<AccountPage> {
                         borderRadius: BorderRadius.circular(10),
                         gradient: LinearGradient(
                             colors: [
-                              Color(0xffff6f20), // Cam nhạt
-                              Color(0xffe91e63), // Hồng đậm
+                              softPink,
+                              paleOrange,
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter)),
@@ -327,7 +374,7 @@ class _AccountPageState extends State<AccountPage> {
                       children: [
                         Icon(
                           Icons.lock_clock,
-                          color: Colors.white,
+                          color: white,
                           size: 25,
                         ),
                         Text(
@@ -336,12 +383,12 @@ class _AccountPageState extends State<AccountPage> {
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white),
+                              color: white),
                         ),
                         Text(
                           "ĐOẠN HỘI THOẠI ĐÃ HOÀN THÀNH",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: white.withOpacity(0.9),
                           ),
                         )
                       ],
@@ -365,6 +412,7 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF5F9FD), // Very light blue background
       appBar: _buildAppbar(),
       body: Container(
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -372,73 +420,32 @@ class _AccountPageState extends State<AccountPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //   children: [
-              //     GestureDetector(
-              //       onTap: () => changeTab(0),
-              //       child: Container(
-              //         padding: EdgeInsets.symmetric(vertical: 12),
-              //         width: MediaQuery.of(context).size.width * 0.45,
-              //         decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(50),
-              //             color:
-              //                 0 == widget._index ? Colors.grey : Colors.black),
-              //         child: Text(
-              //           textAlign: TextAlign.center,
-              //           "Tiến độ",
-              //           style: TextStyle(
-              //             color:
-              //                 0 == widget._index ? Colors.black : Colors.white,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     GestureDetector(
-              //       onTap: () => changeTab(1),
-              //       child: Container(
-              //         padding: EdgeInsets.symmetric(vertical: 10),
-              //         width: MediaQuery.of(context).size.width * 0.45,
-              //         decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(50),
-              //             color:
-              //                 1 == widget._index ? Colors.grey : Colors.black),
-              //         child: Text(
-              //           textAlign: TextAlign.center,
-              //           "Thành tựu",
-              //           style: TextStyle(
-              //             color:
-              //                 1 == widget._index ? Colors.black : Colors.white,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               /*Profile */
               const SizedBox(
                 height: 15,
               ),
               buildProfilePanel(),
               buildActivityPanel(),
+              SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xfffe3030),
+                      backgroundColor: Colors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 15),
                     ),
                     onPressed: () async {
                       await logout(context);
                     },
                     child: Text(
                       "Đăng xuất",
-                      style: textStyle.copyWith(
+                      style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
-                          color: Color(0xffffffff)),
+                          color: white),
                     )),
               )
             ],

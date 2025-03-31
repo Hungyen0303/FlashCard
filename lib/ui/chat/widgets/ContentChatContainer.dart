@@ -46,9 +46,9 @@ class ContentChatContainer extends StatelessWidget {
                               padding: EdgeInsets.all(8),
                               margin: EdgeInsets.only(left: 10, top: 20),
                               decoration: BoxDecoration(
-                                color: MAIN_THEME_YELLOW,
+                                color: Color(0xffcadcef),
                                 border: Border.all(
-                                    width: 1, color: MAIN_THEME_YELLOW_TEXT),
+                                    width: 1, color: dominantColor),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               alignment: Alignment.centerLeft,

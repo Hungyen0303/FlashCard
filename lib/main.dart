@@ -11,14 +11,16 @@ import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetVie
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/CustomCardProvider.dart';
 import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/view_models/SpecificFlashCardViewModel.dart';
+import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'domain/models/user.dart';
 
+
 void main() async {
+
   await Supabase.initialize(
     url: SupaBaseService.URL,
     anonKey: SupaBaseService.anonKey,
@@ -68,7 +70,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: "MainFont",
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        buttonTheme: ButtonThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: darkBlue) ,
+
+        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: darkBlue),
         useMaterial3: true,
       ),
     );
