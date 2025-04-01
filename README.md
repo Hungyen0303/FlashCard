@@ -36,7 +36,7 @@ A mobile application built with **Flutter** to help users learn through interact
 ## Screenshots
 
 ### Home Screen with Flashcards
-![Home Screen](screenshots/home_screen.png)
+![Home Screen](home.png)
 
 ### AI Conversation with Shimmer Loading
 ![AI Conversation](screenshots/ai_conversation_shimmer.png)
@@ -44,7 +44,15 @@ A mobile application built with **Flutter** to help users learn through interact
 ### Loading Overlay
 ![Loading Overlay](screenshots/loading_overlay.png)
 
-*(Note: Replace the screenshot paths with actual images once uploaded to GitHub.)*
+### Home Screen with Flashcards
+![Home Screen](home.png)
+
+### AI Conversation with Shimmer Loading
+![AI Conversation](screenshots/ai_conversation_shimmer.png)
+
+### Loading Overlay
+![Loading Overlay](screenshots/loading_overlay.png)
+
 
 ---
 
