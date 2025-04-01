@@ -7,7 +7,9 @@
 ### Created by : Hungyen0303 
 ## Youtube : Demo 
 - https://youtu.be/GaH_4NPYHh4
-## Backend repo ( I build by myself ) : https://github.com/Hungyen0303/FlashCard_backend
+## Backend repo 
+I build by myself
+- https://github.com/Hungyen0303/FlashCard_backend
 
 Inspired by trendy AI ,  I create app for assisting Vietnamese to learn English. This motivation makes me invent this app. 
 A mobile application built with **Flutter** to help users learn through interactive flashcards and AI-powered conversations. This project aims to provide an engaging learning experience with appealing UI , easy tools, modern trendy technology. 
@@ -39,7 +41,7 @@ A mobile application built with **Flutter** to help users learn through interact
 
 ## Screenshots
 
-![Home Screen](home.png)
+![Home Screen](home (2).png)
 ![Intro page](intropage.png)
 ![Flashcard](card.png)
 ![Dictionary](dictionary.png)
