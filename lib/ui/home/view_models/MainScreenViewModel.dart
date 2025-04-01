@@ -10,9 +10,7 @@ class MainScreenViewModel extends ChangeNotifier {
   String API_KEY = "AIzaSyBax0qdrfE8U0TzsW4OISS4VZ3DqLic20s";
   List<String> conversation = [];
 
-
-   Function()? onDoneChanged;
-
+  Function()? onDoneChanged;
 
   bool hasError = false;
 
@@ -90,7 +88,7 @@ class MainScreenViewModel extends ChangeNotifier {
       final content = [Content.text(prompt)];
       final response = await model.generateContent(content);
       Message responseMessage =
-      Message(humanChat: humanChat, botChat: response.text ?? "");
+          Message(humanChat: humanChat, botChat: response.text ?? "");
       chatList.removeLast();
       chatList.add(responseMessage);
       isDone = true;
@@ -104,12 +102,14 @@ class MainScreenViewModel extends ChangeNotifier {
       final content = [Content.text(prompt)];
       final response = await model.generateContent(content);
       Message responseMessage =
-      Message(humanChat: humanChat, botChat: response.text ?? "");
+          Message(humanChat: humanChat, botChat: response.text ?? "");
 
       try {
-        double testValue = double.parse(response.text![7]);
+        double testValue = double.parse(response.text![8]);
         averageScore += testValue;
-      } catch (e) {}
+      } catch (e) {
+        averageScore += 5;
+      }
 
       chatList.removeLast();
       chatList.add(responseMessage);
@@ -120,8 +120,4 @@ class MainScreenViewModel extends ChangeNotifier {
     notifyListeners();
     return true;
   }
-
-
-
-
 }

@@ -52,13 +52,20 @@ class Prompt {
           String answer, String question, String nextQuestion) =>
       '''
       I want you to do this thing for me. 
-      First lets grade this answer {I like fish }  for this question : {What is you favorites animals }
+      First lets grade this answer ${answer}  for this question : ${question}
       in scale 1 to 10.
-      And then send back this question for me : $nextQuestion ? ”
+      For example , if the answer is basic give from 1 to 5 
+      if answer is immediate , give score from 6 to 8 
+      if answer is good  , give score from 8 to 10 
+      if it is too short , consider it as basic. 
+      Remember to score honestly , base on vocabulary , length of answer , grammar , 
+      the way to use sentence 
+      And then send back this question for me : $nextQuestion?
        , bear in mind that do not change my question.
-      Please answer follows this format : 
+      Please answer follows this format , note: remember your_score is in position 7   : 
       Score : your_score 
-      {question back }
+      New Question : Question_back
+      Shortly Explain why that score
       ''';
 
   static String promptForLastQuestion(String humanChat, String question) => '''
@@ -69,8 +76,7 @@ class Prompt {
       Score : your_score 
       ''';
 
-  static String promptForGettingPopularWord() =>
-      '''
+  static String promptForGettingPopularWord() => '''
       I want you to recommend for me four english word in order to learning english
       the level is middle , there are just a word like eligible , constant , ... 
       

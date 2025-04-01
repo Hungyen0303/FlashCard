@@ -136,7 +136,13 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
         child: Column(
           children: [
             _buildTextFormEnglish(),
+            SizedBox(
+              height: 5,
+            ),
             _buildTextFormVietnamese(),
+            SizedBox(
+              height: 5,
+            ),
             _buildTextFormExample(),
           ],
         ),
@@ -185,37 +191,34 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
     );
   }
 
-  AppBar _buildAppbar() {
+  static const Color primaryColor = Color(0xFF4361EE);
+  static const Color secondaryColor = Color(0xFF3A0CA3);
+  static const Color accentColor = Color(0xFF7209B7);
+  static const Color successColor = Color(0xFF4BB543);
+  static const Color warningColor = Color(0xFFFFCC00);
+  static const Color dangerColor = Color(0xFFCC0000);
+
+  AppBar _buildAppBar() {
     return AppBar(
       title: Text(
         widget.nameOfSet,
-        style: TextStyle(color: darkBlue),
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       centerTitle: true,
+      backgroundColor: primaryColor,
       leading: IconButton(
-        icon: const Icon(
-          Icons.navigate_before,
-          color: darkBlue,
-        ),
-        onPressed: () async {
-          // TODO use this way
-          // int numOfDone = context.read<SpecificFlashCardViewModel>().numOfDone;
-          // await context
-          //     .read<FlashCardSetViewModel>()
-          //     .checkDone(widget.nameOfSet, numOfDone);
-          if (mounted) context.pop();
-        },
+        icon: const Icon(Icons.arrow_back, color: Colors.white),
+        onPressed: () => Navigator.pop(context),
       ),
       actions: [
-        widget.isPublic
-            ? const SizedBox.shrink()
-            : GestureDetector(
-                onTap: () => _showPopUp(true),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Icon(CupertinoIcons.plus, color: darkBlue),
-                ),
-              )
+        if (!widget.isPublic)
+          IconButton(
+            icon: const Icon(Icons.add, color: Colors.white),
+            onPressed: () => _showPopUp(true),
+          ),
       ],
     );
   }
@@ -245,35 +248,34 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
     flutterTts.stop();
   }
 
-  Container _buildCard(String word) {
+  Widget _buildCard(String text) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.blueAccent, // Nền màu xanh
-        borderRadius: BorderRadius.circular(20), // Bo tròn góc
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [primaryColor, secondaryColor],
+        ),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black26,
+            color: Colors.black.withOpacity(0.2),
             blurRadius: 10,
-            offset: Offset(2, 2),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
-      foregroundDecoration: BoxDecoration(
-        gradient: LinearGradient(
-          // Tạo gradient cho foreground
-          colors: [Colors.white.withOpacity(0.2), Colors.transparent],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20), // Bo tròn giống như decoration
-      ),
       child: Center(
-        child: Text(
-          word,
-          style: TextStyle(
-            fontSize: 24,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text(
+            text,
+            style: const TextStyle(
+              fontSize: 24,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),
@@ -739,8 +741,8 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
             specificFlashCardViewModel.flashcardList[_index], widget.nameOfSet);
         LoadingOverlay.hide();
         setState(() {
-          if (_index  >= 1 ){
-            _index-- ;
+          if (_index >= 1) {
+            _index--;
           }
         });
         if (mounted) {
@@ -761,288 +763,174 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
 
   @override
   Widget build(BuildContext context) {
-    double size = MediaQuery.of(context).size.width *
-        0.75; // Giảm kích thước flashcard để cân đối hơn
+    final viewModel = Provider.of<SpecificFlashCardViewModel>(context);
+    final flashcardList = viewModel.flashcardList;
+    final currentFlashcard =
+        _index < flashcardList.length ? flashcardList[_index] : null;
+
     return Scaffold(
-      appBar: _buildAppbar(),
-      body: FutureBuilder(
-        future: loadData,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const SpinKitFadingFour(color: Colors.grey);
-          } else {
-            return Consumer<SpecificFlashCardViewModel>(
-              builder: (context, specificFlashCardViewModel, child) {
-                return specificFlashCardViewModel.flashcardList.isEmpty
-                    ? _buildBlankPage()
-                    : SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // Số thứ tự flashcard
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 16),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffeee880),
-                                    borderRadius: BorderRadius.circular(12),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black12,
-                                        blurRadius: 4,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Text(
-                                    "${_index + 1} / ${specificFlashCardViewModel.flashcardList.length}",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
+      appBar: _buildAppBar(),
+      body: flashcardList.isEmpty
+          ? _buildBlankPage()
+          : Column(
+              children: [
+                // Progress indicator
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: LinearProgressIndicator(
+                    value: (_index + 1) / flashcardList.length,
+                    backgroundColor: Colors.grey[200],
+                    color: primaryColor,
+                    minHeight: 8,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                // Flashcard counter
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Card ${_index + 1} of ${flashcardList.length}",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      if (!widget.isPublic)
+                        IconButton(
+                          icon: Icon(
+                            currentFlashcard?.done ?? false
+                                ? Icons.check_circle
+                                : Icons.check_circle_outline,
+                            color: currentFlashcard?.done ?? false
+                                ? successColor
+                                : Colors.grey,
+                          ),
+                          onPressed: () => viewModel.markDone(_index),
+                        ),
+                    ],
+                  ),
+                ),
+                // Flashcard
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: GestureFlipCard(
+                      animationDuration: const Duration(milliseconds: 400),
+                      frontWidget: _buildCard(currentFlashcard?.english ?? ""),
+                      backWidget:
+                          _buildCard(currentFlashcard?.vietnamese ?? ""),
+                    ),
+                  ),
+                ),
+                // Example sentence
+                if (showExample && currentFlashcard?.example.isNotEmpty == true)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Example:",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: primaryColor,
                               ),
-                              SizedBox(height: 40),
-
-                              // Flashcard
-                              Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Transform.rotate(
-                                      angle: -15 * (pi / 180),
-                                      child: Container(
-                                        width: size,
-                                        height: size,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xff12b9a2),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black26,
-                                              blurRadius: 10,
-                                              offset: Offset(2, 2),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: size,
-                                      height: size,
-                                      child: GestureFlipCard(
-                                        animationDuration:
-                                            const Duration(milliseconds: 300),
-                                        axis: FlipAxis.horizontal,
-                                        enableController: false,
-                                        frontWidget: _buildCard(
-                                            specificFlashCardViewModel
-                                                .flashcardList[_index].english),
-                                        backWidget: _buildCard(
-                                            specificFlashCardViewModel
-                                                .flashcardList[_index]
-                                                .vietnamese),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 40),
-
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(width: 20),
-                                    Visibility(
-                                      visible: !showExample,
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 4),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              Color(0xffFF7E5F),
-                                              Color(0xfff67916)
-                                            ],
-                                          ),
-                                        ),
-                                        child: TextButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              showExample = !showExample;
-                                            });
-                                          },
-                                          child: const Text(
-                                            "View Example",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              Visibility(
-                                visible: showExample,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 15),
-                                  child: Container(
-                                    padding: EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(12),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black12,
-                                          blurRadius: 4,
-                                          offset: Offset(0, 2),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Text(
-                                      specificFlashCardViewModel
-                                          .flashcardList[_index].example,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Color(0xFFF10808),
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              widget.isPublic
-                                  ? SizedBox.shrink()
-                                  : Container(
-                                margin: EdgeInsets.only(top: 10),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 100, vertical: 4),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          color: Color(0xff15b036)),
-                                      child: TextButton(
-                                        onPressed: () async {
-                                          await specificFlashCardViewModel
-                                              .markDone(_index);
-                                        },
-                                        child: Text(
-                                          specificFlashCardViewModel
-                                                  .flashcardList[_index].done
-                                              ? "Undone"
-                                              : "Done",
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        ),
-                                      ),
-                                    ),
-                              // Nút điều khiển
-                              SizedBox(height: 30),
-
-                              Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    widget.isPublic
-                                        ? SizedBox.shrink()
-                                        : IconButton(
-                                            onPressed: () async {
-                                              await deleteAFlashCard();
-                                            },
-                                            icon: Icon(CupertinoIcons.trash,
-                                                size: 28,
-                                                color: Color(0xff187ee1)),
-                                            tooltip: "Delete",
-                                          ),
-                                    IconButton(
-                                      onPressed: () async {
-                                        await _speak(specificFlashCardViewModel
-                                            .flashcardList[_index].english);
-                                      },
-                                      icon: Icon(Icons.volume_up,
-                                          size: 28, color: Color(0xff609fde)),
-                                      tooltip: "Speak",
-                                    ),
-                                    widget.isPublic
-                                        ? SizedBox.shrink()
-                                        : IconButton(
-                                            onPressed: () {
-                                              _showPopUp(false);
-                                            },
-                                            icon: Icon(
-                                                FontAwesomeIcons.penToSquare,
-                                                size: 28,
-                                                color: Color(0xff609fde)),
-                                            tooltip: "Edit",
-                                          ),
-                                    IconButton(
-                                      onPressed: () {
-                                        if (_index == 0) return;
-                                        setState(() {
-                                          _index--;
-                                          if (showExample)
-                                            showExample = !showExample;
-                                        });
-                                      },
-                                      icon: Icon(Icons.navigate_before,
-                                          size: 28, color: Color(0xff609fde)),
-                                      tooltip: "Previous",
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        if (_index ==
-                                            specificFlashCardViewModel
-                                                    .flashcardList.length -
-                                                1) return;
-                                        setState(() {
-                                          _index++;
-                                          if (showExample)
-                                            showExample = !showExample;
-                                        });
-                                      },
-                                      icon: Icon(Icons.navigate_next,
-                                          size: 28, color: Color(0xff609fde)),
-                                      tooltip: "Next",
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              // Khoảng cách cuối để không bị sát đáy
-                            ],
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              currentFlashcard!.example,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                // Control buttons
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        color: primaryColor,
+                        iconSize: 30,
+                        onPressed: () async {
+                          await deleteAFlashCard();
+                        },
+                      ),
+                      if (!widget.isPublic)
+                        IconButton(
+                          icon: const Icon(Icons.edit),
+                          color: primaryColor,
+                          iconSize: 30,
+                          onPressed: () {
+                            _showPopUp(false);
+                          },
+                        ),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back),
+                        color: _index == 0 ? Colors.grey : primaryColor,
+                        iconSize: 30,
+                        onPressed: _index == 0
+                            ? null
+                            : () {
+                                setState(() {
+                                  _index--;
+                                  showExample = false;
+                                });
+                              },
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            showExample = !showExample;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              showExample ? Colors.grey : primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                      );
-              },
-            );
-          }
-        },
-      ),
+                        child: Text(
+                          showExample ? "Hide Example" : "Show Example",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_forward),
+                        color: _index == flashcardList.length - 1
+                            ? Colors.grey
+                            : primaryColor,
+                        iconSize: 30,
+                        onPressed: _index == flashcardList.length - 1
+                            ? null
+                            : () {
+                                setState(() {
+                                  _index++;
+                                  showExample = false;
+                                });
+                              },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }

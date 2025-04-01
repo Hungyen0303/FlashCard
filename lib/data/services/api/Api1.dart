@@ -41,6 +41,9 @@ abstract class Api1 {
 
   Future<bool> deleteFlashcard(FlashCard f, String nameOfSet);
 
+  Future<bool> publicSet(String name);
+
+
 /*----------------Conversation -----------------------*/
 
   Future<List<Conversation>> getConversations();

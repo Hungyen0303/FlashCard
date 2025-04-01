@@ -139,8 +139,12 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
                 ? QuickAlertType.success
                 : QuickAlertType.error,
             text: actionSuccessfully
-                ? "Created new Flashcard Set"
-                : "Failed to create Flashcard Set ",
+                ? isCreating
+                    ? "Created new Flashcard Set"
+                    : "Updated  Flashcard Set"
+                : isCreating
+                    ? "Failed to create Flashcard Set "
+                    : "Failed to  update Flashcard Set ",
           );
         }
       },
@@ -281,9 +285,10 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
             AnimatedContainer(
               duration: Duration(milliseconds: 800),
               curve: Curves.easeInOut,
-              child: Text("🎲"  , style: TextStyle(
-                fontSize: 100
-              ),),
+              child: Text(
+                "🎲",
+                style: TextStyle(fontSize: 100),
+              ),
             ),
             SizedBox(height: 25),
             // Tiêu đề

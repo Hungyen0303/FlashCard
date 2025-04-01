@@ -1,214 +1,226 @@
-import 'dart:math';
-import 'dart:ui';
-
 import 'package:flashcard_learning/domain/models/flashSet.dart';
-import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
-import 'package:flashcard_learning/utils/LoadingOverlay.dart';
-import 'package:flashcard_learning/utils/color/AllColor.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:pie_menu/pie_menu.dart';
-import 'package:provider/provider.dart';
 
 import '../../../routing/route.dart';
 
 class FlashCardSetItem extends StatelessWidget {
-  FlashCardSetItem({
+  final FlashCardSet flashCardSet;
+  final Function edit;
+  final Function delete;
+  final Function share;
+  final bool isGridView;
+  final bool isPublic;
+
+  const FlashCardSetItem({
     super.key,
     required this.flashCardSet,
     required this.edit,
     required this.delete,
     required this.share,
-    required this.isGridView, required this.isPublic,
+    required this.isGridView,
+    required this.isPublic,
   });
-
-  final FlashCardSet flashCardSet;
-  final Function edit;
-  final Function delete;
-  final Function share;
-  bool isGridView = true;
-  final bool isPublic;
 
   void _goToSpecificFlashCardSet(String nameOfSet, BuildContext context) {
     context.push(AppRoute.gotoFlashcardSet(nameOfSet, isPublic.toString()));
   }
 
-  Container _buildGridItem(BuildContext context) {
+  Widget _buildGridItem(BuildContext context) {
     return Container(
-      foregroundDecoration: BoxDecoration(),
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      width: MediaQuery.of(context).size.width * 0.5,
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: flashCardSet.color.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                flex: 5,
-                child: Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: Text(
-                    "#${flashCardSet.numOfCard}",
-                    style: TextStyle(fontSize: 16, color: flashCardSet.color),
-                  ),
-                ),
-              ),
-              Icon(
-                flashCardSet.iconData,
-                size: 80,
-                color: flashCardSet.color,
-              ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  margin: EdgeInsets.only(right: 10, bottom: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Icon(Icons.timer_outlined, color: flashCardSet.color),
-                      SizedBox(width: 5),
-                    ],
-                  ),
-                ),
-              ),
+              // Top info section
               Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      flashCardSet.color,
-                      flashCardSet.color.withOpacity(0.5),
-                    ],
+                  border: Border.all(color: flashCardSet.color, width: 1),
+                  color: flashCardSet.color.withOpacity(0.1),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blueGrey,
-                      offset: Offset(1, 1),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${flashCardSet.numOfCard} cards",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: flashCardSet.color,
+                      ),
+                    ),
+                    if (flashCardSet.done) _buildCompletionBadge(),
+                  ],
+                ),
+              ),
+
+              // Main content
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      flashCardSet.iconData,
+                      size: 48,
+                      color: flashCardSet.color,
+                    ),
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Text(
+                        flashCardSet.name,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
+                ),
+              ),
+
+              // Bottom section
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: flashCardSet.color.withOpacity(0.8),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
                   ),
                 ),
-                alignment: Alignment.center,
-                child: Text(
-                  flashCardSet.name,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.timer_outlined,
+                        size: 16, color: Colors.white70),
+                    const SizedBox(width: 4),
+                    Text(
+                      "Study now",
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.9),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          // Đặt icon hoàn thành ở góc trên bên phải
-          if (flashCardSet.done)
-            Positioned(
-              top: 8,
-              right: 8,
-              child: _buildIconComplete(),
-            ),
         ],
       ),
     );
   }
 
-  Widget _buildIconComplete() {
-    return AnimatedSwitcher(
-      duration: Duration(milliseconds: 300),
-      child: flashCardSet.done
-          ? Container(
-              key: ValueKey("complete"),
-              padding: EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Icon(
-                Icons.check_circle,
-                color: Colors.green,
-                size: 24,
-              ),
-            )
-          : SizedBox.shrink(key: ValueKey("empty")),
+  Widget _buildListItem() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: flashCardSet.color),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: ListTile(
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        leading: Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            color: flashCardSet.color.withOpacity(0.1),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            flashCardSet.iconData,
+            color: flashCardSet.color,
+            size: 24,
+          ),
+        ),
+        title: Text(
+          flashCardSet.name,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        subtitle: Text(
+          "${flashCardSet.numOfCard} cards",
+          style: TextStyle(
+            color: Colors.grey.shade600,
+            fontSize: 14,
+          ),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (flashCardSet.done) _buildCompletionBadge(),
+            const SizedBox(width: 8),
+            Icon(
+              Icons.chevron_right,
+              color: Colors.grey.shade400,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  Container _buildListItem() {
-    TextStyle textStyle = TextStyle(
-      fontSize: 15,
-      fontWeight: FontWeight.w400,
-      fontFamily: "FontListView",
-      color: flashCardSet.color,
-    );
+  Widget _buildCompletionBadge() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      child: ListTile(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-          side: BorderSide(width: 2, color: flashCardSet.color),
-        ),
-        tileColor: flashCardSet.color.withOpacity(0.1),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-        leading: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "${flashCardSet.numOfCard}\nPairs",
-                style: textStyle,
-                textAlign: TextAlign.center,
-              ),
-            ],
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.green.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.check_circle,
+            color: Colors.green.shade600,
+            size: 16,
           ),
-        ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                flashCardSet.name,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: flashCardSet.color,
-                  fontWeight: FontWeight.w600,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
+          const SizedBox(width: 4),
+          Text(
+            "Completed",
+            style: TextStyle(
+              color: Colors.green.shade600,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
             ),
-            _buildIconComplete(), // Đặt icon hoàn thành bên phải tên
-          ],
-        ),
-        trailing: Container(
-          margin: const EdgeInsets.only(right: 10),
-          child: Icon(
-            flashCardSet.iconData,
-            size: 50,
-            color: flashCardSet.color,
           ),
-        ),
+        ],
       ),
     );
   }
@@ -216,37 +228,41 @@ class FlashCardSetItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PieMenu(
-        onPressed: () {
-          _goToSpecificFlashCardSet(flashCardSet.name, context);
-        },
-        actions: [
-          PieAction(
-            tooltip: const Text('Edit'),
-            onSelect: () => edit(),
-
-            /// Optical correction
-            child: Padding(
-              padding: const EdgeInsets.only(left: 4),
-              child: FaIcon(FontAwesomeIcons.penToSquare),
-            ),
+      theme: const PieTheme(
+        buttonTheme: PieButtonTheme(
+          backgroundColor: Color(0xFF9AC2EA),
+          iconColor: Colors.black87,
+        ),
+      ),
+      actions: [
+        PieAction(
+          tooltip: Text('Edit'),
+          onSelect: () => edit(),
+          child: const Icon(Icons.edit, size: 20),
+        ),
+        PieAction(
+          tooltip: Text('Delete'),
+          onSelect: () => delete(),
+          buttonTheme: const PieButtonTheme(
+            backgroundColor: Colors.red,
+            iconColor: Colors.white,
           ),
-          PieAction(
-            buttonTheme: PieButtonTheme(
-                backgroundColor: Colors.red, iconColor: Colors.white),
-            tooltip: const Text('Delete'),
-            onSelect: () => delete(),
-            child: const FaIcon(
-              FontAwesomeIcons.trash,
-            ),
+          child: const Icon(Icons.delete, size: 20),
+        ),
+        PieAction(
+          tooltip: Text('Share'),
+          onSelect: () => share(),
+          buttonTheme: const PieButtonTheme(
+            backgroundColor: Colors.blue,
+            iconColor: Colors.white,
           ),
-          PieAction(
-            buttonTheme: PieButtonTheme(
-                backgroundColor: Colors.greenAccent, iconColor: Colors.white),
-            tooltip: const Text('Share'),
-            onSelect: () => share(),
-            child: const FaIcon(FontAwesomeIcons.share),
-          ),
-        ],
-        child: isGridView ? _buildGridItem(context) : _buildListItem());
+          child: const Icon(Icons.share, size: 20),
+        ),
+      ],
+      child: GestureDetector(
+        onTap: () => _goToSpecificFlashCardSet(flashCardSet.name, context),
+        child: isGridView ? _buildGridItem(context) : _buildListItem(),
+      ),
+    );
   }
 }

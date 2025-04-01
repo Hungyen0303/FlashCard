@@ -300,6 +300,24 @@ class Api1Impl extends Api1 {
   }
 
   @override
+  Future<bool> publicSet(String name) async {
+    try {
+      Response res = await dio.patch(URL.postFlashCardSetPublic(name),
+          options: Options(headers: {
+            "Authorization": "Bearer ${AppManager.getToken()}",
+            "Content-Type": "application/json"
+          }));
+      if (res.statusCode == 200) {
+        var rawData = res.data["data"];
+        return rawData;
+      } else
+        return false;
+    } on DioException catch (e) {
+      return false;
+    }
+  }
+
+  @override
   Future<List<FlashCard>> getAllFlashcard(String name) async {
     try {
       Response res = await dio.get(URL.flashCard(name),

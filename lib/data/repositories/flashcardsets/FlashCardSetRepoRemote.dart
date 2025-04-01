@@ -19,7 +19,8 @@ class FlashCardSetRepoRemote extends FlashCardSetRepo {
 
   @override
   Future<bool> addNewSetToPublic(FlashCardSet newSet) async {
-    // localListFlashCardSetPublic.add(newSet);
+    cachedlocalListFlashCardSetPublic.add(newSet);
+    await api1.publicSet(newSet.name);
     return true;
   }
 

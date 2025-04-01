@@ -15,7 +15,8 @@ class URL {
   static String flashCardSet = "$baseURL/FlashcardSet";
   static String flashCardSetPublic = "$baseURL/FlashcardSet/public";
 
-
+  static String postFlashCardSetPublic(String name) =>
+      "$baseURL/FlashcardSet/public/${name}";
 
   static String flashCard(nameOfSet) => "$baseURL/FlashcardSet/$nameOfSet";
 
@@ -44,7 +45,5 @@ class URL {
   static String createNewMessage(idOfConversation) =>
       "$conversationBase/$idOfConversation";
 
-
-  static String track = "$info/track" ;
-
+  static String track = "$info/track";
 }
