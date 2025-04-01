@@ -4,7 +4,13 @@
 ![Dart](https://img.shields.io/badge/Dart-2.x-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-A mobile application built with **Flutter** to help users learn through interactive flashcards and AI-powered conversations. This project aims to provide an engaging learning experience with a clean UI, smooth loading states, and efficient data handling.
+### Created by : Hungyen0303 
+## Youtube : Demo 
+- https://youtu.be/GaH_4NPYHh4
+## Backend repo ( I build by myself ) : https://github.com/Hungyen0303/FlashCard_backend
+
+Inspired by trendy AI ,  I create app for assisting Vietnamese to learn English. This motivation makes me invent this app. 
+A mobile application built with **Flutter** to help users learn through interactive flashcards and AI-powered conversations. This project aims to provide an engaging learning experience with appealing UI , easy tools, modern trendy technology. 
 
 ---
 
@@ -14,10 +20,9 @@ A mobile application built with **Flutter** to help users learn through interact
 - [Screenshots](#screenshots)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Project Structure](#project-structure)
 - [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-- [License](#license)
+- [Architecture](#Architecture)
+
 
 ---
 
@@ -27,34 +32,20 @@ A mobile application built with **Flutter** to help users learn through interact
 - **AI Conversations**: Simulated conversations powered by AI to enhance language skills.
 - **Loading Overlay**: Custom loading overlay with animated visuals (e.g., a jumping cat) for smooth user experience during data fetching.
 - **Shimmer Effect**: Skeleton loading UI using the `shimmer` package to display placeholders while fetching data.
-- **Provider State Management**: Efficient state management for handling conversations and user data.
-- **Responsive Design**: Optimized for both Android and iOS platforms.
-- **Splash Screen Customization**: Previously implemented with `flutter_native_splash` (now reverted to default).
+- **Provider State Management**: Efficient state management for handling conversations and user data
+- **Dictionary** : Designed for searching words, prounoucing words, listening natives speak , scan images for quick search
 
 ---
 
 ## Screenshots
 
-### Home Screen with Flashcards
 ![Home Screen](home.png)
+![Intro page](intropage.png)
+![Flashcard](card.png)
+![Dictionary](dictionary.png)
+![AI Conversation](chatwithAI.png)
+![Account](account.png)
 
-### AI Conversation with Shimmer Loading
-![AI Conversation](screenshots/ai_conversation_shimmer.png)
-
-### Loading Overlay
-![Loading Overlay](screenshots/loading_overlay.png)
-
-### Home Screen with Flashcards
-![Home Screen](home.png)
-
-### AI Conversation with Shimmer Loading
-![AI Conversation](screenshots/ai_conversation_shimmer.png)
-
-### Loading Overlay
-![Loading Overlay](screenshots/loading_overlay.png)
-
-
----
 
 ## Installation
 
@@ -76,20 +67,22 @@ A mobile application built with **Flutter** to help users learn through interact
    ```bash
    flutter run
 
-
 ### Usage
 - Launch the App: Open the app to see the default splash screen (Flutter logo) followed by the home screen.
 - Explore Flashcards: Navigate through the flashcard section to view learning content.
 - AI Conversations: Access the "AI Conversations" section, where cards display a shimmer effect while data loads from the AI backend. Once loaded, interact with the conversation cards.
-- Loading Feedback: During data fetching, or shimmer effect provides visual feedback.
+- AI Chat : Chat with AI for feedbacks or other problems with leanring
+- Navigating to dictionary help you to practice pronoucing , listening  skills.
 
 ## Technologies Used
 Flutter: Cross-platform framework for building the app.
 Dart: Programming language for Flutter.
-Provider: State management for handling data and UI updates.
-Shimmer: Package for skeleton loading effects.
+Java 
+MySQL 
+Supabase 
+and more ... 
 
-Android/iOS: Native configurations for platform-specific features.
+## Architecture
 
 ```bash
    flashcard-learning/
