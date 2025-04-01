@@ -77,27 +77,11 @@ A mobile application built with **Flutter** to help users learn through interact
    flutter run
 
 
-Usage
-Launch the App: Open the app to see the default splash screen (Flutter logo) followed by the home screen.
-Explore Flashcards: Navigate through the flashcard section to view learning content.
-AI Conversations: Access the "AI Conversations" section, where cards display a shimmer effect while data loads from the AI backend. Once loaded, interact with the conversation cards.
-Loading Feedback: During data fetching, or shimmer effect provides visual feedback.
-
-flashcard-learning/
-├── android/              # Android native files
-├── ios/                  # iOS native files
-├── lib/
-│   ├── ui/               # UI components and screens
-│   │   ├── home/         # Home screen and widgets
-│   │   │   ├── widgets/  # Reusable widgets (e.g., CardCustom)
-│   │   └── conversation_ai_screen.dart  # AI conversation screen
-│   ├── utils/            # Utility files (colors, enums)
-│   ├── view_models/      # View models for state management
-│   └── main.dart         # App entry point
-├── assets/               # Images and static resources
-├── pubspec.yaml          # Dependencies and configuration
-└── README.md             # Project documentation
-
+### Usage
+- Launch the App: Open the app to see the default splash screen (Flutter logo) followed by the home screen.
+- Explore Flashcards: Navigate through the flashcard section to view learning content.
+- AI Conversations: Access the "AI Conversations" section, where cards display a shimmer effect while data loads from the AI backend. Once loaded, interact with the conversation cards.
+- Loading Feedback: During data fetching, or shimmer effect provides visual feedback.
 
 ## Technologies Used
 Flutter: Cross-platform framework for building the app.
@@ -106,5 +90,24 @@ Provider: State management for handling data and UI updates.
 Shimmer: Package for skeleton loading effects.
 
 Android/iOS: Native configurations for platform-specific features.
+
+```bash
+   flashcard-learning/
+   ├── android/              # Android native files
+   ├── ios/                  # iOS native files
+   ├── lib/
+   │   ├── ui/               # UI components and screens
+   │   │   ├── home/         # Home screen and widgets
+   │   │   │   ├── widgets/  # Reusable widgets (e.g., CardCustom)
+   │   │   └── conversation_ai_screen.dart  # AI conversation screen
+   │   ├── utils/            # Utility files (colors, enums)
+   │   ├── view_models/      # View models for state management
+   │   └── main.dart         # App entry point
+   ├── assets/               # Images and static resources
+   ├── pubspec.yaml          # Dependencies and configuration
+   └── README.md             # Project documentation
+
+
+
 
 
