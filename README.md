@@ -41,7 +41,7 @@ A mobile application built with **Flutter** to help users learn through interact
 
 ## Screenshots
 
-![Home Screen](home (2).png)
+![Home Screen](home.png)
 ![Intro page](intropage.png)
 ![Flashcard](card.png)
 ![Dictionary](dictionary.png)
