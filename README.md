@@ -40,13 +40,13 @@ A mobile application built with **Flutter** to help users learn through interact
 ---
 
 ## Screenshots
-
-![Home Screen](home.png)
-![Intro page](intropage.png)
-![Flashcard](card.png)
-![Dictionary](dictionary.png)
-![AI Conversation](chatwithAI.png)
-![Account](account.png)
+![Sign in](https://github.com/Hungyen0303/FlashCard/blob/remote/screenshots/signin.png?raw=true)
+![Home Screen](https://github.com/Hungyen0303/FlashCard/blob/remote/screenshots/Screenshot_20250401_162344.png?raw=true)
+![Intro page](https://github.com/Hungyen0303/FlashCard/blob/remote/screenshots/Screenshot_20250401_162316.png?raw=true)
+![Flashcard](https://github.com/Hungyen0303/FlashCard/blob/remote/screenshots/Screenshot_20250401_162357.png)
+![Dictionary](https://github.com/Hungyen0303/FlashCard/blob/remote/screenshots/Screenshot_20250401_162414.png)
+![AI Conversation](https://github.com/Hungyen0303/FlashCard/blob/remote/screenshots/Screenshot_20250401_162439.png))
+![Account](https://github.com/Hungyen0303/FlashCard/blob/remote/screenshots/Screenshot_20250401_162439.png?raw=true)
 
 
 ## Installation
