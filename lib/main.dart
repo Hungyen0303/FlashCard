@@ -1,25 +1,16 @@
-import 'package:flashcard_learning/data/repositories/auth/AuthRepositoryLocal.dart';
-import 'package:flashcard_learning/data/repositories/auth/AuthRepositoryRemote.dart';
+import 'package:flashcard_learning/AppProvider.dart';
 import 'package:flashcard_learning/data/services/supabass_service/SupabassService.dart';
 import 'package:flashcard_learning/routing/router.dart';
-import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/auth/AppManager.dart';
-import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
-import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
-import 'package:flashcard_learning/ui/dictionary/view_model/DictionaryViewModel.dart';
-import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
-import 'package:flashcard_learning/ui/flashcard_sets/widgets/CustomCardProvider.dart';
-import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
-import 'package:flashcard_learning/ui/specific_flashcard/view_models/SpecificFlashCardViewModel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'domain/models/user.dart';
-
 
 void main() async {
+  await dotenv.load(fileName: ".env");
 
   await Supabase.initialize(
     url: SupaBaseService.URL,
@@ -32,34 +23,15 @@ void main() async {
         '${record.time}: [${record.level.name}] ${record.loggerName} - ${record.message}');
   });
   await AppManager.initialize();
+
   runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider<CustomCardProvider>(
-          create: (_) => CustomCardProvider()),
-      Provider<AuthRepositoryRemote>(create: (_) => AuthRepositoryRemote()),
-      ChangeNotifierProvider<LoginViewModel>(
-          create: (context) => LoginViewModel(
-              authRepository:
-                  Provider.of<AuthRepositoryRemote>(context, listen: false))),
-      ChangeNotifierProvider<FlashCardSetViewModel>(
-          create: (_) => FlashCardSetViewModel()),
-      ChangeNotifierProvider<SpecificFlashCardViewModel>(
-          create: (_) => SpecificFlashCardViewModel()),
-      ChangeNotifierProvider<ChatWithAIViewModel>(
-          create: (_) => ChatWithAIViewModel()),
-      ChangeNotifierProvider<AccountViewModel>(
-          create: (_) => AccountViewModel()),
-      ChangeNotifierProvider<MainScreenViewModel>(
-          create: (_) => MainScreenViewModel()),
-      Provider<DictionaryViewModel>(create: (context) => DictionaryViewModel()),
-    ],
+    providers: AppProvider.providers,
     child: MyApp(),
   ));
 }
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-
   final Logger mainLogger = Logger("MyApp");
 
   @override
@@ -71,8 +43,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "MainFont",
         buttonTheme: ButtonThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: darkBlue) ,
-
+          colorScheme: ColorScheme.fromSeed(seedColor: darkBlue),
         ),
         colorScheme: ColorScheme.fromSeed(seedColor: darkBlue),
         useMaterial3: true,

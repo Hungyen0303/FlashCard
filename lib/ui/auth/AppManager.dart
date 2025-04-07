@@ -2,14 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flashcard_learning/data/services/api/Api1.dart';
 import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
 import 'package:flashcard_learning/domain/models/user.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../routing/route.dart';
 
 class AppManager {
   static String _token = "";
-
   static String _refreshToken = "";
   static User? _currentUser = User();
   static late SharedPreferences prefs;
@@ -49,6 +49,15 @@ class AppManager {
         return false;
       }
     }
+  }
+
+  static GenerativeModel aiModelGemini = GenerativeModel(
+    model: 'gemini-1.5-flash-latest',
+    apiKey: dotenv.env['AI_API_KEY'] ?? "",
+  );
+
+  static GenerativeModel getAI() {
+    return aiModelGemini;
   }
 
   static Future<void> initialize() async {

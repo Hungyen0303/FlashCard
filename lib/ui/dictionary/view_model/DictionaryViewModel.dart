@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../../../data/repositories/chatWithAI/Prompt.dart';
@@ -10,21 +11,26 @@ import '../../../domain/models/WordFromAPI.dart';
 class DictionaryViewModel {
   DictionaryRepo repo = DictionaryRepoLocal();
 
+  bool hasError = false;
+
+  String errorMessage = "";
+
   DictionaryApi dictionaryApi = DictionaryApi();
 
-  Future<WordFromAPI> loadWord(String text) async {
-    return await dictionaryApi.getWord(text);
+  Future<WordFromAPI?> loadWord(String text) async {
+    try {
+      return await dictionaryApi.getWord(text);
+    } catch (e) {
+      hasError = true;
+      errorMessage = e.toString();
+      return null;
+    }
   }
 
   Future<Word> getWord(String text) async {
     return await repo.getWord(text);
   }
-
-  final model = GenerativeModel(
-    model: 'gemini-1.5-flash-latest',
-    apiKey: "AIzaSyBax0qdrfE8U0TzsW4OISS4VZ3DqLic20s",
-  );
-
+  final model = AppManager.getAI();
   List<String> popularWords = [];
 
   Future<List<String>> getPopularWord() async {

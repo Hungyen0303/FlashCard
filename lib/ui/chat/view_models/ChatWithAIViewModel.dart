@@ -3,17 +3,16 @@ import 'package:flashcard_learning/data/repositories/chatWithAI/ChatWithAIRepoRe
 import 'package:flashcard_learning/data/repositories/chatWithAI/Prompt.dart';
 import 'package:flashcard_learning/domain/models/Conversation.dart';
 import 'package:flashcard_learning/domain/models/Message.dart';
+import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class ChatWithAIViewModel extends ChangeNotifier {
-  final ChatWithAIRepo _repo = ChatWithAIRepoRemote();
-  final model = GenerativeModel(
-    model: 'gemini-1.5-flash-latest',
-    apiKey: "AIzaSyBax0qdrfE8U0TzsW4OISS4VZ3DqLic20s",
-  );
+  ChatWithAIViewModel(this._repo);
 
-  String API_KEY = "AIzaSyBax0qdrfE8U0TzsW4OISS4VZ3DqLic20s";
+  final ChatWithAIRepo _repo;
+
+  final model = AppManager.getAI();
 
   // TODO : has Error
   // TODO Error message
@@ -105,5 +104,4 @@ class ChatWithAIViewModel extends ChangeNotifier {
     notifyListeners();
     return success;
   }
-
 }

@@ -21,8 +21,8 @@ class DictionaryApi {
           continue;
         } else {
           Meaning meaning = Meaning.named(
-            i["definitions"][0]["definition"] ,
-            i["definitions"][0]["example"] ,
+            i["definitions"][0]["definition"],
+            i["definitions"][0]["example"],
           );
           wordFromAPI.meanings.add(meaning);
           break;
@@ -31,7 +31,7 @@ class DictionaryApi {
 
       return wordFromAPI;
     } catch (e) {
-      return WordFromAPI();
+      rethrow;
     }
   }
 }

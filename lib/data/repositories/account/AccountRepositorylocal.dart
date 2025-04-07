@@ -26,6 +26,11 @@ class AccountRepositoryLocal extends AccountRepository {
   }
 
   @override
+  void clearCached() {
+
+  }
+
+  @override
   Future<void> updateTrackData(
       int numOfCompleteFlashcard, int numOfCompleteConversation) async {
 //

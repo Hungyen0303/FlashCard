@@ -12,6 +12,8 @@ import 'package:logging/logging.dart';
 import '../../../data/repositories/flashcardsets/FlashCardSetRepoRemote.dart';
 
 class FlashCardSetViewModel extends ChangeNotifier {
+  FlashCardSetViewModel(this._repo);
+
   List<FlashCardSet> _listFlashCardSets = [];
   List<FlashCardSet> _listFlashCardSetsPublic = [];
 
@@ -27,13 +29,12 @@ class FlashCardSetViewModel extends ChangeNotifier {
     notifyListeners();
     return true;
   }
-  Future<bool> loadDataPublic () async {
+
+  Future<bool> loadDataPublic() async {
     _listFlashCardSetsPublic = await getAllSetPublic();
     notifyListeners();
     return true;
   }
-
-
 
   // Future<void> checkDone(String nameOfSet, int numOfDone) async {
   //   int index = listFlashCardSets.indexWhere((e) => e.name == nameOfSet);
@@ -54,7 +55,7 @@ class FlashCardSetViewModel extends ChangeNotifier {
   //   // }
   // }
 
-  final FlashCardSetRepo _repo = FlashCardSetRepoRemote();
+  final FlashCardSetRepo _repo;
 
   Future<List<FlashCardSet>> getAllSet() async {
     try {

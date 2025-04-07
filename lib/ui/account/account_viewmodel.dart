@@ -1,4 +1,3 @@
-import 'package:flashcard_learning/data/repositories/account/AccountRepositorylocal.dart';
 import 'package:flashcard_learning/data/repositories/account/accountRepository.dart';
 import 'package:flashcard_learning/data/services/supabass_service/SupabassService.dart';
 import 'package:flashcard_learning/domain/models/user.dart';
@@ -6,16 +5,14 @@ import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flashcard_learning/data/repositories/account/AccountRepositoryRemote.dart';
-import 'package:line_icons/line_icon.dart';
 
 class AccountViewModel extends ChangeNotifier {
+  AccountViewModel(this._repo);
   User get currentUser => _currentUser;
   User _currentUser = AppManager.getUser() ??
       User.named(username: "guest", name: "guest", plan: "Basic", avatar: "");
 
-  AccountViewModel();
-
-  final AccountRepository _repo = AccountRepositoryRemote();
+  final AccountRepository _repo;
 
   bool countByDay = true;
 
@@ -37,7 +34,9 @@ class AccountViewModel extends ChangeNotifier {
             avatar: linkAfterUploading));
         loadUser();
         notifyListeners();
-      } catch (e) {}
+      } catch (e) {
+
+      }
     }
   }
 
@@ -54,7 +53,9 @@ class AccountViewModel extends ChangeNotifier {
     countByDay = isCountByDay;
     try {
       await loadData();
-    } catch (e) {}
+    } catch (e) {
+
+    }
 
     notifyListeners();
   }
@@ -96,4 +97,9 @@ class AccountViewModel extends ChangeNotifier {
     await _repo.postTrack();
     notifyListeners();
   }
+
+  void clearCached() {
+
+  }
+
 }

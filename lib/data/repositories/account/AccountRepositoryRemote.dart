@@ -4,8 +4,16 @@ import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
 import 'package:flashcard_learning/ui/auth/AppManager.dart';
 
 import '../../../domain/models/user.dart';
+import '../chatWithAI/ChatWithAIRepo.dart';
+import '../flashcardsets/FlashCardSetRepo.dart';
+import '../search_result/search_result_repository.dart';
+import '../specific_flashcard/SpecificFlashCardRepo.dart';
 
 class AccountRepositoryRemote extends AccountRepository {
+  AccountRepositoryRemote();
+
+
+
   Map<String, dynamic> cachedData = {};
 
   int cachedNumOfCompleteFlashcardSet = -1;
@@ -21,7 +29,8 @@ class AccountRepositoryRemote extends AccountRepository {
 
   @override
   Future<void> logout() {
-    // TODO: implement logout
+    AppManager.clearToken();
+    clearCached();
     throw UnimplementedError();
   }
 
@@ -41,15 +50,15 @@ class AccountRepositoryRemote extends AccountRepository {
   }
 
   @override
-  Future<Map<String, int>> getTrackData() {
-    return api1.getTrackData() ;
-  }
+  void clearCached() {}
 
+  @override
+  Future<Map<String, int>> getTrackData() {
+    return api1.getTrackData();
+  }
 
   @override
   Future<void> postTrack() async {
-    await api1.postTrack() ;
+    await api1.postTrack();
   }
-
-
 }

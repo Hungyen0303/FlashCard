@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:provider/provider.dart';
@@ -39,10 +40,7 @@ class MainScreenViewModel extends ChangeNotifier {
     });
   }
 
-  final model = GenerativeModel(
-    model: 'gemini-1.5-flash-latest',
-    apiKey: "AIzaSyBax0qdrfE8U0TzsW4OISS4VZ3DqLic20s",
-  );
+  final model = AppManager.getAI();
 
   String title = "";
   late Conversation currentConversation;

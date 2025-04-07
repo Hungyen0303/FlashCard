@@ -41,12 +41,12 @@ A mobile application built with **Flutter** to help users learn through interact
 
 ## Screenshots
 
-![Home Screen](home.png)
-![Intro page](intropage.png)
-![Flashcard](card.png)
-![Dictionary](dictionary.png)
-![AI Conversation](chatwithAI.png)
-![Account](account.png)
+![Home Screen](screenshots/home.png)
+![Intro page](screenshots/intropage.png)
+![Flashcard](screenshots/card.png)
+![Dictionary](screenshots/dictionary.png)
+![AI Conversation](screenshots/chatwithAI.png)
+![Account](screenshots/account.png)
 
 
 ## Installation

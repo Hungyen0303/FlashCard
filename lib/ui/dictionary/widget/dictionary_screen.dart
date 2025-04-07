@@ -81,9 +81,11 @@ class _DictionaryPageState extends State<DictionaryPage> {
 
   Future<void> gotoSearchPage(String text) async {
     LoadingOverlay.show(context);
-    WordFromAPI wordFromAPI =
+    WordFromAPI?  wordFromAPI =
         await Provider.of<DictionaryViewModel>(context, listen: false)
             .loadWord(text);
+
+
     LoadingOverlay.hide();
 
     Navigator.of(context).push(MaterialPageRoute(

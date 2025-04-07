@@ -11,10 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 class SearchResultPage extends StatelessWidget {
   SearchResultPage({super.key, required this.word});
 
-  final WordFromAPI word;
-
-  // SearchResultViewModel searchResultViewModel = SearchResultViewModel();
-
+  final WordFromAPI? word;
   Padding _buildText(String text, TextStyle? style) {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
@@ -54,6 +51,58 @@ class SearchResultPage extends StatelessWidget {
     fontSize: 18,
   );
 
+  Widget _buildUnfoundWidget(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.search_off,
+            size: 64,
+            color: Colors.grey[400],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            "Word Not Found",
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[700],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Text(
+              "We couldn't find the word you're looking for. Please try another search.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton.icon(
+            onPressed: () {
+              context.pop();
+            },
+            icon: const Icon(Icons.search),
+            label: const Text("Search Again"),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue[600],
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,85 +132,92 @@ class SearchResultPage extends StatelessWidget {
         elevation: 4,
         shadowColor: Colors.black45,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Expanded(
+      body: word == null
+          ? _buildUnfoundWidget(context)
+          : Padding(
+              padding: EdgeInsets.all(20),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildText(word.word.toUpperCase(), mainWord),
-                  Text(word.phonetics, style: apiStyle),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () async {
-                          await playAudioFromNetWork(word.linkAudio);
-                        },
-                        icon: Icon(
-                          CupertinoIcons.volume_down,
-                          color: Colors.blueAccent,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Icon(
-                        CupertinoIcons.slowmo,
-                        color: Colors.blueAccent,
-                      ),
-                    ],
-                  ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: 1,
-                      itemBuilder: (context, i) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildText(word!.word.toUpperCase(), mainWord),
+                        Text(word!.phonetics, style: apiStyle),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
                           children: [
-                            _buildText("📘 Definition", submain),
-                            Text(
-                              word.meanings[i].definition,
-                              style: contentStyle,
+                            IconButton(
+                              onPressed: () async {
+                                await playAudioFromNetWork(word!.linkAudio);
+                              },
+                              icon: Icon(
+                                CupertinoIcons.volume_down,
+                                color: Colors.blueAccent,
+                              ),
                             ),
-                            _buildText("✅ Example", submain),
-                            Text(
-                              word.meanings[i].example,
-                              style: contentStyle,
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Icon(
+                              CupertinoIcons.slowmo,
+                              color: Colors.blueAccent,
                             ),
                           ],
-                        );
-                      },
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: 1,
+                            itemBuilder: (context, i) {
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildText("📘 Definition", submain),
+                                  Text(
+                                    word!.meanings.isNotEmpty
+                                        ? word!.meanings[i].definition
+                                        : "We could not find the meaning ",
+                                    style: contentStyle,
+                                  ),
+                                  _buildText("✅ Example", submain),
+                                  Text(
+                                    word!.meanings.isNotEmpty
+                                        ? word!.meanings[i].example
+                                        : "We could not find the example",
+                                    style: contentStyle,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () async {
+                              final Uri url = Uri.parse(
+                                  "https://youglish.com/pronounce/${word!.word}/english");
+
+                              if (!await launchUrl(url)) {
+                                throw Exception('Could not launch $url');
+                              }
+                            },
+                            child: Text(
+                              "Xem người khác thực hành >",
+                              style:
+                                  TextStyle(color: Colors.blue, fontSize: 18),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () async {
-                        final Uri url = Uri.parse(
-                            "https://youglish.com/pronounce/${word.word}/english");
-
-                        if (!await launchUrl(url)) {
-                          throw Exception('Could not launch $url');
-                        }
-                      },
-                      child: Text(
-                        "Xem người khác thực hành >",
-                        style: TextStyle(color: Colors.blue, fontSize: 18),
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

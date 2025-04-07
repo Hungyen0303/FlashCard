@@ -12,4 +12,6 @@ abstract class AccountRepository {
   Future<Map<String, int>> getTrackData();
 
   Future<void> postTrack();
+
+  void clearCached() ;
 }

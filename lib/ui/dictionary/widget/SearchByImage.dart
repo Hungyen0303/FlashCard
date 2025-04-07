@@ -67,7 +67,7 @@ class SearchByImageState extends State<SearchByImage> {
 
   Future<void> gotoSearchPage(String text) async {
     LoadingOverlay.show(context);
-    WordFromAPI wordFromAPI =
+    WordFromAPI? wordFromAPI =
         await Provider.of<DictionaryViewModel>(context, listen: false)
             .loadWord(text);
     LoadingOverlay.hide();

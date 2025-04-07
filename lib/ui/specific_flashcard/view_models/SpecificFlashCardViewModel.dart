@@ -6,10 +6,13 @@ import 'package:flashcard_learning/domain/models/Flashcard.dart';
 import 'package:flutter/cupertino.dart';
 
 class SpecificFlashCardViewModel extends ChangeNotifier {
-  final SpecificFlashCardRepo _repo = SpecificFlashCardRepoRemote();
+  SpecificFlashCardViewModel(this._repo);
+
+  final SpecificFlashCardRepo _repo;
+
   List<FlashCard> flashcardList = [];
   late int numOfDone;
-   Function(int)? onDoneChanged;
+  Function(int)? onDoneChanged;
   late final VoidCallback? onAllDone;
   Timer? _debounceTimer;
 

@@ -66,6 +66,7 @@ dependencies:
   audioplayers: ^6.4.0
   json_annotation: ^4.9.0
   shimmer: ^3.0.0
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -118,6 +119,7 @@ flutter:
      - assets/gg-icon.png
      - assets/apple-icon.png
      - assets/icon-picker.jpg
+     - .env
 
 
 

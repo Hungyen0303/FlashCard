@@ -53,7 +53,7 @@ class SearchByVoiceState extends State<SearchByVoice> {
     if (text.isEmpty) return;
 
     LoadingOverlay.show(context);
-    WordFromAPI wordFromAPI =
+    WordFromAPI? wordFromAPI =
         await Provider.of<DictionaryViewModel>(context, listen: false)
             .loadWord(text);
     LoadingOverlay.hide();
