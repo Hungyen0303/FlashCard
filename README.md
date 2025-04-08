@@ -49,6 +49,7 @@ A mobile application built with **Flutter** to help users learn through interact
 ![Account](screenshots/account.png)
 
 
+
 ## Installation
 
 ### Prerequisites
