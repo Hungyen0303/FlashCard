@@ -13,5 +13,4 @@ abstract class AccountRepository {
 
   Future<void> postTrack();
 
-  void clearCached() ;
 }

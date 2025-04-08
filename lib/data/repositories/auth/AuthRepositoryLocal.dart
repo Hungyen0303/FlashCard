@@ -1,5 +1,4 @@
 import 'package:flashcard_learning/data/repositories/auth/AuthRepository.dart';
-import 'package:flashcard_learning/domain/models/user.dart';
 
 class Authrepositorylocal extends AuthRepository {
   final Map<String, String> fakeAccounts = {

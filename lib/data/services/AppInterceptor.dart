@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:logging/logging.dart';
 
-import '../../ui/auth/AppManager.dart';
+import '../../AppManager.dart';
 import '../URL.dart';
 
 class AppInterceptor extends Interceptor {

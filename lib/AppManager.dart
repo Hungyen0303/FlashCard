@@ -62,7 +62,6 @@ class AppManager {
 
   static Future<void> initialize() async {
     prefs = await SharedPreferences.getInstance();
-    prefs.remove("isFirstTime");
 
     loadToken();
 

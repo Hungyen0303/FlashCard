@@ -12,7 +12,7 @@ class FlashCardSet {
   FlashCardSet(
       this.name, this.numOfCard, this.iconData, this.color, this.done);
 
-  // DateTime createAt;
+  
   String name;
 
   int numOfCard;

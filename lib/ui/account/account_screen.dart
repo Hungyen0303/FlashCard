@@ -1,12 +1,14 @@
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
-import 'package:flashcard_learning/ui/auth/AppManager.dart';
+import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
+
+import '../../AppManager.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -19,8 +21,11 @@ class _AccountPageState extends State<AccountPage> {
   // Define color palette based on the dominant color 0xFFA6C7E7
 
   Future<void> logout(BuildContext context) async {
-    AppManager.clearToken();
-    context.go(AppRoute.login);
+    context.read<ChatWithAIViewModel>().clearAll();
+    await context.read<AccountViewModel>().logout();
+    if (mounted) {
+      context.go(AppRoute.login);
+    }
   }
 
   void _gotoAccountPage() {

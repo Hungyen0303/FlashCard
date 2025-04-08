@@ -1,12 +1,8 @@
-import 'dart:math';
 
 import 'package:flashcard_learning/data/repositories/flashcardsets/FlashCardSetRepo.dart';
 import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
 import 'package:flashcard_learning/domain/models/flashSet.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:line_icons/line_icons.dart';
+
 
 import '../../services/api/Api1.dart';
 

@@ -6,7 +6,6 @@ abstract class FlashCardSetRepo {
   Future<List<FlashCardSet>> getAllSetPublic();
 
 
-
   Future<bool> addNewSet(FlashCardSet newSet);
 
   Future<bool> addNewSetToPublic(FlashCardSet newSet);

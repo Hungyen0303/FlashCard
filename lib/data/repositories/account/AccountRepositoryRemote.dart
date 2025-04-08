@@ -1,26 +1,16 @@
 import 'package:flashcard_learning/data/repositories/account/accountRepository.dart';
 import 'package:flashcard_learning/data/services/api/Api1.dart';
 import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
-import 'package:flashcard_learning/ui/auth/AppManager.dart';
+import 'package:hive/hive.dart';
 
+import '../../../AppCachedData.dart';
+import '../../../AppManager.dart';
 import '../../../domain/models/user.dart';
-import '../chatWithAI/ChatWithAIRepo.dart';
-import '../flashcardsets/FlashCardSetRepo.dart';
-import '../search_result/search_result_repository.dart';
-import '../specific_flashcard/SpecificFlashCardRepo.dart';
 
 class AccountRepositoryRemote extends AccountRepository {
-  AccountRepositoryRemote();
+  AccountRepositoryRemote({required this.api1});
 
-
-
-  Map<String, dynamic> cachedData = {};
-
-  int cachedNumOfCompleteFlashcardSet = -1;
-
-  int cachedNumOfCompleteConversation = -1;
-
-  Api1 api1 = Api1Impl();
+  final Api1 api1;
 
   @override
   void setImage(String path) {
@@ -28,17 +18,18 @@ class AccountRepositoryRemote extends AccountRepository {
   }
 
   @override
-  Future<void> logout() {
-    AppManager.clearToken();
-    clearCached();
-    throw UnimplementedError();
+  Future<void> logout() async {
+    await AppManager.logout();
+    await AppCachedData.clearCachedData();
   }
 
   @override
   Future<void> updateUser(User newUser) async {
     try {
       await api1.updateUser(newUser);
-    } catch (e) {}
+    } catch (e) {
+      // TODO hasError and showEror
+    }
   }
 
   @override
@@ -50,11 +41,22 @@ class AccountRepositoryRemote extends AccountRepository {
   }
 
   @override
-  void clearCached() {}
+  Future<Map<String, int>> getTrackData() async {
+    await Hive.openBox(RepoName.account.name);
+    var box = Hive.box(RepoName.account.name);
+    final rawData = box.get(RepoName.account.name);
+    Map<String, int> cachedData = {};
+    if (rawData is Map) {
+      cachedData = rawData.map(
+        (key, value) => MapEntry(key.toString(), value as int),
+      );
+    }
 
-  @override
-  Future<Map<String, int>> getTrackData() {
-    return api1.getTrackData();
+    if (cachedData == null || cachedData.isEmpty) {
+      cachedData = await api1.getTrackData();
+      box.put(RepoName.account.name, cachedData);
+    }
+    return cachedData;
   }
 
   @override

@@ -8,7 +8,10 @@ import '../../../domain/models/Flashcard.dart';
 class SpecificFlashCardRepoRemote extends SpecificFlashCardRepo {
   List<FlashCard> cachedList = [];
   String nameOfSet = "";
-  Api1 api1 = Api1Impl();
+
+  SpecificFlashCardRepoRemote({required this.api1});
+
+  final Api1 api1;
 
   @override
   void setNameOfSet(String newName) {

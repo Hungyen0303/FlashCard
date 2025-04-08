@@ -1,8 +1,8 @@
-import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:provider/provider.dart';
 
+import '../../../AppManager.dart';
 import '../../../data/repositories/chatWithAI/Prompt.dart';
 import '../../../domain/models/Conversation.dart';
 import '../../../domain/models/Message.dart';

@@ -1,11 +1,11 @@
 import 'package:flashcard_learning/data/repositories/chatWithAI/ChatWithAIRepo.dart';
-import 'package:flashcard_learning/data/repositories/chatWithAI/ChatWithAIRepoRemote.dart';
 import 'package:flashcard_learning/data/repositories/chatWithAI/Prompt.dart';
 import 'package:flashcard_learning/domain/models/Conversation.dart';
 import 'package:flashcard_learning/domain/models/Message.dart';
-import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+
+import '../../../AppManager.dart';
 
 class ChatWithAIViewModel extends ChangeNotifier {
   ChatWithAIViewModel(this._repo);
@@ -49,7 +49,6 @@ class ChatWithAIViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-// TODO : Hide API_KEY
   Future<bool> saveMessage(String humanChat) async {
     if (indexOfCurrentConversation == -1) {
       indexOfCurrentConversation = conversationList.length;
@@ -103,5 +102,15 @@ class ChatWithAIViewModel extends ChangeNotifier {
     conversationList.removeAt(index);
     notifyListeners();
     return success;
+  }
+
+  void clearAll() {
+    nameOfConversation = "";
+    conversationList = [];
+    indexOfCurrentConversation = -1;
+    chatList = [];
+    isLoading = false;
+    humanChat = '';
+    botChat = "";
   }
 }

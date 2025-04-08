@@ -48,6 +48,7 @@ class LoginState extends State<LoginPage> {
           _emailController.text, _passwordController.text);
       if (mounted && !loginViewModel.hasError) {
         LoadingOverlay.hide();
+        await context.read<AccountViewModel>().loadTrackData();
         context.go('/home');
       } else if (mounted) {
         LoadingOverlay.hide();
@@ -69,6 +70,9 @@ class LoginState extends State<LoginPage> {
   void initState() {
     _emailController.text = "user3";
     _passwordController.text = "123456789";
+
+
+
   }
 
   void _scrollToFocusedField(double offset) {

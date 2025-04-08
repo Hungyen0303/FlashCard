@@ -7,6 +7,8 @@ class LoginViewModel extends ChangeNotifier {
   LoginViewModel({required AuthRepository authRepository})
       : _authRepository = authRepository;
 
+
+
   final AuthRepository _authRepository;
 
   void saveToken(String token, String refreshToken) {}
@@ -24,8 +26,8 @@ class LoginViewModel extends ChangeNotifier {
 
   Future<void> login(String username, String password) async {
     try {
-      await _authRepository.login(username, password);
 
+      await _authRepository.login(username, password);
     } on Exception catch (e) {
       _hasError = true;
       _errorMessage = e.toString().replaceAll("Exception:", "");

@@ -5,7 +5,6 @@ import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
 import 'package:flashcard_learning/domain/models/user.dart';
 
 class AuthRepositoryRemote extends AuthRepository {
-  final Dio dio = Dio();
   final Api1 _api1 = Api1Impl();
 
   User? cachedUser = null;

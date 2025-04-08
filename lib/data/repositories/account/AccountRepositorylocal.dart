@@ -25,10 +25,7 @@ class AccountRepositoryLocal extends AccountRepository {
     return {};
   }
 
-  @override
-  void clearCached() {
 
-  }
 
   @override
   Future<void> updateTrackData(

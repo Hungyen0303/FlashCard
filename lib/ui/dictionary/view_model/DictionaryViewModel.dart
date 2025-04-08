@@ -1,6 +1,6 @@
-import 'package:flashcard_learning/ui/auth/AppManager.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
+import '../../../AppManager.dart';
 import '../../../data/repositories/chatWithAI/Prompt.dart';
 import '../../../data/repositories/dictionary/DictionaryRepo.dart';
 import '../../../data/repositories/dictionary/DictionaryRepoLocal.dart';
