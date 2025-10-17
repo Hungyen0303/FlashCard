@@ -5,7 +5,7 @@ import 'package:flashcard_learning/domain/models/Message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-import '../../../AppManager.dart';
+import '../../../app_manager.dart';
 
 class ChatWithAIViewModel extends ChangeNotifier {
   ChatWithAIViewModel(this._repo);

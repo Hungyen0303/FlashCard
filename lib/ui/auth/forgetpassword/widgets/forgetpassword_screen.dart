@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/routing/route.dart';
-import '../../../../utils/color/AllColor.dart';
-import '../../../../logo.dart';
+import '../../../../core/app_colors/app_colors.dart';
+import '../../../../features/share_widget.dart/logo.dart';
 
 class Forgetpasswordpage extends StatefulWidget {
   const Forgetpasswordpage({super.key});

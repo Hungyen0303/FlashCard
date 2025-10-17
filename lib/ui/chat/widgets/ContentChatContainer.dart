@@ -1,4 +1,4 @@
-import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/core/app_colors/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -47,8 +47,8 @@ class ContentChatContainer extends StatelessWidget {
                               margin: EdgeInsets.only(left: 10, top: 20),
                               decoration: BoxDecoration(
                                 color: Color(0xffcadcef),
-                                border: Border.all(
-                                    width: 1, color: dominantColor),
+                                border:
+                                    Border.all(width: 1, color: dominantColor),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               alignment: Alignment.centerLeft,

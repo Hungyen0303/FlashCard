@@ -1,4 +1,4 @@
-import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/core/app_colors/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,14 +12,12 @@ class CustomCardProvider extends ChangeNotifier {
   IconData? get iconData => _iconData; // Getter để đọc màu hiện tại
 
   void setIconData(IconData? iconData) {
-    _iconData = iconData ;
+    _iconData = iconData;
     notifyListeners();
   }
+
   void setColor(Color color) {
-    _iconColor = color ;
+    _iconColor = color;
     notifyListeners();
-
   }
-
-
 }

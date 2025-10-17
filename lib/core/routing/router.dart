@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
 
-import '../../AppManager.dart';
+import '../../app_manager.dart';
 import '../../features/accounts/presentation/profile_screen.dart';
 import '../../ui/auth/login/widgets/login_screen.dart';
 import '../../ui/dictionary/widget/SearchByImage.dart';

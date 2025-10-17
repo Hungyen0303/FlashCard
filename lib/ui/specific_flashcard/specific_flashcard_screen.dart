@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flashcard_learning/domain/models/Flashcard.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/view_models/SpecificFlashCardViewModel.dart';
-import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/core/app_colors/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-import '../../utils/LoadingOverlay.dart';
+import '../../features/share_widget.dart/loading_overlay.dart';
 import '../../features/accounts/presentation/account_viewmodel.dart';
 
 enum TtsState { playing, stopped, paused, continued }

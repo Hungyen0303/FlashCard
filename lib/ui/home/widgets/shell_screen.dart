@@ -1,4 +1,4 @@
-import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/core/app_colors/app_colors.dart';
 import 'package:flashcard_learning/features/accounts/presentation/account_screen.dart';
 import 'package:flashcard_learning/ui/home/widgets/main_screen.dart';
 import 'package:flutter/material.dart';

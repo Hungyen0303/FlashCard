@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -9,7 +8,7 @@ class LoadingOverlay {
     _overlayEntry = OverlayEntry(
       builder: (context) => Container(
         color: Colors.black.withOpacity(0.5),
-        child: Center(
+        child: const Center(
             child: SpinKitFadingFour(
           color: Colors.white,
         )),

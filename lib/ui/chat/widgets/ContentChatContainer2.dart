@@ -1,4 +1,4 @@
-import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/core/app_colors/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,7 +20,8 @@ class ContentChatContainer2 extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
       child: Row(
-        mainAxisAlignment: isBot ? MainAxisAlignment.start : MainAxisAlignment.end,
+        mainAxisAlignment:
+            isBot ? MainAxisAlignment.start : MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Avatar cho bot
@@ -49,21 +50,21 @@ class ContentChatContainer2 extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: isBot
                       ? LinearGradient(
-                    colors: [
-                      MAIN_THEME_YELLOW,
-                      MAIN_THEME_YELLOW_TEXT.withOpacity(0.8),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  )
+                          colors: [
+                            MAIN_THEME_YELLOW,
+                            MAIN_THEME_YELLOW_TEXT.withOpacity(0.8),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        )
                       : LinearGradient(
-                    colors: [
-                      Colors.grey.shade600,
-                      Colors.grey.shade500,
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
+                          colors: [
+                            Colors.grey.shade600,
+                            Colors.grey.shade500,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
@@ -75,21 +76,22 @@ class ContentChatContainer2 extends StatelessWidget {
                 ),
                 child: isLoading && content.isEmpty
                     ? const SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  ),
-                )
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      )
                     : Text(
-                  content,
-                  style: GoogleFonts.poppins(
-                    color: isBot ? Colors.black87 : Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                        content,
+                        style: GoogleFonts.poppins(
+                          color: isBot ? Colors.black87 : Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
               ),
             ),
           ),

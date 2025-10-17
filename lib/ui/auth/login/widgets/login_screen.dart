@@ -1,6 +1,6 @@
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
-import 'package:flashcard_learning/utils/LoadingOverlay.dart';
-import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/features/share_widget.dart/loading_overlay.dart';
+import 'package:flashcard_learning/core/app_colors/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
-import '../../../../logo.dart';
+import '../../../../features/share_widget.dart/logo.dart';
 import '../../../../core/routing/route.dart';
 import '../../../../features/accounts/presentation/account_viewmodel.dart';
 import '../../../test/Testpage.dart';

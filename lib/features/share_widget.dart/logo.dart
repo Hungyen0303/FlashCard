@@ -15,7 +15,6 @@ class Logo extends StatelessWidget {
             "assets/logo.png",
             height: 200,
           ),
-
         ],
       ),
     );

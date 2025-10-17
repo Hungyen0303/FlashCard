@@ -1,15 +1,15 @@
-import 'package:flashcard_learning/AppCachedData.dart';
-import 'package:flashcard_learning/AppProvider.dart';
+import 'package:flashcard_learning/app_cache_data.dart';
+import 'package:flashcard_learning/app_provider.dart';
 import 'package:flashcard_learning/data/services/supabass_service/SupabassService.dart';
 import 'package:flashcard_learning/core/routing/router.dart';
-import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/core/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'AppManager.dart';
+import 'app_manager.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");

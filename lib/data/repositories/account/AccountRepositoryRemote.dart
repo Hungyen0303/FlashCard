@@ -2,8 +2,8 @@ import 'package:flashcard_learning/data/repositories/account/accountRepository.d
 import 'package:flashcard_learning/data/services/api/Api1.dart';
 import 'package:hive/hive.dart';
 
-import '../../../AppCachedData.dart';
-import '../../../AppManager.dart';
+import '../../../app_cache_data.dart';
+import '../../../app_manager.dart';
 import '../../../domain/models/user.dart';
 
 class AccountRepositoryRemote extends AccountRepository {

@@ -1,7 +1,7 @@
 import 'package:flashcard_learning/domain/models/Conversation.dart';
 import 'package:flashcard_learning/domain/models/Message.dart';
 import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
-import 'package:flashcard_learning/utils/LoadingOverlay.dart';
+import 'package:flashcard_learning/features/share_widget.dart/loading_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -12,7 +12,7 @@ import 'package:pie_menu/pie_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 
-import '../../../utils/color/AllColor.dart';
+import '../../../core/app_colors/app_colors.dart';
 import 'ContentChatContainer.dart';
 
 class ChatWithAIPage extends StatefulWidget {
@@ -344,7 +344,6 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
 
   Drawer _buildDrawer(ChatWithAIViewModel chatWithAIViewModel) {
     return Drawer(
-
       backgroundColor: Color(0xFFC5DDF5), // Nền vàng chủ đạo
       child: SafeArea(
         child: ListView(
@@ -368,13 +367,11 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               child: SearchBar(
                 onTap: () {
-                  setState(() {
-                  });
+                  setState(() {});
                 },
                 onTapOutside: (event) {
                   FocusManager.instance.primaryFocus?.unfocus();
-                  setState(() {
-                  });
+                  setState(() {});
                 },
                 controller: searchController,
                 elevation: WidgetStateProperty.all(3.0),
@@ -438,7 +435,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-           darkBlue,
+            darkBlue,
             Color(0xFF4E7BA2),
           ],
         ),

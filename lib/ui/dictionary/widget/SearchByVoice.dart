@@ -1,16 +1,12 @@
 import 'package:flashcard_learning/domain/models/WordFromAPI.dart';
-import 'package:flashcard_learning/core/routing/router.dart';
 import 'package:flashcard_learning/ui/dictionary/view_model/DictionaryViewModel.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-import '../../../domain/models/Word.dart';
-import '../../../utils/LoadingOverlay.dart';
+import '../../../features/share_widget.dart/loading_overlay.dart';
 import '../../search_result/searchResult_screen.dart';
 import 'SearchByVoiceOverlay.dart';
 

@@ -2,14 +2,14 @@ import 'package:flashcard_learning/core/routing/route.dart';
 import 'package:flashcard_learning/core/routing/router.dart';
 import 'package:flashcard_learning/features/accounts/presentation/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
-import 'package:flashcard_learning/utils/LoadingOverlay.dart';
-import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/features/share_widget.dart/loading_overlay.dart';
+import 'package:flashcard_learning/core/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
-import '../../../AppManager.dart';
+import '../../../app_manager.dart';
 import 'AIConversation.dart';
 import '../../flashcard_sets/widgets/flashcard_sets_screen.dart';
 

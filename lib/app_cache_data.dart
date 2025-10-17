@@ -1,4 +1,3 @@
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 enum RepoName {
@@ -24,7 +23,6 @@ class AppCachedData {
 
   static Future<void> initialize() async {
     await Hive.initFlutter();
-
   }
 
   static Future<void> clearCachedData() async {

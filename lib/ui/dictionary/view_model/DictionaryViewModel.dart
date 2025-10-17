@@ -1,6 +1,6 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-import '../../../AppManager.dart';
+import '../../../app_manager.dart';
 import '../../../data/repositories/chatWithAI/Prompt.dart';
 import '../../../data/repositories/dictionary/DictionaryRepo.dart';
 import '../../../data/repositories/dictionary/DictionaryRepoLocal.dart';
@@ -30,6 +30,7 @@ class DictionaryViewModel {
   Future<Word> getWord(String text) async {
     return await repo.getWord(text);
   }
+
   final model = AppManager.getAI();
   List<String> popularWords = [];
 

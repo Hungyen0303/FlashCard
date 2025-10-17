@@ -3,7 +3,7 @@ import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetVie
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/CustomCardProvider.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/CustomIconPickerDialog.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/FlashCardSetItem.dart';
-import 'package:flashcard_learning/utils/LoadingOverlay.dart';
+import 'package:flashcard_learning/features/share_widget.dart/loading_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -16,7 +16,7 @@ import 'package:pie_menu/pie_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-import '../../../utils/color/AllColor.dart';
+import '../../../core/app_colors/app_colors.dart';
 
 class AllFlashCardSet extends StatefulWidget {
   const AllFlashCardSet({super.key});

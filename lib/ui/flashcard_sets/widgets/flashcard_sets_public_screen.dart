@@ -9,7 +9,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pie_menu/pie_menu.dart';
 import 'package:provider/provider.dart';
 
-import '../../../utils/color/AllColor.dart';
+import '../../../core/app_colors/app_colors.dart';
 
 class AllFlashCardPublicSet extends StatefulWidget {
   const AllFlashCardPublicSet({super.key});
@@ -40,7 +40,6 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
       ),
       foregroundColor: mainColor,
       actions: [
-
         GestureDetector(
           onTap: () {
             setState(() {
@@ -56,12 +55,11 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
     );
   }
 
-
   @override
   void initState() {
     super.initState();
-    _loadData =
-        Provider.of<FlashCardSetViewModel>(context, listen: false).loadDataPublic();
+    _loadData = Provider.of<FlashCardSetViewModel>(context, listen: false)
+        .loadDataPublic();
   }
 
   @override

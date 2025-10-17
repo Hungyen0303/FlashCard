@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 
-import '../../../../utils/LoadingOverlay.dart';
-import '../../../../utils/color/AllColor.dart';
+import '../../../../features/share_widget.dart/loading_overlay.dart';
+import '../../../../core/app_colors/app_colors.dart';
 import '../../login/view_models/login_viewmodel.dart';
 
 class RegisterPage extends StatefulWidget {

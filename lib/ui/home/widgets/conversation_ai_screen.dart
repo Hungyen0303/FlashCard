@@ -1,6 +1,4 @@
 import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
-import 'package:flashcard_learning/utils/LoadingOverlay.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
@@ -259,9 +257,8 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
                           child: FutureBuilder(
                               future: data,
                               builder: (context, snapshot) {
-                                return Consumer<MainScreenViewModel>(
-                                    builder:
-                                        (context, chatWithAIViewModel, child) {
+                                return Consumer<MainScreenViewModel>(builder:
+                                    (context, chatWithAIViewModel, child) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
                                     return const Center(

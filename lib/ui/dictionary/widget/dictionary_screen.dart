@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:flashcard_learning/utils/LoadingOverlay.dart';
-import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/features/share_widget.dart/loading_overlay.dart';
+import 'package:flashcard_learning/core/app_colors/app_colors.dart';
 import 'package:flashcard_learning/ui/search_result/searchResult_screen.dart';
 import 'package:flashcard_learning/ui/dictionary/widget/BoxText.dart';
 import 'package:flutter/material.dart';

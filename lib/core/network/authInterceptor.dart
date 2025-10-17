@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flashcard_learning/core/constant/endpoints.dart';
 import 'package:logging/logging.dart';
 
-import '../../AppManager.dart';
+import '../../app_manager.dart';
 
 class AppInterceptor extends Interceptor {
   AppInterceptor(this.dio);

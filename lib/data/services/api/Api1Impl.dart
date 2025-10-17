@@ -5,7 +5,7 @@ import 'package:flashcard_learning/data/services/api/Status.dart';
 import 'package:flashcard_learning/domain/models/Flashcard.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../AppManager.dart';
+import '../../../app_manager.dart';
 import '../../../domain/models/Conversation.dart';
 import '../../../domain/models/Message.dart';
 import '../../../domain/models/flashSet.dart';
