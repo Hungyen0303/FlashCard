@@ -1,5 +1,6 @@
-class URL {
+class Endpoints {
   static String baseURL = "http://10.0.2.2:8080/flashcard/api";
+  static String noneServer = "http://none.server";
 
   /*-------------Auth-----------------*/
 
@@ -16,7 +17,7 @@ class URL {
   static String flashCardSetPublic = "$baseURL/FlashcardSet/public";
 
   static String postFlashCardSetPublic(String name) =>
-      "$baseURL/FlashcardSet/public/${name}";
+      "$baseURL/FlashcardSet/public/$name";
 
   static String flashCard(nameOfSet) => "$baseURL/FlashcardSet/$nameOfSet";
 

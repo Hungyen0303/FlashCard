@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import '../../../domain/models/Word.dart';
 
 import '../../../domain/models/WordFromAPI.dart';
-import '../../../routing/route.dart';
+import '../../../core/routing/route.dart';
 import '../view_model/DictionaryViewModel.dart';
 import 'SearchByVoiceOverlay.dart';
 import 'SearchByImage.dart';
@@ -36,8 +36,6 @@ class _DictionaryPageState extends State<DictionaryPage> {
     fontWeight: FontWeight.w700,
     color: Color(0xFF045FB4),
     fontSize: 20,
-
-    
   );
   bool isSearch = false;
   late Future load;
@@ -58,7 +56,6 @@ class _DictionaryPageState extends State<DictionaryPage> {
         ],
       ),
       centerTitle: true,
-
     );
   }
 
@@ -76,15 +73,13 @@ class _DictionaryPageState extends State<DictionaryPage> {
       });
     }
     print(popularWords);
-
   }
 
   Future<void> gotoSearchPage(String text) async {
     LoadingOverlay.show(context);
-    WordFromAPI?  wordFromAPI =
+    WordFromAPI? wordFromAPI =
         await Provider.of<DictionaryViewModel>(context, listen: false)
             .loadWord(text);
-
 
     LoadingOverlay.hide();
 
@@ -97,7 +92,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+        appBar: buildAppBar(),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: SingleChildScrollView(

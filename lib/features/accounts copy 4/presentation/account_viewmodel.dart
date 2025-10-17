@@ -4,7 +4,7 @@ import 'package:flashcard_learning/domain/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../AppManager.dart';
+import '../../../AppManager.dart';
 
 class AccountViewModel extends ChangeNotifier {
   AccountViewModel(this._repo);

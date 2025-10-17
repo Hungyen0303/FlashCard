@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
-import '../../../routing/route.dart';
+import '../../../core/routing/route.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
@@ -38,7 +38,8 @@ class OnBoardingPageState extends State<OnBoardingPage> {
         pages: [
           PageViewModel(
             title: "Unlock Your English Potential!",
-            body: "Learn faster with interactive flashcards designed for your success.",
+            body:
+                "Learn faster with interactive flashcards designed for your success.",
             image: _buildImage('img-1.jpg'),
             decoration: PageDecoration(
               titleTextStyle: TextStyle(
@@ -56,7 +57,8 @@ class OnBoardingPageState extends State<OnBoardingPage> {
           ),
           PageViewModel(
             title: "Turn Words Into Knowledge!",
-            body: "Discover the power of consistent practice and effortless learning.",
+            body:
+                "Discover the power of consistent practice and effortless learning.",
             image: _buildImage('img-2.jpg'),
             decoration: PageDecoration(
               titleTextStyle: TextStyle(

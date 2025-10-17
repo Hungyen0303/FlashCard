@@ -9,8 +9,8 @@ import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../../../../logo.dart';
-import '../../../../routing/route.dart';
-import '../../../account/account_viewmodel.dart';
+import '../../../../core/routing/route.dart';
+import '../../../../features/accounts/presentation/account_viewmodel.dart';
 import '../../../test/Testpage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -24,8 +24,6 @@ class LoginState extends State<LoginPage> {
   void _gotoRegisterPage(BuildContext context) {
     context.push(AppRoute.signup);
   }
-
-
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -41,7 +39,7 @@ class LoginState extends State<LoginPage> {
   Future<void> login(
       GlobalKey<FormState> formState, BuildContext context) async {
     LoginViewModel loginViewModel =
-    Provider.of<LoginViewModel>(context, listen: false);
+        Provider.of<LoginViewModel>(context, listen: false);
     if (formState.currentState!.validate()) {
       LoadingOverlay.show(context);
       await loginViewModel.login(
@@ -70,9 +68,6 @@ class LoginState extends State<LoginPage> {
   void initState() {
     _emailController.text = "user3";
     _passwordController.text = "123456789";
-
-
-
   }
 
   void _scrollToFocusedField(double offset) {
@@ -166,7 +161,7 @@ class LoginState extends State<LoginPage> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide:
-                          BorderSide(color: Colors.grey.shade300, width: 1),
+                              BorderSide(color: Colors.grey.shade300, width: 1),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -202,7 +197,7 @@ class LoginState extends State<LoginPage> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide:
-                          BorderSide(color: Colors.grey.shade300, width: 1),
+                              BorderSide(color: Colors.grey.shade300, width: 1),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),

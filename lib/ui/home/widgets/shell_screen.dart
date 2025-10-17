@@ -1,5 +1,5 @@
 import 'package:flashcard_learning/utils/color/AllColor.dart';
-import 'package:flashcard_learning/ui/account/account_screen.dart';
+import 'package:flashcard_learning/features/accounts/presentation/account_screen.dart';
 import 'package:flashcard_learning/ui/home/widgets/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -19,7 +19,6 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   List<Widget> widgets = [];
   int currentPageIndex = 0;
-
 
   void changeTab(int tab) {
     setState(() {

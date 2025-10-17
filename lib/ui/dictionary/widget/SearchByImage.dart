@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flashcard_learning/routing/router.dart';
+import 'package:flashcard_learning/core/routing/router.dart';
 import 'package:flashcard_learning/ui/dictionary/view_model/DictionaryViewModel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';

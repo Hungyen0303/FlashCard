@@ -1,5 +1,5 @@
 import 'package:flashcard_learning/domain/models/WordFromAPI.dart';
-import 'package:flashcard_learning/routing/router.dart';
+import 'package:flashcard_learning/core/routing/router.dart';
 import 'package:flashcard_learning/ui/dictionary/view_model/DictionaryViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +99,8 @@ class SearchByVoiceState extends State<SearchByVoice> {
           children: [
             Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 50, bottom: 20 , left: 20 ,right: 20),
+                margin:
+                    EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
                 padding: EdgeInsets.all(30),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -139,17 +140,16 @@ class SearchByVoiceState extends State<SearchByVoice> {
                       padding: EdgeInsets.symmetric(vertical: 16),
                       width: MediaQuery.of(context).size.width * 0.5,
                       decoration: BoxDecoration(
-                        gradient:LinearGradient(colors: [
-                          Color(0xFFE86902) ,
-                          Color(0xFFFAD14C) ,
-
-                        ]),
+                          gradient: LinearGradient(colors: [
+                            Color(0xFFE86902),
+                            Color(0xFFFAD14C),
+                          ]),
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(7)),
                       child: Text(
                         "Search",
                         style: TextStyle(
-                            color:  Color(0xFFFFFFFF),
+                            color: Color(0xFFFFFFFF),
                             fontSize: 20,
                             fontFamily: "mainFont",
                             decoration: TextDecoration.none),

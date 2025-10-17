@@ -1,4 +1,4 @@
-import 'package:flashcard_learning/routing/route.dart';
+import 'package:flashcard_learning/core/routing/route.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';

@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:dio/dio.dart';
+import 'package:flashcard_learning/core/constant/endpoints.dart';
 import 'package:logging/logging.dart';
 
 import '../../AppManager.dart';
-import '../URL.dart';
 
 class AppInterceptor extends Interceptor {
   AppInterceptor(this.dio);
@@ -37,7 +37,7 @@ class AppInterceptor extends Interceptor {
       try {
         // Gọi API refresh token
         final refreshResponse = await Dio().post(
-          URL.verify,
+          Endpoints.verify,
           data: {
             "token": AppManager.getRefreshToken(),
             "refreshToken": AppManager.getRefreshToken()

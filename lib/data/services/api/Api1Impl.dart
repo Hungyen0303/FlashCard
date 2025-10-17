@@ -1,34 +1,26 @@
 import 'package:dio/dio.dart';
-import 'package:flashcard_learning/data/services/AppInterceptor.dart';
+import 'package:flashcard_learning/core/constant/endpoints.dart';
 import 'package:flashcard_learning/data/services/api/Api1.dart';
 import 'package:flashcard_learning/data/services/api/Status.dart';
 import 'package:flashcard_learning/domain/models/Flashcard.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../AppManager.dart';
 import '../../../domain/models/Conversation.dart';
 import '../../../domain/models/Message.dart';
 import '../../../domain/models/flashSet.dart';
 import '../../../domain/models/user.dart';
-import '../../URL.dart';
 
-Dio setupDio() {
-  final dio = Dio();
-  dio.interceptors.add(AppInterceptor(dio));
-
-  // TODO : Test
-  Options options = Options(sendTimeout: Duration(seconds: 10));
-  return dio;
-}
-
-class Api1Impl extends Api1 {
-  final Dio dio = setupDio();
-
+@injectable
+class ApiImpl extends Api {
+  ApiImpl(this.dio);
+  final Dio dio;
   @override
   Future<void> login((String, String) credentials) async {
     final (username, password) = credentials;
     try {
       final response = await dio.post(
-        URL.login,
+        Endpoints.login,
         data: {
           "username": username,
           "password": password,
@@ -65,7 +57,7 @@ class Api1Impl extends Api1 {
     final (email, username, password) = credentials;
     try {
       final response = await dio.post(
-        URL.signUp,
+        Endpoints.signUp,
         data: {
           "email": email,
           "username": username,
@@ -93,7 +85,7 @@ class Api1Impl extends Api1 {
   @override
   Future<void> updateUser(User newUser) async {
     try {
-      final response = await dio.patch(URL.info,
+      final response = await dio.patch(Endpoints.info,
           options: Options(
             headers: {
               "Content-Type": "application/json",
@@ -120,7 +112,7 @@ class Api1Impl extends Api1 {
     print("LOAD USER ");
     try {
       final response = await dio.get(
-        URL.info,
+        Endpoints.info,
         options: Options(
           headers: {
             "Content-Type": "application/json",
@@ -145,7 +137,7 @@ class Api1Impl extends Api1 {
   @override
   Future<void> verifyToken(String token, String refreshToken) async {
     try {
-      Response res = await dio.post(URL.verify,
+      Response res = await dio.post(Endpoints.verify,
           data: {"token": token, "refreshToken": refreshToken},
           options: Options(
             headers: {
@@ -165,7 +157,7 @@ class Api1Impl extends Api1 {
   @override
   Future<void> refresh() async {
     try {
-      Response res = await dio.post(URL.refresh,
+      Response res = await dio.post(Endpoints.refresh,
           options: Options(headers: {"Content-Type": "application/json"}),
           data: {"refreshToken": AppManager.getRefreshToken()});
       if (res.statusCode == 200) {
@@ -179,7 +171,7 @@ class Api1Impl extends Api1 {
   Future<List<FlashCardSet>> getAllFlashcardSet() async {
     try {
       String token = AppManager.getToken();
-      Response res = await dio.get(URL.flashCardSet,
+      Response res = await dio.get(Endpoints.flashCardSet,
           options: Options(headers: {
             "Authorization": "Bearer ${AppManager.getToken()}",
             "Content-Type": "application/json"
@@ -194,7 +186,7 @@ class Api1Impl extends Api1 {
   @override
   Future<List<FlashCardSet>> getAllFlashcardSetPublic() async {
     try {
-      Response res = await dio.get(URL.flashCardSetPublic,
+      Response res = await dio.get(Endpoints.flashCardSetPublic,
           options: Options(headers: {
             "Authorization": "Bearer ${AppManager.getToken()}",
             "Content-Type": "application/json"
@@ -209,7 +201,7 @@ class Api1Impl extends Api1 {
   @override
   Future<bool> addNewSet(FlashCardSet f) async {
     try {
-      Response res = await dio.post(URL.flashCardSet,
+      Response res = await dio.post(Endpoints.flashCardSet,
           data: f.toJson(),
           options: Options(headers: {
             "Authorization": "Bearer ${AppManager.getToken()}",
@@ -227,7 +219,7 @@ class Api1Impl extends Api1 {
   @override
   Future<bool> updateSet(String flashcardName, FlashCardSet f) async {
     try {
-      Response res = await dio.patch("${URL.flashCardSet}/$flashcardName",
+      Response res = await dio.patch("${Endpoints.flashCardSet}/$flashcardName",
           data: f.toJson(),
           options: Options(headers: {
             "Authorization": "Bearer ${AppManager.getToken()}",
@@ -245,7 +237,7 @@ class Api1Impl extends Api1 {
   @override
   Future<bool> deleteSet(String name) async {
     try {
-      Response res = await dio.delete("${URL.flashCardSet}/$name",
+      Response res = await dio.delete("${Endpoints.flashCardSet}/$name",
           options: Options(headers: {
             "Authorization": "Bearer ${AppManager.getToken()}",
             "Content-Type": "application/json"
@@ -266,7 +258,7 @@ class Api1Impl extends Api1 {
       // String encodedName = Uri.encodeComponent(nameOfSet);
       // print(encodedName);
 
-      Response res = await dio.post(URL.flashCard(nameOfSet),
+      Response res = await dio.post(Endpoints.flashCard(nameOfSet),
           data: f.toJson(),
           options: Options(headers: {
             "Authorization": "Bearer ${AppManager.getToken()}",
@@ -285,7 +277,7 @@ class Api1Impl extends Api1 {
   Future<bool> deleteFlashcard(FlashCard f, String nameOfSet) async {
     try {
       Response res =
-          await dio.delete(URL.flashCardUpdateOrDelete(nameOfSet, f.id),
+          await dio.delete(Endpoints.flashCardUpdateOrDelete(nameOfSet, f.id),
               options: Options(headers: {
                 "Authorization": "Bearer ${AppManager.getToken()}",
                 "Content-Type": "application/json"
@@ -302,7 +294,7 @@ class Api1Impl extends Api1 {
   @override
   Future<bool> publicSet(String name) async {
     try {
-      Response res = await dio.patch(URL.postFlashCardSetPublic(name),
+      Response res = await dio.patch(Endpoints.postFlashCardSetPublic(name),
           options: Options(headers: {
             "Authorization": "Bearer ${AppManager.getToken()}",
             "Content-Type": "application/json"
@@ -320,7 +312,7 @@ class Api1Impl extends Api1 {
   @override
   Future<List<FlashCard>> getAllFlashcard(String name) async {
     try {
-      Response res = await dio.get(URL.flashCard(name),
+      Response res = await dio.get(Endpoints.flashCard(name),
           options: Options(headers: {
             "Authorization": "Bearer ${AppManager.getToken()}",
             "Content-Type": "application/json"
@@ -340,7 +332,7 @@ class Api1Impl extends Api1 {
       FlashCard fOld, FlashCard fNew, String nameOfSet) async {
     try {
       Response res =
-          await dio.patch(URL.flashCardUpdateOrDelete(nameOfSet, fOld.id),
+          await dio.patch(Endpoints.flashCardUpdateOrDelete(nameOfSet, fOld.id),
               data: fNew.toJson(),
               options: Options(headers: {
                 "Authorization": "Bearer ${AppManager.getToken()}",
@@ -364,7 +356,7 @@ class Api1Impl extends Api1 {
             "Content-Type": "application/json",
             "Authorization": "Bearer ${AppManager.getToken()}"
           }),
-          URL.editMessage(idOfConversation, idOfMessage),
+          Endpoints.editMessage(idOfConversation, idOfMessage),
           data: newMessage.toJson());
       if (res.statusCode == 200) {
         return Message.fromJson(res.data["data"]);
@@ -379,12 +371,13 @@ class Api1Impl extends Api1 {
   Future<Message> saveMessage(
       Message newMessage, String idOfConversation) async {
     try {
-      Response res = await dio.post(URL.createNewMessage(idOfConversation),
-          options: Options(headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer ${AppManager.getToken()}"
-          }),
-          data: newMessage.toJson());
+      Response res =
+          await dio.post(Endpoints.createNewMessage(idOfConversation),
+              options: Options(headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer ${AppManager.getToken()}"
+              }),
+              data: newMessage.toJson());
       if (res.statusCode == 200) {
         return Message.fromJson(res.data["data"]);
       }
@@ -397,7 +390,7 @@ class Api1Impl extends Api1 {
   @override
   Future<List<Message>> getAllMessage(String idOfConversation) async {
     try {
-      Response res = await dio.get(URL.getAllMessage(idOfConversation),
+      Response res = await dio.get(Endpoints.getAllMessage(idOfConversation),
           options: Options(headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer ${AppManager.getToken()}"
@@ -420,7 +413,7 @@ class Api1Impl extends Api1 {
             "Content-Type": "application/json",
             "Authorization": "Bearer ${AppManager.getToken()}"
           }),
-          URL.createConversation(),
+          Endpoints.createConversation(),
           data: c.toJson());
       if (res.statusCode == 200) {
         return Conversation.fromJson(res.data["data"]);
@@ -439,7 +432,7 @@ class Api1Impl extends Api1 {
           "Content-Type": "application/json",
           "Authorization": "Bearer ${AppManager.getToken()}"
         }),
-        URL.deleteConversation(idOfConversation),
+        Endpoints.deleteConversation(idOfConversation),
       );
       if (res.statusCode == 200) {
         return true;
@@ -459,7 +452,7 @@ class Api1Impl extends Api1 {
             "Content-Type": "application/json",
             "Authorization": "Bearer ${AppManager.getToken()}"
           }),
-          URL.editConversation(idOfConversation),
+          Endpoints.editConversation(idOfConversation),
           data: c.toJson());
       if (res.statusCode == 200) {
         return Conversation.fromJson(res.data["data"]);
@@ -473,7 +466,7 @@ class Api1Impl extends Api1 {
   @override
   Future<List<Conversation>> getConversations() async {
     try {
-      Response res = await dio.get(URL.getAllConversation,
+      Response res = await dio.get(Endpoints.getAllConversation,
           options: Options(headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer ${AppManager.getToken()}"
@@ -492,7 +485,7 @@ class Api1Impl extends Api1 {
   @override
   Future<Map<String, int>> getTrackData() async {
     try {
-      Response res = await dio.get(URL.track,
+      Response res = await dio.get(Endpoints.track,
           options: Options(headers: {
             'Content-Type': "application/json",
             "Authorization": "Bearer ${AppManager.getToken()}"
@@ -528,7 +521,7 @@ class Api1Impl extends Api1 {
   @override
   Future<void> postTrack() async {
     try {
-      Response res = await dio.post(URL.track,
+      Response res = await dio.post(Endpoints.track,
           options: Options(headers: {
             'Content-Type': "application/json",
             "Authorization": "Bearer ${AppManager.getToken()}"

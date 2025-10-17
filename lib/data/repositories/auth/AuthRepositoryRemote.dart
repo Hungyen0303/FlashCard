@@ -5,14 +5,15 @@ import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
 import 'package:flashcard_learning/domain/models/user.dart';
 
 class AuthRepositoryRemote extends AuthRepository {
-  final Api1 _api1 = Api1Impl();
+  AuthRepositoryRemote(this.api);
+  final Api api;
 
   User? cachedUser = null;
 
   @override
   Future<void> login(String username, String password) async {
     try {
-      await _api1.login((username, password));
+      await api.login((username, password));
     } on DioException catch (e) {
       throw Exception(e.response?.data["message"]);
     }
@@ -21,7 +22,7 @@ class AuthRepositoryRemote extends AuthRepository {
   @override
   Future<User?> getUser(String username) async {
     if (cachedUser == null && username != cachedUser!.username) {
-      _api1.getUser();
+      api.getUser();
     }
     return cachedUser;
   }
@@ -29,7 +30,7 @@ class AuthRepositoryRemote extends AuthRepository {
   @override
   Future<void> signUp(String email, String username, String password) async {
     try {
-      await _api1.signUp((email, username, password));
+      await api.signUp((email, username, password));
     } on DioException catch (e) {
       throw Exception(e.response?.data["message"]);
     }

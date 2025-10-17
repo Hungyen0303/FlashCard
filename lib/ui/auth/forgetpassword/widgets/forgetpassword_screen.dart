@@ -1,11 +1,11 @@
-import 'package:flashcard_learning/routing/router.dart';
+import 'package:flashcard_learning/core/routing/router.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
 import 'package:flashcard_learning/ui/auth/login/widgets/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../routing/route.dart';
+import '../../../../core/routing/route.dart';
 import '../../../../utils/color/AllColor.dart';
 import '../../../../logo.dart';
 

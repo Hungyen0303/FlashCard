@@ -1,6 +1,6 @@
-import 'package:flashcard_learning/routing/route.dart';
-import 'package:flashcard_learning/routing/router.dart';
-import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
+import 'package:flashcard_learning/core/routing/route.dart';
+import 'package:flashcard_learning/core/routing/router.dart';
+import 'package:flashcard_learning/features/accounts/presentation/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';

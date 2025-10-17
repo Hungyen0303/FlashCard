@@ -1,7 +1,7 @@
 import 'package:flashcard_learning/AppCachedData.dart';
 import 'package:flashcard_learning/AppProvider.dart';
 import 'package:flashcard_learning/data/services/supabass_service/SupabassService.dart';
-import 'package:flashcard_learning/routing/router.dart';
+import 'package:flashcard_learning/core/routing/router.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

@@ -19,7 +19,7 @@ import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import '../../utils/LoadingOverlay.dart';
-import '../account/account_viewmodel.dart';
+import '../../features/accounts/presentation/account_viewmodel.dart';
 
 enum TtsState { playing, stopped, paused, continued }
 

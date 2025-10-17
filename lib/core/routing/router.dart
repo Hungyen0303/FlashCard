@@ -1,5 +1,4 @@
-import 'package:flashcard_learning/routing/route.dart';
-import 'package:flashcard_learning/ui/SplashScreen.dart';
+import 'package:flashcard_learning/core/routing/route.dart';
 import 'package:flashcard_learning/ui/auth/forgetpassword/widgets/forgetpassword_screen.dart';
 import 'package:flashcard_learning/ui/auth/register/widgets/register_screen.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/specific_flashcard_screen.dart';
@@ -9,13 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
 
-import '../AppManager.dart';
-import '../ui/account/profile_screen.dart';
-import '../ui/auth/login/widgets/login_screen.dart';
-import '../ui/dictionary/widget/SearchByImage.dart';
-import '../ui/flashcard_sets/widgets/flashcard_sets_public_screen.dart';
-import '../ui/home/widgets/onboard_screen.dart';
-import '../ui/home/widgets/shell_screen.dart';
+import '../../AppManager.dart';
+import '../../features/accounts/presentation/profile_screen.dart';
+import '../../ui/auth/login/widgets/login_screen.dart';
+import '../../ui/dictionary/widget/SearchByImage.dart';
+import '../../ui/flashcard_sets/widgets/flashcard_sets_public_screen.dart';
+import '../../ui/home/widgets/onboard_screen.dart';
+import '../../ui/home/widgets/shell_screen.dart';
 
 class AppRouter {
   final routeLogger = Logger('ROUTE');
@@ -31,7 +30,7 @@ class AppRouter {
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
+                const Center(
                     child: Text(
                   "There was no URL  ",
                   style: TextStyle(fontSize: 30, color: Colors.red),

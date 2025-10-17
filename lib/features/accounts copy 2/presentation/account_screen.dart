@@ -1,5 +1,5 @@
-import 'package:flashcard_learning/routing/route.dart';
-import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
+import 'package:flashcard_learning/core/routing/route.dart';
+import 'package:flashcard_learning/features/accounts/presentation/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
-import '../../AppManager.dart';
+import '../../../AppManager.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});

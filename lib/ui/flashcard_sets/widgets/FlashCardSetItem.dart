@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pie_menu/pie_menu.dart';
 
-import '../../../routing/route.dart';
+import '../../../core/routing/route.dart';
 
 class FlashCardSetItem extends StatelessWidget {
   final FlashCardSet flashCardSet;

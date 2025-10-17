@@ -8,7 +8,7 @@ import 'package:flashcard_learning/data/repositories/specific_flashcard/Specific
 import 'package:flashcard_learning/data/repositories/specific_flashcard/SpecificFlashCardRepoRemote.dart';
 import 'package:flashcard_learning/data/services/api/Api1.dart';
 import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
-import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
+import 'package:flashcard_learning/features/accounts/presentation/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
 import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
 import 'package:flashcard_learning/ui/dictionary/view_model/DictionaryViewModel.dart';
@@ -21,8 +21,9 @@ import 'package:provider/single_child_widget.dart';
 import 'data/repositories/auth/AuthRepositoryRemote.dart';
 
 class AppProvider {
+  // static const api = ApiImpl();
   static List<SingleChildWidget> providers = [
-    ChangeNotifierProvider<CustomCardProvider>(
+    /*   ChangeNotifierProvider<CustomCardProvider>(
         create: (_) => CustomCardProvider()),
     Provider<Api1>(create: (_) => Api1Impl()),
     Provider<AuthRepositoryRemote>(create: (_) => AuthRepositoryRemote()),
@@ -54,6 +55,6 @@ class AppProvider {
             Provider.of<AccountRepository>(context, listen: false))),
     ChangeNotifierProvider<MainScreenViewModel>(
         create: (_) => MainScreenViewModel()),
-    Provider<DictionaryViewModel>(create: (context) => DictionaryViewModel()),
+    Provider<DictionaryViewModel>(create: (context) => DictionaryViewModel()),*/
   ];
 }

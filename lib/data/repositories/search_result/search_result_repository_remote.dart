@@ -3,10 +3,10 @@ import 'package:flashcard_learning/data/services/api/Api1.dart';
 
 class SearchResultRepositoryRemote implements SearchResultRepository {
   SearchResultRepositoryRemote({
-    required Api1 apiClient,
+    required Api apiClient,
   }) : _apiClient = apiClient;
 
-  final Api1 _apiClient;
+  final Api _apiClient;
 
   @override
   void search(String word) {}

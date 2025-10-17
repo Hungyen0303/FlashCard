@@ -6,7 +6,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../routing/route.dart';
+import 'core/routing/route.dart';
+import 'package:get_it/get_it.dart';
 
 class AppManager {
   static String _token = "";
@@ -36,7 +37,7 @@ class AppManager {
   /// if both is not valid => login
   ///
 
-  static final Api1 _api1 = Api1Impl();
+  static final Api _api1 = ApiImpl(GetIt.instance<Dio>());
 
   static Future<bool> isLogged() async {
     if (_token.isEmpty) {
