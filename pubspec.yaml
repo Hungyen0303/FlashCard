@@ -69,6 +69,9 @@ dependencies:
   flutter_dotenv: ^5.2.1
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  flutter_native_splash: ^2.4.6
+  flutter_launcher_icons: ^0.14.4
+  requests_inspector: ^5.1.1
 
 dev_dependencies:
   flutter_test:
@@ -115,12 +118,13 @@ flutter:
      - assets/img-3.jpg
      - assets/flutter.png
      - assets/fullscreen.jpg
-     - assets/logo.png
+     - assets/logo.jpg
      - assets/logo-transparent.png
      - assets/fb-icon.png
      - assets/gg-icon.png
      - assets/apple-icon.png
      - assets/icon-picker.jpg
+     - assets/launch_icon.jpg
      - .env
 
 

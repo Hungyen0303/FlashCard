@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:requests_inspector/requests_inspector.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'AppManager.dart';
@@ -26,7 +27,7 @@ void main() async {
   await AppManager.initialize();
   runApp(MultiProvider(
     providers: AppProvider.providers,
-    child: MyApp(),
+    child: RequestsInspector(child: MyApp()),
   ));
 }
 
@@ -37,17 +38,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: AppRouter.route,
-      title: 'Learning with Flash Card',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: "MainFont",
-        buttonTheme: ButtonThemeData(
+    return SafeArea(
+      child: MaterialApp.router(
+        routerConfig: AppRouter.route,
+        title: 'Learning with Flash Card',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: "MainFont",
+          buttonTheme: ButtonThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: darkBlue),
+          ),
           colorScheme: ColorScheme.fromSeed(seedColor: darkBlue),
+          useMaterial3: true,
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: darkBlue),
-        useMaterial3: true,
       ),
     );
   }
