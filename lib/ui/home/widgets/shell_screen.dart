@@ -1,6 +1,6 @@
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/ui/account/account_screen.dart';
-import 'package:flashcard_learning/ui/home/widgets/main_screen.dart';
+import 'package:flashcard_learning/ui/home/widgets/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -20,7 +20,6 @@ class _HomepageState extends State<Homepage> {
   List<Widget> widgets = [];
   int currentPageIndex = 0;
 
-
   void changeTab(int tab) {
     setState(() {
       currentPageIndex = tab;
@@ -34,7 +33,7 @@ class _HomepageState extends State<Homepage> {
   void initState() {
     super.initState();
     widgets = [
-      Mainflashcard(onTabChange: changeTab),
+      HomePage(onTabChange: changeTab),
       DictionaryPage(
         dictionaryViewModel: DictionaryViewModel(),
       ),
@@ -51,13 +50,9 @@ class _HomepageState extends State<Homepage> {
             changeTab(tab);
           },
           rippleColor: Colors.grey,
-          // tab button ripple color when pressed
           hoverColor: Colors.grey,
-          // tab button hover color
           haptic: true,
-          // haptic feedback
           tabBorderRadius: 30,
-
           //tabActiveBorder: Border.all(color: Colors.black, width: 1), // tab button border
           //tabBorder: Border.all(color: Colors.grey, width: 1), // tab button border
           //tabShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 8)], // tab button shadow

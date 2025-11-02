@@ -1,34 +1,34 @@
 import 'package:flashcard_learning/routing/route.dart';
-import 'package:flashcard_learning/routing/router.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
-import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import '../../../AppManager.dart';
-import 'AIConversation.dart';
+import 'ai_conversation.dart';
 import '../../flashcard_sets/widgets/flashcard_sets_screen.dart';
 
-class Mainflashcard extends StatefulWidget {
-  const Mainflashcard({super.key, required this.onTabChange});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key, required this.onTabChange});
 
   final Function onTabChange;
 
   @override
-  State<Mainflashcard> createState() => _MainflashcardState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MainflashcardState extends State<Mainflashcard> {
+class _HomePageState extends State<HomePage> {
   void _gotoAllCollections(context) {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => const AllFlashCardSet()));
   }
 
-  Padding buildListTile(String title, Icon leadingIcon, Function callback) {
+  Widget buildListTile(
+      {required String title,
+      required IconData leadingIcon,
+      required Function onPressed}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListTile(
@@ -53,7 +53,7 @@ class _MainflashcardState extends State<Mainflashcard> {
               color: Colors.red,
               shape: BoxShape.circle),
         ),
-        onTap: () => callback(),
+        onTap: () => onPressed(),
         leading: Padding(
             padding: const EdgeInsets.only(left: 8),
             child: Text(
@@ -82,19 +82,6 @@ class _MainflashcardState extends State<Mainflashcard> {
       fontSize: 20,
       fontWeight: FontWeight.w600);
 
-  Container buildActions(String text) {
-    return Container(
-      child: Text(
-        text,
-        style: TextStyle(fontSize: 18),
-      ),
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      decoration: BoxDecoration(
-          color: Color(0xFF1986F3), borderRadius: BorderRadius.circular(10)),
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -111,15 +98,11 @@ class _MainflashcardState extends State<Mainflashcard> {
 
   AppBar _buildAppbar() {
     return AppBar(
-      title: Text(
+      title: const Text(
         "🏠 ",
         style: TextStyle(
             color: MAIN_TITLE_COLOR, fontSize: 25, fontWeight: FontWeight.bold),
       ),
-      actions: [
-        buildActions("⚡"),
-        buildActions("🔥"),
-      ],
     );
   }
 
@@ -141,20 +124,19 @@ class _MainflashcardState extends State<Mainflashcard> {
             children: [
               RichText(
                 text: TextSpan(children: [
-                  TextSpan(
+                  const TextSpan(
                       text: "Chào mừng bạn trở lại, \n",
                       style: TextStyle(color: MAIN_TITLE_COLOR, fontSize: 18)),
                   TextSpan(
                       text: AppManager.getUser()!.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: MAIN_TITLE_COLOR,
                           fontSize: 25,
                           fontWeight: FontWeight.w500))
                 ]),
               ),
-
               AIConversation(),
-              Padding(
+              const Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   "Hôm nay chúng ta nên làm gì ",
@@ -166,16 +148,17 @@ class _MainflashcardState extends State<Mainflashcard> {
                 ),
               ),
               buildListTile(
-                  listTiles[0], const Icon(Icons.rate_review_outlined), () {
-                _gotoAllCollections(context);
-              }),
-              buildListTile(listTiles[1], const Icon(LineIcons.plusCircle), () {
-                context.push(AppRoute.public_flashcard);
-              }),
-
-              // buildListtile(listTiles[3], Icon(LineIcons.rocketChat), () {
-              //   widget.onTabChange(2);
-              // }),
+                  title: listTiles[0],
+                  leadingIcon: Icons.rate_review_outlined,
+                  onPressed: () {
+                    _gotoAllCollections(context);
+                  }),
+              buildListTile(
+                  title: listTiles[1],
+                  leadingIcon: LineIcons.plusCircle,
+                  onPressed: () {
+                    context.push(AppRoute.public_flashcard);
+                  }),
             ],
           ),
         ),

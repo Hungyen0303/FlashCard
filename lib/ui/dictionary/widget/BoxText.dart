@@ -11,15 +11,16 @@ class Boxtext extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap() ,
+      onTap: () => onTap(),
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 5),
-        padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
         decoration: BoxDecoration(
-            color: Color(0xFF7EAFE1), borderRadius: BorderRadius.circular(10)),
+            color: const Color(0xFF7EAFE1),
+            borderRadius: BorderRadius.circular(10)),
         child: Text(
           word,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFF054179),
             fontSize: 18,
             fontWeight: FontWeight.w600,

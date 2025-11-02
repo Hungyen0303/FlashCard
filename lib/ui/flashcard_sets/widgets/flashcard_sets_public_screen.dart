@@ -26,11 +26,11 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
 
   AppBar _buildAppbar() {
     return AppBar(
-      leading: BackButton(
+      leading: const BackButton(
         color: darkBlue,
       ),
       centerTitle: true,
-      title: Text(
+      title: const Text(
         "Flashcard Public",
         style: TextStyle(
             fontSize: 22,
@@ -40,7 +40,6 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
       ),
       foregroundColor: mainColor,
       actions: [
-
         GestureDetector(
           onTap: () {
             setState(() {
@@ -56,12 +55,76 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
     );
   }
 
+  Widget _buildBlankPage() {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF529CE5),
+            Color(0xFF86B3E0),
+          ],
+        ),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Icon lớn
+            AnimatedContainer(
+              duration: Duration(milliseconds: 800),
+              curve: Curves.easeInOut,
+              child: const Text(
+                "🎲",
+                style: TextStyle(fontSize: 100),
+              ),
+            ),
+            SizedBox(height: 25),
+            // Tiêu đề
+            const Text(
+              "No Flashcard Sets Yet",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: white,
+                letterSpacing: 1.2,
+                shadows: [
+                  Shadow(
+                    color: Colors.black45,
+                    offset: Offset(2, 2),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 15),
+            // Mô tả
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                "Start your learning journey by creating your first flashcard set!",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white70,
+                  height: 1.5,
+                ),
+              ),
+            ),
+            const SizedBox(height: 35),
+            // Nút tạo mới
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
-    _loadData =
-        Provider.of<FlashCardSetViewModel>(context, listen: false).loadDataPublic();
+    _loadData = Provider.of<FlashCardSetViewModel>(context, listen: false)
+        .loadDataPublic();
   }
 
   @override
@@ -81,11 +144,13 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
                 return Consumer<FlashCardSetViewModel>(
                     builder: (context, flashCardSetViewModel, child) {
                   return PieCanvas(
-                      child: isGridView
-                          ? GridView.count(
-                              crossAxisCount: 2,
-                              children:
-                                  flashCardSetViewModel.listFlashCardSetsPublic
+                      child: flashCardSetViewModel
+                              .listFlashCardSetsPublic.isNotEmpty
+                          ? isGridView
+                              ? GridView.count(
+                                  crossAxisCount: 2,
+                                  children: flashCardSetViewModel
+                                      .listFlashCardSetsPublic
                                       .map((a) => FlashCardSetItem(
                                             isPublic: true,
                                             flashCardSet: a,
@@ -95,10 +160,10 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
                                             isGridView: true,
                                           ))
                                       .toList(),
-                            )
-                          : ListView(
-                              children:
-                                  flashCardSetViewModel.listFlashCardSetsPublic
+                                )
+                              : ListView(
+                                  children: flashCardSetViewModel
+                                      .listFlashCardSetsPublic
                                       .map((a) => FlashCardSetItem(
                                             isPublic: true,
                                             flashCardSet: a,
@@ -108,7 +173,8 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
                                             isGridView: false,
                                           ))
                                       .toList(),
-                            ));
+                                )
+                          : _buildBlankPage());
                 });
               }
             }));

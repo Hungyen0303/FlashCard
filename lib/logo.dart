@@ -12,10 +12,9 @@ class Logo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(
-            "assets/logo.png",
-            height: 200,
+            "assets/logo-removebg.png",
+            height: 180,
           ),
-
         ],
       ),
     );

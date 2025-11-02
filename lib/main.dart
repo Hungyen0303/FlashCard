@@ -18,23 +18,16 @@ void main() async {
     url: SupaBaseService.URL,
     anonKey: SupaBaseService.anonKey,
   );
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((record) {
-    print(
-        '${record.time}: [${record.level.name}] ${record.loggerName} - ${record.message}');
-  });
   await AppCachedData.initialize();
   await AppManager.initialize();
   runApp(MultiProvider(
     providers: AppProvider.providers,
-    child: RequestsInspector(child: MyApp()),
+    child: const MyApp(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
-  final Logger mainLogger = Logger("MyApp");
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

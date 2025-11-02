@@ -8,7 +8,7 @@ import '../../../domain/models/Conversation.dart';
 import '../../../domain/models/Message.dart';
 
 class MainScreenViewModel extends ChangeNotifier {
-  String API_KEY = "AIzaSyBax0qdrfE8U0TzsW4OISS4VZ3DqLic20s";
+  String API_KEY = "AIzaSyDIlB9Y39PTHZx2VNGrbrtjqZ_RVTrKu3o";
   List<String> conversation = [];
 
   Function()? onDoneChanged;
@@ -20,7 +20,7 @@ class MainScreenViewModel extends ChangeNotifier {
   Future<void> getListConversation() async {
     if (conversation.isNotEmpty) return;
     final model = GenerativeModel(
-      model: 'gemini-1.5-flash-latest',
+      model: 'gemini-2.5-flash',
       apiKey: API_KEY,
     );
 

@@ -1,6 +1,6 @@
+import 'package:flashcard_learning/logo.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
-import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -8,13 +8,11 @@ import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
-import '../../../../logo.dart';
 import '../../../../routing/route.dart';
 import '../../../account/account_viewmodel.dart';
-import '../../../test/Testpage.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => LoginState();
@@ -24,8 +22,6 @@ class LoginState extends State<LoginPage> {
   void _gotoRegisterPage(BuildContext context) {
     context.push(AppRoute.signup);
   }
-
-
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -41,7 +37,7 @@ class LoginState extends State<LoginPage> {
   Future<void> login(
       GlobalKey<FormState> formState, BuildContext context) async {
     LoginViewModel loginViewModel =
-    Provider.of<LoginViewModel>(context, listen: false);
+        Provider.of<LoginViewModel>(context, listen: false);
     if (formState.currentState!.validate()) {
       LoadingOverlay.show(context);
       await loginViewModel.login(
@@ -68,11 +64,8 @@ class LoginState extends State<LoginPage> {
 
   @override
   void initState() {
-    _emailController.text = "user3";
-    _passwordController.text = "123456789";
-
-
-
+    _emailController.text = "yen@dev.com";
+    _passwordController.text = "yen@dev.com";
   }
 
   void _scrollToFocusedField(double offset) {
@@ -96,13 +89,13 @@ class LoginState extends State<LoginPage> {
             // Header Section
             Container(
               height: 280,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [primaryColor, secondaryColor],
                 ),
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(40),
                   bottomRight: Radius.circular(40),
                 ),
@@ -111,7 +104,7 @@ class LoginState extends State<LoginPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const FlutterLogo(size: 80), // Replace with your logo
+                    const Logo(),
                     const SizedBox(height: 20),
                     Text(
                       "Welcome Back",
@@ -154,7 +147,8 @@ class LoginState extends State<LoginPage> {
                       controller: _emailController,
                       decoration: InputDecoration(
                         labelText: 'Email',
-                        prefixIcon: Icon(Icons.email, color: primaryColor),
+                        prefixIcon:
+                            const Icon(Icons.email, color: primaryColor),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
@@ -166,7 +160,7 @@ class LoginState extends State<LoginPage> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide:
-                          BorderSide(color: Colors.grey.shade300, width: 1),
+                              BorderSide(color: Colors.grey.shade300, width: 1),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -189,8 +183,10 @@ class LoginState extends State<LoginPage> {
                       controller: _passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
+                        suffixIcon:
+                            const Icon(Icons.visibility, color: primaryColor),
                         labelText: 'Password',
-                        prefixIcon: Icon(Icons.lock, color: primaryColor),
+                        prefixIcon: const Icon(Icons.lock, color: primaryColor),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
@@ -202,11 +198,12 @@ class LoginState extends State<LoginPage> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide:
-                          BorderSide(color: Colors.grey.shade300, width: 1),
+                              BorderSide(color: Colors.grey.shade300, width: 1),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: primaryColor, width: 2),
+                          borderSide:
+                              const BorderSide(color: primaryColor, width: 2),
                         ),
                       ),
                       validator: (value) {
@@ -223,7 +220,7 @@ class LoginState extends State<LoginPage> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           'Forgot Password?',
                           style: TextStyle(color: primaryColor),
                         ),
@@ -267,8 +264,8 @@ class LoginState extends State<LoginPage> {
                             thickness: 1,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
                             'OR',
                             style: TextStyle(
@@ -306,7 +303,7 @@ class LoginState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Don't have an account? ",
                           style: TextStyle(color: lightText),
                         ),
@@ -314,7 +311,7 @@ class LoginState extends State<LoginPage> {
                           onTap: () {
                             _gotoRegisterPage(context);
                           },
-                          child: Text(
+                          child: const Text(
                             'Sign Up',
                             style: TextStyle(
                               color: primaryColor,

@@ -52,7 +52,7 @@ class AppManager {
   }
 
   static GenerativeModel aiModelGemini = GenerativeModel(
-    model: 'gemini-1.5-flash-latest',
+    model: 'gemini-2.5-flash',
     apiKey: dotenv.env['AI_API_KEY'] ?? "",
   );
 

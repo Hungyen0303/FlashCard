@@ -18,7 +18,7 @@ class URL {
   static String flashCardSetPublic = "$baseURL/FlashcardSet/public";
 
   static String postFlashCardSetPublic(String name) =>
-      "$baseURL/FlashcardSet/public/${name}";
+      "$baseURL/FlashcardSet/public/$name";
 
   static String flashCard(nameOfSet) => "$baseURL/FlashcardSet/$nameOfSet";
 

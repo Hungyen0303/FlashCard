@@ -60,12 +60,14 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
       listChat
         ..add(
           ContentChatContainer(
+            controller: _scrollController,
             isBot: false,
             content: conversationAiViewModel.chatList[i].humanChat ?? "",
             isLoading: false,
           ),
         )
         ..add(ContentChatContainer(
+          controller: _scrollController,
           isBot: true,
           content: conversationAiViewModel.chatList[i].botChat ?? "",
           isLoading: false,
@@ -259,9 +261,8 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
                           child: FutureBuilder(
                               future: data,
                               builder: (context, snapshot) {
-                                return Consumer<MainScreenViewModel>(
-                                    builder:
-                                        (context, chatWithAIViewModel, child) {
+                                return Consumer<MainScreenViewModel>(builder:
+                                    (context, chatWithAIViewModel, child) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
                                     return const Center(

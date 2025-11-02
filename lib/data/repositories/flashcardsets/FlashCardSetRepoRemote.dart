@@ -1,21 +1,14 @@
-
 import 'package:flashcard_learning/data/repositories/flashcardsets/FlashCardSetRepo.dart';
 import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
 import 'package:flashcard_learning/domain/models/flashSet.dart';
 
-
 import '../../services/api/Api1.dart';
 
 class FlashCardSetRepoRemote extends FlashCardSetRepo {
-  List<FlashCardSet> cachedlocalListFlashCardSet = [];
-
-  List<FlashCardSet> cachedlocalListFlashCardSetPublic = [];
-
   Api1 api1 = Api1Impl();
 
   @override
   Future<bool> addNewSetToPublic(FlashCardSet newSet) async {
-    cachedlocalListFlashCardSetPublic.add(newSet);
     await api1.publicSet(newSet.name);
     return true;
   }
@@ -23,11 +16,7 @@ class FlashCardSetRepoRemote extends FlashCardSetRepo {
   @override
   Future<List<FlashCardSet>> getAllSetPublic() async {
     try {
-      if (cachedlocalListFlashCardSetPublic.isEmpty) {
-        cachedlocalListFlashCardSetPublic =
-            await api1.getAllFlashcardSetPublic();
-      }
-      return cachedlocalListFlashCardSetPublic;
+      await api1.getAllFlashcardSetPublic();
     } catch (e) {
       rethrow;
     }
@@ -37,10 +26,7 @@ class FlashCardSetRepoRemote extends FlashCardSetRepo {
   @override
   Future<List<FlashCardSet>> getAll() async {
     try {
-      if (cachedlocalListFlashCardSet.isEmpty) {
-        cachedlocalListFlashCardSet = await api1.getAllFlashcardSet();
-      }
-      return cachedlocalListFlashCardSet;
+      return await api1.getAllFlashcardSet();
     } catch (e) {
       rethrow;
     }
@@ -49,10 +35,8 @@ class FlashCardSetRepoRemote extends FlashCardSetRepo {
   @override
   Future<bool> addNewSet(FlashCardSet newSet) async {
     try {
-      bool success = await api1.addNewSet(newSet);
-      if (success) {
-        cachedlocalListFlashCardSet.add(newSet);
-      }
+      await api1.addNewSet(newSet);
+
       return true;
     } catch (e) {
       return false;
@@ -62,14 +46,7 @@ class FlashCardSetRepoRemote extends FlashCardSetRepo {
   @override
   Future<bool> editASet(String nameOfSet, FlashCardSet newSet) async {
     try {
-      bool success = await api1.updateSet(nameOfSet, newSet);
-      if (success) {
-        final index = cachedlocalListFlashCardSet
-            .indexWhere((old) => old.name == nameOfSet);
-        if (index != -1) {
-          cachedlocalListFlashCardSet[index] = newSet;
-        }
-      }
+      await api1.updateSet(nameOfSet, newSet);
       return true;
     } catch (e) {
       return false;
@@ -79,15 +56,9 @@ class FlashCardSetRepoRemote extends FlashCardSetRepo {
   @override
   Future<bool> deleteASet(String name) async {
     try {
-      bool success = await api1.deleteSet(name);
-      if (success) {
-        cachedlocalListFlashCardSet
-            .removeWhere((element) => element.name == name);
-      }
-      return true;
+      return await api1.deleteSet(name);
     } catch (e) {
       return false;
     }
-    return true;
   }
 }

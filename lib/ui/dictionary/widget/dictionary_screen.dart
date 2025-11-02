@@ -11,13 +11,10 @@ import 'package:line_icons/line_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../../domain/models/Word.dart';
-
 import '../../../domain/models/WordFromAPI.dart';
 import '../../../routing/route.dart';
 import '../view_model/DictionaryViewModel.dart';
 import 'SearchByVoiceOverlay.dart';
-import 'SearchByImage.dart';
 
 class DictionaryPage extends StatefulWidget {
   const DictionaryPage({super.key, required this.dictionaryViewModel});
@@ -31,13 +28,10 @@ class DictionaryPage extends StatefulWidget {
 class _DictionaryPageState extends State<DictionaryPage> {
   final TextEditingController _searchController = TextEditingController();
   List<String> popularWords = [];
-
-  TextStyle titleStyle = TextStyle(
+  TextStyle titleStyle = const TextStyle(
     fontWeight: FontWeight.w700,
     color: Color(0xFF045FB4),
     fontSize: 20,
-
-    
   );
   bool isSearch = false;
   late Future load;
@@ -58,7 +52,6 @@ class _DictionaryPageState extends State<DictionaryPage> {
         ],
       ),
       centerTitle: true,
-
     );
   }
 
@@ -76,15 +69,13 @@ class _DictionaryPageState extends State<DictionaryPage> {
       });
     }
     print(popularWords);
-
   }
 
   Future<void> gotoSearchPage(String text) async {
     LoadingOverlay.show(context);
-    WordFromAPI?  wordFromAPI =
+    WordFromAPI? wordFromAPI =
         await Provider.of<DictionaryViewModel>(context, listen: false)
             .loadWord(text);
-
 
     LoadingOverlay.hide();
 
@@ -96,8 +87,9 @@ class _DictionaryPageState extends State<DictionaryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final boxSize = MediaQuery.of(context).size * 0.4;
     return Scaffold(
-      appBar: buildAppBar(),
+        appBar: buildAppBar(),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: SingleChildScrollView(
@@ -184,7 +176,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   padding: EdgeInsets.symmetric(vertical: 20),
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                                       side: BorderSide(
                                         color: MAIN_TITLE_COLOR,
                                       ),
@@ -196,7 +188,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
                                 }
                                 await gotoSearchPage(_searchController.text);
                               },
-                              child: Text(
+                              child: const Text(
                                 "Tra cứu",
                                 style: TextStyle(
                                   fontSize: 20,
@@ -205,113 +197,45 @@ class _DictionaryPageState extends State<DictionaryPage> {
                         )),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(
-                      onTap: () => SearchByMediaOverlay.show(context),
-                      child: Container(
-                        height: 180,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        width: 180,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                                colors: [
-                                  Color(0xff2196f3),
-                                  Color(0xff9c27b0),
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.mic,
-                              color: Colors.white,
-                              size: 50,
-                            ),
-                            Text(
-                              "Phát âm ",
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
-                            ),
-                            Text(
-                              "Phát âm cụm từ để kiểm tra phát âm ",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        context.push(AppRoute.SearchByImagePath);
-                      },
-                      child: Container(
-                        height: 180,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        width: 180,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                                colors: [
-                                  Color(0xffff6f20), // Cam nhạt
-                                  Color(0xffe91e63), // Hồng đậm
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.image,
-                              color: Colors.white,
-                              size: 50,
-                            ),
-                            Text(
-                              textAlign: TextAlign.center,
-                              "Tìm bằng hình ảnh ",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
-                            ),
-                            Text(
-                              "Phát âm cụm từ để kiểm tra phát âm ",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
+                    _buildCard(
+                        onPressed: () => SearchByMediaOverlay.show(context),
+                        title: "Phát âm",
+                        description: "Phát âm cụm từ để kiểm tra phát âm ",
+                        gradient: const LinearGradient(
+                            colors: [
+                              Color(0xff2196f3),
+                              Color(0xff9c27b0),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter),
+                        iconData: LineIcons.microphone),
+                    _buildCard(
+                        onPressed: () =>
+                            context.push(AppRoute.SearchByImagePath),
+                        title: "Tìm bằng hình ảnh",
+                        description: "Phát âm cụm từ để kiểm tra phát âm ",
+                        gradient: const LinearGradient(
+                            colors: [
+                              Color(0xffff6f20), // Cam nhạt
+                              Color(0xffe91e63), // Hồng đậm
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter),
+                        iconData: Icons.image),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                _spacer(),
                 Text(
                   style: titleStyle,
                   "Những từ tìm kiếm phổ biến ",
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                _spacer(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: popularWords
@@ -326,5 +250,57 @@ class _DictionaryPageState extends State<DictionaryPage> {
             ),
           ),
         ));
+  }
+
+  Widget _buildCard(
+      {required String title,
+      required String description,
+      required LinearGradient gradient,
+      required IconData iconData,
+      required VoidCallback onPressed}) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        height: MediaQuery.of(context).size.width * 0.44,
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        width: MediaQuery.of(context).size.width * 0.44,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10), gradient: gradient),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              iconData,
+              color: Colors.white,
+              size: 50,
+            ),
+            FittedBox(
+              child: Text(
+                maxLines: 1,
+                title,
+                style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white),
+              ),
+            ),
+            Text(
+              description,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _spacer() {
+    return const SizedBox(
+      height: 10,
+    );
   }
 }

@@ -72,6 +72,8 @@ dependencies:
   flutter_native_splash: ^2.4.6
   flutter_launcher_icons: ^0.14.4
   requests_inspector: ^5.1.1
+  flutter_markdown: ^0.7.7+1
+  markdown_widget: ^2.3.2+8
 
 dev_dependencies:
   flutter_test:
@@ -125,6 +127,7 @@ flutter:
      - assets/apple-icon.png
      - assets/icon-picker.jpg
      - assets/launch_icon.jpg
+     - assets/logo-removebg.png
      - .env
 
 

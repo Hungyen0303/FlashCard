@@ -1,4 +1,3 @@
-import 'package:flashcard_learning/domain/models/user.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../data/repositories/auth/AuthRepository.dart';
@@ -6,8 +5,6 @@ import '../../../../data/repositories/auth/AuthRepository.dart';
 class LoginViewModel extends ChangeNotifier {
   LoginViewModel({required AuthRepository authRepository})
       : _authRepository = authRepository;
-
-
 
   final AuthRepository _authRepository;
 
@@ -26,7 +23,6 @@ class LoginViewModel extends ChangeNotifier {
 
   Future<void> login(String username, String password) async {
     try {
-
       await _authRepository.login(username, password);
     } on Exception catch (e) {
       _hasError = true;
@@ -44,6 +40,4 @@ class LoginViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-
 }

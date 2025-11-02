@@ -1,9 +1,8 @@
 import 'package:flashcard_learning/utils/color/AllColor.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CardCustom extends StatefulWidget {
-  CardCustom(
+  const CardCustom(
       {super.key,
       required this.image,
       required this.title,

@@ -15,7 +15,6 @@ Dio setupDio() {
   final dio = Dio();
   dio.interceptors.add(AppInterceptor(dio));
 
-  // TODO : Test
   Options options = Options(sendTimeout: Duration(seconds: 10));
   return dio;
 }

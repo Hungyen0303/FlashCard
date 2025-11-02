@@ -4,6 +4,7 @@ import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart'
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -26,6 +27,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
   TextEditingController searchController = TextEditingController();
   final TextEditingController askingController = TextEditingController();
   late Future<void> data;
+  ScrollController controller = ScrollController();
 
   Future<void> _onItemTapped(int index) async {
     LoadingOverlay.show(context);
@@ -78,12 +80,14 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
       listChat
         ..add(
           ContentChatContainer(
+            controller: _scrollController,
             isBot: false,
             content: chatWithAIViewModel.chatList[i].humanChat ?? "",
             isLoading: false,
           ),
         )
         ..add(ContentChatContainer(
+          controller: _scrollController,
           isBot: true,
           content: chatWithAIViewModel.chatList[i].botChat ?? "",
           isLoading: false,
@@ -239,7 +243,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
   final ScrollController _scrollController = ScrollController();
 
   void _scrollToFocusedField(double offset) {
-    if (_scrollController != null && _scrollController!.hasClients) {
+    if (_scrollController.hasClients) {
       Future.delayed(const Duration(milliseconds: 250), () {
         _scrollController.animateTo(
           offset,
@@ -265,6 +269,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
     super.dispose();
     askingController.dispose();
     searchController.dispose();
+    _scrollController.dispose();
   }
 
   Color mainColor = const Color(0xFF726D14);
@@ -344,7 +349,6 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
 
   Drawer _buildDrawer(ChatWithAIViewModel chatWithAIViewModel) {
     return Drawer(
-
       backgroundColor: Color(0xFFC5DDF5), // Nền vàng chủ đạo
       child: SafeArea(
         child: ListView(
@@ -368,13 +372,11 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               child: SearchBar(
                 onTap: () {
-                  setState(() {
-                  });
+                  setState(() {});
                 },
                 onTapOutside: (event) {
                   FocusManager.instance.primaryFocus?.unfocus();
-                  setState(() {
-                  });
+                  setState(() {});
                 },
                 controller: searchController,
                 elevation: WidgetStateProperty.all(3.0),
@@ -438,7 +440,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-           darkBlue,
+            darkBlue,
             Color(0xFF4E7BA2),
           ],
         ),

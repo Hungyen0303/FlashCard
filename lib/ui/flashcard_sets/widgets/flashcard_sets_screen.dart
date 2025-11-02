@@ -7,11 +7,8 @@ import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
-import 'package:line_icons/line_icon.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:pie_menu/pie_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
@@ -29,6 +26,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
   bool isGridView = false;
   Color mainColor = const Color(0xff3F2088);
   TextEditingController nameController = TextEditingController();
+  late Future<void> _loadFuture;
 
   TextFormField _buildTextFormEnglish(controller) {
     String typeWord = "";
@@ -53,8 +51,6 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
       },
     );
   }
-
-  late Future<void> _loadData;
 
   void _showPopUp(bool isCreating) {
     FlashCardSetViewModel flashCardSetViewModel =
@@ -198,7 +194,17 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
   @override
   void initState() {
     super.initState();
-    _loadData = context.read<FlashCardSetViewModel>().loadData();
+    _loadFuture = initializeLoadData();
+  }
+
+  Future<void> initializeLoadData() async {
+    await context.read<FlashCardSetViewModel>().loadData();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadFuture = initializeLoadData();
   }
 
   @override
@@ -267,7 +273,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
 
   Widget _buildBlankPage() {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -285,14 +291,14 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
             AnimatedContainer(
               duration: Duration(milliseconds: 800),
               curve: Curves.easeInOut,
-              child: Text(
+              child: const Text(
                 "🎲",
                 style: TextStyle(fontSize: 100),
               ),
             ),
             SizedBox(height: 25),
             // Tiêu đề
-            Text(
+            const Text(
               "No Flashcard Sets Yet",
               style: TextStyle(
                 fontSize: 28,
@@ -310,7 +316,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
             ),
             SizedBox(height: 15),
             // Mô tả
-            Padding(
+            const Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 "Start your learning journey by creating your first flashcard set!",
@@ -355,7 +361,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
     return Scaffold(
         appBar: _buildAppbar(),
         body: FutureBuilder(
-            future: _loadData,
+            future: _loadFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
