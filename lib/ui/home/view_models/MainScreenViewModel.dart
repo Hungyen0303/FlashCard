@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +9,7 @@ import '../../../domain/models/Conversation.dart';
 import '../../../domain/models/Message.dart';
 
 class MainScreenViewModel extends ChangeNotifier {
-  String API_KEY = "AIzaSyDIlB9Y39PTHZx2VNGrbrtjqZ_RVTrKu3o";
+  String apiKey = dotenv.env['AI_API_KEY'] ?? "";
   List<String> conversation = [];
 
   Function()? onDoneChanged;
@@ -21,7 +22,7 @@ class MainScreenViewModel extends ChangeNotifier {
     if (conversation.isNotEmpty) return;
     final model = GenerativeModel(
       model: 'gemini-2.5-flash',
-      apiKey: API_KEY,
+      apiKey: apiKey,
     );
 
     var content = [Content.text(Prompt.promptForGettingTopic)];

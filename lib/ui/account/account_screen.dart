@@ -20,12 +20,12 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   // Define color palette based on the dominant color 0xFFA6C7E7
 
-  Future<void> logout(BuildContext context) async {
+  Future<void> logout() async {
     context.read<ChatWithAIViewModel>().clearAll();
-    await context.read<AccountViewModel>().logout();
     if (mounted) {
-      context.go(AppRoute.login);
+      Navigator.of(context).popUntil((route) => route.isFirst);
     }
+    await context.read<AccountViewModel>().logout();
   }
 
   void _gotoAccountPage() {
@@ -328,7 +328,7 @@ class _AccountPageState extends State<AccountPage> {
                     width: MediaQuery.of(context).size.width * 0.4,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                             colors: [
                               dominantColor,
                               darkBlue,
@@ -339,7 +339,7 @@ class _AccountPageState extends State<AccountPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.book_sharp,
                           color: white,
                           size: 25,
@@ -366,7 +366,7 @@ class _AccountPageState extends State<AccountPage> {
                     width: MediaQuery.of(context).size.width * 0.4,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                             colors: [
                               softPink,
                               paleOrange,
@@ -377,7 +377,7 @@ class _AccountPageState extends State<AccountPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.lock_clock,
                           color: white,
                           size: 25,
@@ -385,7 +385,7 @@ class _AccountPageState extends State<AccountPage> {
                         Text(
                           textAlign: TextAlign.center,
                           "${accountViewModel.numOfCompleteFlashcard}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w500,
                               color: white),
@@ -431,7 +431,7 @@ class _AccountPageState extends State<AccountPage> {
               ),
               buildProfilePanel(),
               buildActivityPanel(),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -443,9 +443,9 @@ class _AccountPageState extends State<AccountPage> {
                       padding: EdgeInsets.symmetric(vertical: 15),
                     ),
                     onPressed: () async {
-                      await logout(context);
+                      await logout();
                     },
-                    child: Text(
+                    child: const Text(
                       "Đăng xuất",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,

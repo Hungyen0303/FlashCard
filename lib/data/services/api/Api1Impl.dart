@@ -3,6 +3,7 @@ import 'package:flashcard_learning/data/services/AppInterceptor.dart';
 import 'package:flashcard_learning/data/services/api/Api1.dart';
 import 'package:flashcard_learning/data/services/api/Status.dart';
 import 'package:flashcard_learning/domain/models/Flashcard.dart';
+import 'package:requests_inspector/requests_inspector.dart';
 
 import '../../../AppManager.dart';
 import '../../../domain/models/Conversation.dart';
@@ -13,7 +14,9 @@ import '../../URL.dart';
 
 Dio setupDio() {
   final dio = Dio();
-  dio.interceptors.add(AppInterceptor(dio));
+  dio.interceptors
+    ..add(RequestsInspectorInterceptor())
+    ..add(AppInterceptor(dio));
 
   Options options = Options(sendTimeout: Duration(seconds: 10));
   return dio;

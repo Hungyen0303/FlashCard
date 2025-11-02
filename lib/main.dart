@@ -22,7 +22,7 @@ void main() async {
   await AppManager.initialize();
   runApp(MultiProvider(
     providers: AppProvider.providers,
-    child: const MyApp(),
+    child: const RequestsInspector(child: MyApp()),
   ));
 }
 
