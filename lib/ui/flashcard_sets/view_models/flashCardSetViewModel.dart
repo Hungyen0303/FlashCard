@@ -1,15 +1,6 @@
-import 'dart:math';
-
 import 'package:flashcard_learning/data/repositories/flashcardsets/FlashCardSetRepo.dart';
-import 'package:flashcard_learning/data/repositories/flashcardsets/FlashCardSetRepoLocal.dart';
 import 'package:flashcard_learning/domain/models/flashSet.dart';
-import 'package:flashcard_learning/routing/route.dart';
-import 'package:flashcard_learning/routing/router.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
-import 'package:logging/logging.dart';
-
-import '../../../data/repositories/flashcardsets/FlashCardSetRepoRemote.dart';
 
 class FlashCardSetViewModel extends ChangeNotifier {
   FlashCardSetViewModel(this._repo);
@@ -31,7 +22,8 @@ class FlashCardSetViewModel extends ChangeNotifier {
   }
 
   Future<bool> loadDataPublic() async {
-    _listFlashCardSetsPublic = await getAllSetPublic();
+    final listSet = await getAllSetPublic();
+    _listFlashCardSetsPublic = listSet;
     notifyListeners();
     return true;
   }
@@ -67,7 +59,8 @@ class FlashCardSetViewModel extends ChangeNotifier {
 
   Future<List<FlashCardSet>> getAllSetPublic() async {
     try {
-      return _repo.getAllSetPublic();
+      final list = await _repo.getAllSetPublic();
+      return list;
     } catch (e) {
       return [];
     }
@@ -76,6 +69,7 @@ class FlashCardSetViewModel extends ChangeNotifier {
   Future<bool> addNewSet(FlashCardSet newSet) async {
     try {
       await _repo.addNewSet(newSet);
+      await loadData();
       notifyListeners();
       return true;
     } catch (e) {

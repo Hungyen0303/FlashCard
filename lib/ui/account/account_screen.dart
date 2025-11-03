@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flashcard_learning/data/services/api/Api1.dart';
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
@@ -7,8 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
-
-import '../../AppManager.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -22,8 +23,9 @@ class _AccountPageState extends State<AccountPage> {
 
   Future<void> logout() async {
     context.read<ChatWithAIViewModel>().clearAll();
+
     if (mounted) {
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      context.go(AppRoute.login);
     }
     await context.read<AccountViewModel>().logout();
   }
@@ -34,15 +36,15 @@ class _AccountPageState extends State<AccountPage> {
 
   Container buildActions(String text) {
     return Container(
-      child: Text(
-        text,
-        style: TextStyle(fontSize: 18, color: white),
-      ),
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
           color: dominantColor.withOpacity(0.8),
           borderRadius: BorderRadius.circular(10)),
+      child: Text(
+        text,
+        style: const TextStyle(fontSize: 18, color: white),
+      ),
     );
   }
 
@@ -120,16 +122,24 @@ class _AccountPageState extends State<AccountPage> {
                           width: 60,
                           height: 60,
                           color: dominantColor,
-                          child: accountViewModel.currentUser.avatar.isEmpty
-                              ? const Icon(LineIcons.user,
-                                  size: 40, color: white)
-                              : Image.network(
+                          child: true
+                              ? Image.network(
                                   alignment: Alignment.topCenter,
-                                  accountViewModel.currentUser.avatar,
+                                  'https://picsum.photos/${Random.secure().nextInt(1000)}',
                                   fit: BoxFit.cover,
-                                  width: 60,
-                                  height: 60,
-                                ),
+                                  width: 80,
+                                  height: 80,
+                                )
+                              : accountViewModel.currentUser.avatar.isEmpty
+                                  ? const Icon(LineIcons.user,
+                                      size: 40, color: white)
+                                  : Image.network(
+                                      alignment: Alignment.topCenter,
+                                      accountViewModel.currentUser.avatar,
+                                      fit: BoxFit.cover,
+                                      width: 60,
+                                      height: 60,
+                                    ),
                         ),
                       ),
                       Align(
@@ -145,7 +155,7 @@ class _AccountPageState extends State<AccountPage> {
                               shape: BoxShape.circle,
                               border: Border.all(color: white, width: 2),
                             ),
-                            child: Icon(
+                            child: const Icon(
                               CupertinoIcons.camera_viewfinder,
                               size: 16,
                               color: white,
@@ -163,7 +173,7 @@ class _AccountPageState extends State<AccountPage> {
                 ),
                 subtitle: GestureDetector(
                     onTap: _gotoAccountPage,
-                    child: Text(
+                    child: const Text(
                       "Edit Profile",
                       style: TextStyle(
                           decoration: TextDecoration.underline,
@@ -208,7 +218,7 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: darkBlue,
+                      backgroundColor: white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -218,11 +228,11 @@ class _AccountPageState extends State<AccountPage> {
                     onPressed: () {
                       context.push(AppRoute.upgrade);
                     },
-                    child: Text(
+                    child: const Text(
                       "Upgrade",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: white,
+                          color: darkBlue,
                           fontSize: 16),
                     ),
                   ),
@@ -260,23 +270,23 @@ class _AccountPageState extends State<AccountPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Activities",
                 style: TextStyle(
                     color: darkBlue, fontSize: 25, fontWeight: FontWeight.bold),
               ),
-              Text(
+              const Text(
                 "Track your progress",
                 style: TextStyle(color: lightText),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Divider(
                 height: 1,
                 color: dominantColor.withOpacity(0.3),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(
@@ -287,7 +297,7 @@ class _AccountPageState extends State<AccountPage> {
                       await accountViewModel.setCountBy(true);
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
                       alignment: Alignment.center,
                       decoration:
                           accountViewModel.countByDay ? boxDecoration : null,
@@ -345,8 +355,10 @@ class _AccountPageState extends State<AccountPage> {
                           size: 25,
                         ),
                         Text(
-                          "${accountViewModel.numOfCompleteConversation}",
-                          style: TextStyle(
+                          true
+                              ? '0'
+                              : "${accountViewModel.numOfCompleteConversation}",
+                          style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w500,
                               color: white),
@@ -362,7 +374,8 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                   Container(
                     height: 150,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
                     width: MediaQuery.of(context).size.width * 0.4,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -384,7 +397,9 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                         Text(
                           textAlign: TextAlign.center,
-                          "${accountViewModel.numOfCompleteFlashcard}",
+                          true
+                              ? '0'
+                              : "${accountViewModel.numOfCompleteFlashcard}",
                           style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w500,
@@ -409,15 +424,9 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    context.read<AccountViewModel>().loadTrackData();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F9FD), // Very light blue background
+      backgroundColor: const Color(0xFFF5F9FD), // Very light blue background
       appBar: _buildAppbar(),
       body: Container(
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -440,7 +449,7 @@ class _AccountPageState extends State<AccountPage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 15),
+                      padding: const EdgeInsets.symmetric(vertical: 15),
                     ),
                     onPressed: () async {
                       await logout();

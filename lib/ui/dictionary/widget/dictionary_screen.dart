@@ -68,7 +68,6 @@ class _DictionaryPageState extends State<DictionaryPage> {
         popularWords = words;
       });
     }
-    print(popularWords);
   }
 
   Future<void> gotoSearchPage(String text) async {

@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/data/services/api/Api1.dart';
 import 'package:flashcard_learning/logo.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
@@ -33,6 +34,7 @@ class LoginState extends State<LoginPage> {
   static const Color darkText = Color(0xFF212529);
   static const Color lightText = Color(0xFF6C757D);
   final ScrollController _scrollController = ScrollController();
+  bool passwordVisible = true;
 
   Future<void> login(
       GlobalKey<FormState> formState, BuildContext context) async {
@@ -44,7 +46,7 @@ class LoginState extends State<LoginPage> {
           _emailController.text, _passwordController.text);
       if (mounted && !loginViewModel.hasError) {
         LoadingOverlay.hide();
-        await context.read<AccountViewModel>().loadTrackData();
+        context.read<Api1>().reset();
         context.go('/home');
       } else if (mounted) {
         LoadingOverlay.hide();
@@ -181,10 +183,20 @@ class LoginState extends State<LoginPage> {
                     // Password Field
                     TextFormField(
                       controller: _passwordController,
-                      obscureText: true,
+                      obscureText: passwordVisible,
                       decoration: InputDecoration(
-                        suffixIcon:
-                            const Icon(Icons.visibility, color: primaryColor),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              passwordVisible = !passwordVisible;
+                            });
+                          },
+                          child: Icon(
+                              !passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: primaryColor),
+                        ),
                         labelText: 'Password',
                         prefixIcon: const Icon(Icons.lock, color: primaryColor),
                         border: OutlineInputBorder(

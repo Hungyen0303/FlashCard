@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/core/constants/app_icons.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,26 +10,15 @@ import 'package:quickalert/quickalert.dart';
 
 import 'CustomCardProvider.dart';
 
-class Customiconpickerdialog extends StatefulWidget {
-  const Customiconpickerdialog({super.key});
+class CustomIconPickerDialog extends StatefulWidget {
+  const CustomIconPickerDialog({super.key});
 
   @override
-  State<Customiconpickerdialog> createState() => _CustomiconpickerdialogState();
+  State<CustomIconPickerDialog> createState() => _CustomIconPickerDialogState();
 }
 
-class _CustomiconpickerdialogState extends State<Customiconpickerdialog> {
+class _CustomIconPickerDialogState extends State<CustomIconPickerDialog> {
   Color iconColor = MAIN_THEME_BLUE_TEXT;
-
-  List<IconData> iconDatas = [
-    Icons.book,
-    LineIcons.star,
-    Icons.abc_outlined,
-    Icons.account_circle_sharp,
-    Icons.accessibility_new_rounded,
-    Icons.add_alert_sharp,
-    LineIcons.line,
-    LineIcons.airFreshener
-  ];
 
   Widget _buildGridIcon() {
     return Container(
@@ -39,7 +29,7 @@ class _CustomiconpickerdialogState extends State<Customiconpickerdialog> {
         padding: EdgeInsets.zero,
         mainAxisSpacing: 0,
         crossAxisSpacing: 0,
-        children: iconDatas
+        children: IconMapper.educationIcons
             .map((e) => IconButton(
                   onPressed: () {
                     Provider.of<CustomCardProvider>(context, listen: false)
@@ -91,7 +81,7 @@ class _CustomiconpickerdialogState extends State<Customiconpickerdialog> {
                 onPressed: () {
                   _showIconPickerDialog();
                 },
-                child: Text(
+                child: const Text(
                   "Choose an icon ",
                   style: TextStyle(
                       fontSize: 18,

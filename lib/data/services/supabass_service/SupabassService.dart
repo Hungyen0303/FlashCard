@@ -1,14 +1,13 @@
 import 'dart:io';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupaBaseService {
-  static final PROJECT_ID = "vuxrufezkmjtjdkwdjmy";
-  static final URL = "https://$PROJECT_ID.supabase.co";
-  static final anonKey =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1eHJ1ZmV6a21qdGpka3dkam15Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIyODIwNzAsImV4cCI6MjA1Nzg1ODA3MH0.ZSCJazbiEFc4QSpNSIUlpq0SVnEGnE32Isgky6LhmL4";
-  static final bucketName = "flashcard";
-
+  static final projectId = dotenv.env['SUPABASE_PROJECT_ID'] ?? "";
+  static final url = "https://$projectId.supabase.co";
+  static final anonKey = dotenv.env['SUPABASE_anonKey'] ?? '';
+  static final bucketName = dotenv.env['SUPABASE_bucketName'] ?? 'flashcard';
   static final supabase = Supabase.instance.client;
 
   static Future<String> uploadImageToSupabase(String path, String name) async {
@@ -26,11 +25,7 @@ class SupaBaseService {
           );
       return supabase.storage.from(bucketName).getPublicUrl(filePath);
     } on StorageException catch (error) {
-      print("Error : " + error.message);
-    } catch (error) {
-      print("Error: ");
-      print(error);
-    }
+    } catch (error) {}
     return "";
   }
 }

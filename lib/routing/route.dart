@@ -1,7 +1,4 @@
 class AppRoute {
-
-
-
   static String home = '/home';
   static String splash = '/splash';
 
@@ -16,11 +13,15 @@ class AppRoute {
 
   static String flashCardSet = '/flashcardSet/:name';
 
-  static String gotoFlashcardSet(String name , String isPublic ) => '/flashcardSet?name=$name&isPublic=${isPublic.toString()}';
+  static String gotoFlashcardSet(String name, String isPublic) =>
+      '/flashcardSet?name=$name&isPublic=${isPublic.toString()}';
 
   static String SearchByImagePath = '/searchbyimage';
 
   static String profile = "/profile";
 
   static String public_flashcard = '/flashcard-public';
+
+  static String policy = '/policy';
+  static String termOfService = '/termOfService';
 }

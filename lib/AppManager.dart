@@ -34,7 +34,6 @@ class AppManager {
   /// if token is still valid => auto login
   /// if token is not valid => refresh =>auto login
   /// if both is not valid => login
-  ///
 
   static final Api1 _api1 = Api1Impl();
 
@@ -88,9 +87,7 @@ class AppManager {
     try {
       await _api1.getUser();
     } on DioException catch (e) {
-    } on Exception catch (e) {
-      print("message" + e.toString());
-    }
+    } on Exception catch (e) {}
   }
 
   static Future<void> saveToken(String token, String refreshToken) async {
@@ -114,6 +111,8 @@ class AppManager {
 
   static Future<void> logout() async {
     await clearToken();
+    _token = "";
+    _refreshToken = "";
     setUser(User());
   }
 }

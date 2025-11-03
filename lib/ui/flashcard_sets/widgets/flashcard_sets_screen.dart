@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/core/constants/app_icons.dart';
 import 'package:flashcard_learning/domain/models/flashSet.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/CustomCardProvider.dart';
@@ -76,7 +77,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
             _buildTextFormEnglish(nameController),
             Consumer<CustomCardProvider>(
                 builder: (context, customCardProvider, child) {
-              return Customiconpickerdialog();
+              return const CustomIconPickerDialog();
             }),
             SizedBox(
               height: 130,
@@ -111,7 +112,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
               FlashCardSet(
                   nameController.text,
                   0,
-                  customCardProvider.iconData ?? Icons.book,
+                  IconMapper.toCode(customCardProvider.iconData ?? Icons.book),
                   customCardProvider.iconColor,
                   false));
         } else {
@@ -120,7 +121,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
               FlashCardSet(
                   nameController.text,
                   0,
-                  customCardProvider.iconData ?? Icons.book,
+                  IconMapper.toCode(customCardProvider.iconData ?? Icons.book),
                   customCardProvider.iconColor,
                   false));
         }
@@ -218,7 +219,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
         Provider.of<CustomCardProvider>(context, listen: false);
     nameController.text = oldSet.name;
     customCardProvider
-      ..setIconData(oldSet.iconData)
+      ..setIconData(IconMapper.fromCode(oldSet.iconData))
       ..setColor(oldSet.color);
 
     _showPopUp(false);
@@ -235,8 +236,8 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
       confirmBtnText: 'Delete',
       confirmBtnColor: Colors.red,
       customAsset: 'assets/img-1.jpg',
-      widget: Padding(
-        padding: const EdgeInsets.all(8.0),
+      widget: const Padding(
+        padding: EdgeInsets.all(8.0),
         child: Text(
           "Are you sure to delete this set",
           style: TextStyle(color: Colors.blue, fontSize: 19),
@@ -400,7 +401,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
                                                 share: () {
                                                   shareASet(a);
                                                 },
-                                                isGridView: true,
+                                                isGridView: isGridView,
                                                 isPublic: false,
                                               ))
                                           .toList(),
@@ -419,7 +420,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
                                                 share: () {
                                                   shareASet(a);
                                                 },
-                                                isGridView: false,
+                                                isGridView: isGridView,
                                                 isPublic: false,
                                               ))
                                           .toList(),

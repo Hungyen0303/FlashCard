@@ -43,7 +43,6 @@ abstract class Api1 {
 
   Future<bool> publicSet(String name);
 
-
 /*----------------Conversation -----------------------*/
 
   Future<List<Conversation>> getConversations();
@@ -67,5 +66,5 @@ abstract class Api1 {
   Future<Map<String, int>> getTrackData();
   Future<void> postTrack();
 
-
+  void reset();
 }

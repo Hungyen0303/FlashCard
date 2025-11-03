@@ -16,11 +16,10 @@ class FlashCardSetRepoRemote extends FlashCardSetRepo {
   @override
   Future<List<FlashCardSet>> getAllSetPublic() async {
     try {
-      await api1.getAllFlashcardSetPublic();
+      return await api1.getAllFlashcardSetPublic();
     } catch (e) {
       rethrow;
     }
-    return [];
   }
 
   @override

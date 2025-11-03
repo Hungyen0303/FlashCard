@@ -50,7 +50,6 @@ class SpecificFlashCardViewModel extends ChangeNotifier {
           notifyListeners();
         }
       } catch (e) {
-        print("Error syncing markDone: $e");
         flashcardList[index].done = !flashcardList[index].done;
         calculateNumOfDone();
         onDoneChanged?.call(flashcardList[index].done ? 1 : -1);

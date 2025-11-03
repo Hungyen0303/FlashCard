@@ -15,9 +15,6 @@ class AppInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    options.connectTimeout = Duration(seconds: 10);
-    options.receiveTimeout = Duration(seconds: 10);
-
     handler.next(options);
   }
 
@@ -39,7 +36,7 @@ class AppInterceptor extends Interceptor {
         final refreshResponse = await Dio().post(
           URL.verify,
           data: {
-            "token": AppManager.getRefreshToken(),
+            "token": AppManager.getToken(),
             "refreshToken": AppManager.getRefreshToken()
           },
         );

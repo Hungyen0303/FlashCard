@@ -31,8 +31,6 @@ class SearchResultPage extends StatelessWidget {
   AudioPlayer audioPlayer = AudioPlayer();
 
   Future<void> playAudioFromNetWork(String url) async {
-    print(url);
-
     await audioPlayer.play(UrlSource(url));
   }
 

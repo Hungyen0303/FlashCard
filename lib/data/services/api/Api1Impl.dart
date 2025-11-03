@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flashcard_learning/data/services/AppInterceptor.dart';
 import 'package:flashcard_learning/data/services/api/Api1.dart';
@@ -12,18 +14,51 @@ import '../../../domain/models/flashSet.dart';
 import '../../../domain/models/user.dart';
 import '../../URL.dart';
 
-Dio setupDio() {
-  final dio = Dio();
-  dio.interceptors
-    ..add(RequestsInspectorInterceptor())
-    ..add(AppInterceptor(dio));
+Dio setupDio({required String token}) {
+  final dio = Dio(
+    BaseOptions(
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+      sendTimeout: const Duration(seconds: 30),
+      contentType: "application/json",
+      responseType: ResponseType.json,
+    ),
+  );
 
-  Options options = Options(sendTimeout: Duration(seconds: 10));
+  dio.interceptors.addAll([
+    RequestsInspectorInterceptor(),
+    AppInterceptor(dio),
+  ]);
+
+  final String token = AppManager.getToken();
+  if (token.isNotEmpty) {
+    dio.options.headers["Authorization"] = "Bearer $token";
+  }
+
+  dio.options.headers.addAll({
+    "Accept": "application/json",
+    "Platform": Platform.isAndroid ? "android" : "ios",
+  });
+
   return dio;
 }
 
 class Api1Impl extends Api1 {
-  final Dio dio = setupDio();
+  late Dio dio; // ← Không khởi tạo ở đây
+
+  Api1Impl() {
+    _initDio(); // ← Khởi tạo trong constructor
+  }
+
+  void _initDio() {
+    final token = AppManager.getToken();
+    dio = setupDio(token: token);
+  }
+
+  @override
+  void reset() {
+    _initDio(); // ← Tạo lại dio với token mới
+  }
 
   @override
   Future<void> login((String, String) credentials) async {
@@ -45,11 +80,11 @@ class Api1Impl extends Api1 {
         if (response.data["status"] == Status.success.value) {
           final token = response.data["data"]["token"] as String;
           final refreshToken = response.data["data"]["refreshToken"] as String;
-
           AppManager.saveToken(token, refreshToken);
           AppManager.setUser(
               User.fromJson(response.data["data"]["userInfoRes"]));
         }
+        _initDio();
       } else {
         throw DioException(
           requestOptions: response.requestOptions,
@@ -73,11 +108,6 @@ class Api1Impl extends Api1 {
           "username": username,
           "password": password,
         },
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-          },
-        ),
       );
       if (response.statusCode == 200) {
       } else {
@@ -119,7 +149,6 @@ class Api1Impl extends Api1 {
 
   @override
   Future<void> getUser() async {
-    print("LOAD USER ");
     try {
       final response = await dio.get(
         URL.info,
@@ -147,13 +176,10 @@ class Api1Impl extends Api1 {
   @override
   Future<void> verifyToken(String token, String refreshToken) async {
     try {
-      Response res = await dio.post(URL.verify,
-          data: {"token": token, "refreshToken": refreshToken},
-          options: Options(
-            headers: {
-              "Content-Type": "application/json",
-            },
-          ));
+      Response res = await dio.post(
+        URL.verify,
+        data: {"token": token, "refreshToken": refreshToken},
+      );
       if (res.statusCode == 200) {
         if (res.data["data"]["valid"]) {
           AppManager.saveToken(res.data["data"]["newToken"], refreshToken);
@@ -168,7 +194,6 @@ class Api1Impl extends Api1 {
   Future<void> refresh() async {
     try {
       Response res = await dio.post(URL.refresh,
-          options: Options(headers: {"Content-Type": "application/json"}),
           data: {"refreshToken": AppManager.getRefreshToken()});
       if (res.statusCode == 200) {
         AppManager.saveToken(
@@ -180,12 +205,9 @@ class Api1Impl extends Api1 {
   @override
   Future<List<FlashCardSet>> getAllFlashcardSet() async {
     try {
-      String token = AppManager.getToken();
-      Response res = await dio.get(URL.flashCardSet,
-          options: Options(headers: {
-            "Authorization": "Bearer ${AppManager.getToken()}",
-            "Content-Type": "application/json"
-          }));
+      Response res = await dio.get(
+        URL.flashCardSet,
+      );
       List<dynamic> rawData = res.data["data"];
       return rawData.map((e) => FlashCardSet.fromJson(e)).toList();
     } on DioException catch (e) {
@@ -196,11 +218,9 @@ class Api1Impl extends Api1 {
   @override
   Future<List<FlashCardSet>> getAllFlashcardSetPublic() async {
     try {
-      Response res = await dio.get(URL.flashCardSetPublic,
-          options: Options(headers: {
-            "Authorization": "Bearer ${AppManager.getToken()}",
-            "Content-Type": "application/json"
-          }));
+      Response res = await dio.get(
+        URL.flashCardSetPublic,
+      );
       List<dynamic> rawData = res.data["data"];
       return rawData.map((e) => FlashCardSet.fromJson(e)).toList();
     } on DioException catch (e) {
@@ -211,12 +231,10 @@ class Api1Impl extends Api1 {
   @override
   Future<bool> addNewSet(FlashCardSet f) async {
     try {
-      Response res = await dio.post(URL.flashCardSet,
-          data: f.toJson(),
-          options: Options(headers: {
-            "Authorization": "Bearer ${AppManager.getToken()}",
-            "Content-Type": "application/json"
-          }));
+      Response res = await dio.post(
+        URL.flashCardSet,
+        data: f.toJson(),
+      );
       if (res.statusCode == 200) {
         return true;
       } else
@@ -229,12 +247,10 @@ class Api1Impl extends Api1 {
   @override
   Future<bool> updateSet(String flashcardName, FlashCardSet f) async {
     try {
-      Response res = await dio.patch("${URL.flashCardSet}/$flashcardName",
-          data: f.toJson(),
-          options: Options(headers: {
-            "Authorization": "Bearer ${AppManager.getToken()}",
-            "Content-Type": "application/json"
-          }));
+      Response res = await dio.patch(
+        "${URL.flashCardSet}/$flashcardName",
+        data: f.toJson(),
+      );
       if (res.statusCode == 200) {
         return true;
       } else
@@ -247,11 +263,9 @@ class Api1Impl extends Api1 {
   @override
   Future<bool> deleteSet(String name) async {
     try {
-      Response res = await dio.delete("${URL.flashCardSet}/$name",
-          options: Options(headers: {
-            "Authorization": "Bearer ${AppManager.getToken()}",
-            "Content-Type": "application/json"
-          }));
+      Response res = await dio.delete(
+        "${URL.flashCardSet}/$name",
+      );
       if (res.statusCode == 200) {
         return true;
       } else {
@@ -265,15 +279,10 @@ class Api1Impl extends Api1 {
   @override
   Future<bool> addNewCard(FlashCard f, String nameOfSet) async {
     try {
-      // String encodedName = Uri.encodeComponent(nameOfSet);
-      // print(encodedName);
-
-      Response res = await dio.post(URL.flashCard(nameOfSet),
-          data: f.toJson(),
-          options: Options(headers: {
-            "Authorization": "Bearer ${AppManager.getToken()}",
-            "Content-Type": "application/json"
-          }));
+      Response res = await dio.post(
+        URL.flashCard(nameOfSet),
+        data: f.toJson(),
+      );
       if (res.statusCode == 200) {
         return true;
       } else
@@ -286,12 +295,9 @@ class Api1Impl extends Api1 {
   @override
   Future<bool> deleteFlashcard(FlashCard f, String nameOfSet) async {
     try {
-      Response res =
-          await dio.delete(URL.flashCardUpdateOrDelete(nameOfSet, f.id),
-              options: Options(headers: {
-                "Authorization": "Bearer ${AppManager.getToken()}",
-                "Content-Type": "application/json"
-              }));
+      Response res = await dio.delete(
+        URL.flashCardUpdateOrDelete(nameOfSet, f.id),
+      );
       if (res.statusCode == 200) {
         return true;
       } else
@@ -304,11 +310,9 @@ class Api1Impl extends Api1 {
   @override
   Future<bool> publicSet(String name) async {
     try {
-      Response res = await dio.patch(URL.postFlashCardSetPublic(name),
-          options: Options(headers: {
-            "Authorization": "Bearer ${AppManager.getToken()}",
-            "Content-Type": "application/json"
-          }));
+      Response res = await dio.patch(
+        URL.postFlashCardSetPublic(name),
+      );
       if (res.statusCode == 200) {
         var rawData = res.data["data"];
         return rawData;
@@ -322,11 +326,9 @@ class Api1Impl extends Api1 {
   @override
   Future<List<FlashCard>> getAllFlashcard(String name) async {
     try {
-      Response res = await dio.get(URL.flashCard(name),
-          options: Options(headers: {
-            "Authorization": "Bearer ${AppManager.getToken()}",
-            "Content-Type": "application/json"
-          }));
+      Response res = await dio.get(
+        URL.flashCard(name),
+      );
       if (res.statusCode == 200) {
         List<dynamic> rawData = res.data["data"];
         return rawData.map((e) => FlashCard.fromJson(e)).toList();
@@ -341,13 +343,10 @@ class Api1Impl extends Api1 {
   Future<bool> updateCard(
       FlashCard fOld, FlashCard fNew, String nameOfSet) async {
     try {
-      Response res =
-          await dio.patch(URL.flashCardUpdateOrDelete(nameOfSet, fOld.id),
-              data: fNew.toJson(),
-              options: Options(headers: {
-                "Authorization": "Bearer ${AppManager.getToken()}",
-                "Content-Type": "application/json"
-              }));
+      Response res = await dio.patch(
+        URL.flashCardUpdateOrDelete(nameOfSet, fOld.id),
+        data: fNew.toJson(),
+      );
       if (res.statusCode == 200) {
         return true;
       } else
@@ -362,10 +361,6 @@ class Api1Impl extends Api1 {
       Message newMessage, String idOfConversation, String idOfMessage) async {
     try {
       Response res = await dio.post(
-          options: Options(headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer ${AppManager.getToken()}"
-          }),
           URL.editMessage(idOfConversation, idOfMessage),
           data: newMessage.toJson());
       if (res.statusCode == 200) {
@@ -382,10 +377,6 @@ class Api1Impl extends Api1 {
       Message newMessage, String idOfConversation) async {
     try {
       Response res = await dio.post(URL.createNewMessage(idOfConversation),
-          options: Options(headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer ${AppManager.getToken()}"
-          }),
           data: newMessage.toJson());
       if (res.statusCode == 200) {
         return Message.fromJson(res.data["data"]);
@@ -399,11 +390,9 @@ class Api1Impl extends Api1 {
   @override
   Future<List<Message>> getAllMessage(String idOfConversation) async {
     try {
-      Response res = await dio.get(URL.getAllMessage(idOfConversation),
-          options: Options(headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer ${AppManager.getToken()}"
-          }));
+      Response res = await dio.get(
+        URL.getAllMessage(idOfConversation),
+      );
       if (res.statusCode == 200) {
         List<dynamic> rawData = res.data["data"];
         return rawData.map((e) => Message.fromJson(e)).toList();
@@ -417,13 +406,7 @@ class Api1Impl extends Api1 {
   @override
   Future<Conversation> createConversation(Conversation c) async {
     try {
-      Response res = await dio.post(
-          options: Options(headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer ${AppManager.getToken()}"
-          }),
-          URL.createConversation(),
-          data: c.toJson());
+      Response res = await dio.post(URL.createConversation(), data: c.toJson());
       if (res.statusCode == 200) {
         return Conversation.fromJson(res.data["data"]);
       }
@@ -437,10 +420,6 @@ class Api1Impl extends Api1 {
   Future<bool> deleteConversation(String idOfConversation) async {
     try {
       Response res = await dio.delete(
-        options: Options(headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer ${AppManager.getToken()}"
-        }),
         URL.deleteConversation(idOfConversation),
       );
       if (res.statusCode == 200) {
@@ -456,12 +435,7 @@ class Api1Impl extends Api1 {
   Future<Conversation> editConversation(
       Conversation c, String idOfConversation) async {
     try {
-      Response res = await dio.patch(
-          options: Options(headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer ${AppManager.getToken()}"
-          }),
-          URL.editConversation(idOfConversation),
+      Response res = await dio.patch(URL.editConversation(idOfConversation),
           data: c.toJson());
       if (res.statusCode == 200) {
         return Conversation.fromJson(res.data["data"]);
@@ -475,11 +449,9 @@ class Api1Impl extends Api1 {
   @override
   Future<List<Conversation>> getConversations() async {
     try {
-      Response res = await dio.get(URL.getAllConversation,
-          options: Options(headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer ${AppManager.getToken()}"
-          }));
+      Response res = await dio.get(
+        URL.getAllConversation,
+      );
       if (res.statusCode == 200) {
         List<dynamic> rawData = res.data["data"];
         return rawData.map((e) => Conversation.fromJson(e)).toList();
@@ -494,11 +466,9 @@ class Api1Impl extends Api1 {
   @override
   Future<Map<String, int>> getTrackData() async {
     try {
-      Response res = await dio.get(URL.track,
-          options: Options(headers: {
-            'Content-Type': "application/json",
-            "Authorization": "Bearer ${AppManager.getToken()}"
-          }));
+      Response res = await dio.get(
+        URL.track,
+      );
 
       if (res.statusCode == 200) {
         Map<String, dynamic> rawData = res.data["data"];
@@ -530,11 +500,9 @@ class Api1Impl extends Api1 {
   @override
   Future<void> postTrack() async {
     try {
-      Response res = await dio.post(URL.track,
-          options: Options(headers: {
-            'Content-Type': "application/json",
-            "Authorization": "Bearer ${AppManager.getToken()}"
-          }));
+      Response res = await dio.post(
+        URL.track,
+      );
 
       if (res.statusCode == 200) {
       } else {}

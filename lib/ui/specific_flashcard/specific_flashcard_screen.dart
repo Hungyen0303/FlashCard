@@ -121,7 +121,6 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
           specificFlashCardViewModel.flashcardList[_index].vietnamese;
       english.text = specificFlashCardViewModel.flashcardList[_index].english;
       example.text = specificFlashCardViewModel.flashcardList[_index].example;
-      print(vietnamese.text);
     }
     QuickAlert.show(
       context: context,
@@ -326,42 +325,36 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
 
     flutterTts.setStartHandler(() {
       setState(() {
-        print("Playing");
         ttsState = TtsState.playing;
       });
     });
 
     flutterTts.setCompletionHandler(() {
       setState(() {
-        print("Complete");
         ttsState = TtsState.stopped;
       });
     });
 
     flutterTts.setCancelHandler(() {
       setState(() {
-        print("Cancel");
         ttsState = TtsState.stopped;
       });
     });
 
     flutterTts.setPauseHandler(() {
       setState(() {
-        print("Paused");
         ttsState = TtsState.paused;
       });
     });
 
     flutterTts.setContinueHandler(() {
       setState(() {
-        print("Continued");
         ttsState = TtsState.continued;
       });
     });
 
     flutterTts.setErrorHandler((msg) {
       setState(() {
-        print("error: $msg");
         ttsState = TtsState.stopped;
       });
     });
@@ -373,16 +366,12 @@ class _SpecificFlashCardPageState extends State<SpecificFlashCardPage> {
 
   Future<void> _getDefaultEngine() async {
     var engine = await flutterTts.getDefaultEngine;
-    if (engine != null) {
-      print("Engine is $engine");
-    }
+    if (engine != null) {}
   }
 
   Future<void> _getDefaultVoice() async {
     var voice = await flutterTts.getDefaultVoice;
-    if (voice != null) {
-      print("getDefaultVoice $voice");
-    }
+    if (voice != null) {}
   }
 
   Future<void> _speak(String text) async {

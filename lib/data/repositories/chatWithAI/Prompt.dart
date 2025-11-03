@@ -1,6 +1,7 @@
 class Prompt {
   static List<String> promptsForChat = [
-    "Chat just for learning English , if the 'content ' is not related. Answer ' $notRelated ",
+    "Chat just for learning English , if the 'content ' is not related. Answer like ' $notRelated ",
+    'if the content is normal question , answer it normally , but remember that you are an AI just for learning english ',
   ];
 
   static String notRelated = "This chat just for learning english . "

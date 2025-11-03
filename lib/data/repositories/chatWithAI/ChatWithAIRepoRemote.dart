@@ -12,10 +12,7 @@ class ChatWithAIRepoRemote extends ChatWithAIRepo {
 
   @override
   Future<List<Conversation>> getConversations() async {
-    if (cachedConversation.isEmpty) {
-      cachedConversation = await api1.getConversations();
-    }
-    return cachedConversation;
+    return await api1.getConversations();
   }
 
   @override

@@ -78,15 +78,6 @@ class AccountViewModel extends ChangeNotifier {
   int numOfCompleteFlashcard = -1;
   int numOfCompleteConversation = -1;
 
-  Future<void> loadTrackData() async {
-    if (numOfCompleteConversation == -1) {
-      Map<String, int> trackData = await _repo.getTrackData();
-      numOfCompleteFlashcard = trackData['flashcard'] ?? -1;
-      numOfCompleteConversation = trackData['conversation'] ?? -1;
-      notifyListeners();
-    }
-  }
-
   void changeNumOfCompleteFlashcard(int change) {
     numOfCompleteFlashcard += change;
     notifyListeners();

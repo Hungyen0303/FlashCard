@@ -20,7 +20,7 @@ class AccountRepositoryRemote extends AccountRepository {
   @override
   Future<void> logout() async {
     await AppManager.logout();
-    await AppCachedData.clearCachedData();
+    //await AppCachedData.clearCachedData();
   }
 
   @override
@@ -42,21 +42,7 @@ class AccountRepositoryRemote extends AccountRepository {
 
   @override
   Future<Map<String, int>> getTrackData() async {
-    await Hive.openBox(RepoName.account.name);
-    var box = Hive.box(RepoName.account.name);
-    final rawData = box.get(RepoName.account.name);
-    Map<String, int> cachedData = {};
-    if (rawData is Map) {
-      cachedData = rawData.map(
-        (key, value) => MapEntry(key.toString(), value as int),
-      );
-    }
-
-    if (cachedData == null || cachedData.isEmpty) {
-      cachedData = await api1.getTrackData();
-      box.put(RepoName.account.name, cachedData);
-    }
-    return cachedData;
+    return await api1.getTrackData();
   }
 
   @override

@@ -13,9 +13,6 @@ class ChatWithAIViewModel extends ChangeNotifier {
   final ChatWithAIRepo _repo;
 
   final model = AppManager.getAI();
-
-  // TODO : has Error
-  // TODO Error message
   String nameOfConversation = "";
   List<Conversation> conversationList = [];
   int indexOfCurrentConversation = -1;
@@ -65,15 +62,12 @@ class ChatWithAIViewModel extends ChangeNotifier {
     notifyListeners();
 
     String prompt = Prompt.getPromptForChat();
-    String finalContent = prompt + ". Content is " + humanChat;
+    String finalContent = "$prompt. Content is $humanChat";
 
     final content = [Content.text(finalContent)];
     final response = await model.generateContent(content);
     Message responseMessage =
         Message(humanChat: humanChat, botChat: response.text ?? "");
-
-    bool success = await _repo.saveMessage(
-        responseMessage, conversationList[indexOfCurrentConversation].id ?? "");
 
     chatList.removeLast();
     chatList.add(responseMessage);
@@ -112,5 +106,6 @@ class ChatWithAIViewModel extends ChangeNotifier {
     isLoading = false;
     humanChat = '';
     botChat = "";
+    notifyListeners();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/core/constants/app_icons.dart';
 import 'package:flashcard_learning/domain/models/flashSet.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,11 +29,16 @@ class FlashCardSetItem extends StatelessWidget {
     context.push(AppRoute.gotoFlashcardSet(nameOfSet, isPublic.toString()));
   }
 
+  IconData intToIconData(int codePoint) {
+    return IconData(fontFamily: 'MaterialIcons', codePoint);
+  }
+
   Widget _buildGridItem(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white,
+        border: Border.all(color: flashCardSet.color, width: 1),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -51,7 +57,6 @@ class FlashCardSetItem extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: flashCardSet.color, width: 1),
                   color: flashCardSet.color.withOpacity(0.1),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(16),
@@ -80,7 +85,7 @@ class FlashCardSetItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      flashCardSet.iconData,
+                      IconMapper.fromCode(flashCardSet.iconData),
                       size: 48,
                       color: flashCardSet.color,
                     ),
@@ -162,7 +167,7 @@ class FlashCardSetItem extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: Icon(
-            flashCardSet.iconData,
+            IconMapper.fromCode(flashCardSet.iconData),
             color: flashCardSet.color,
             size: 24,
           ),

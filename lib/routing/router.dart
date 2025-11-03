@@ -1,5 +1,7 @@
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/ui/SplashScreen.dart';
+import 'package:flashcard_learning/ui/account/policy_screen.dart';
+import 'package:flashcard_learning/ui/account/term_of_service_screen.dart';
 import 'package:flashcard_learning/ui/auth/forgetpassword/widgets/forgetpassword_screen.dart';
 import 'package:flashcard_learning/ui/auth/register/widgets/register_screen.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/specific_flashcard_screen.dart';
@@ -106,6 +108,16 @@ class AppRouter {
             path: AppRoute.upgrade,
             builder: (context, state) {
               return UpgradePlanScreen();
+            }),
+        GoRoute(
+            path: AppRoute.policy,
+            builder: (context, state) {
+              return const PolicyScreen();
+            }),
+        GoRoute(
+            path: AppRoute.termOfService,
+            builder: (context, state) {
+              return const TermsOfServiceScreen();
             }),
         // GoRoute(
         //     path: AppRoute.splash,

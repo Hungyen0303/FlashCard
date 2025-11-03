@@ -54,16 +54,27 @@ class ContentChatContainer extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        GestureDetector(
-                          onTap: () => copyText(content),
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Icon(
-                              Icons.copy,
-                              size: 16,
-                              color: Colors.grey[600],
+                        Row(
+                          children: [
+                            const Expanded(
+                              child: Text("Gemini flash 2.0",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color: Color.fromARGB(221, 10, 21, 74))),
                             ),
-                          ),
+                            GestureDetector(
+                              onTap: () => copyText(content),
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Icon(
+                                  Icons.copy,
+                                  size: 16,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         Markdown(
                           controller: controller,

@@ -97,7 +97,6 @@ class SpecificFlashCardRepoRemote extends SpecificFlashCardRepo {
 
       return success;
     } catch (e) {
-      print("Error in markDone: $e");
       return false;
     }
   }

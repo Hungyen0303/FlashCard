@@ -27,6 +27,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
   TextEditingController searchController = TextEditingController();
   final TextEditingController askingController = TextEditingController();
   late Future<void> data;
+  late ChatWithAIViewModel chatWithAIViewModel;
   ScrollController controller = ScrollController();
 
   Future<void> _onItemTapped(int index) async {
@@ -52,15 +53,14 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
 
   Future<void> sendMessage(String text) async {
     _scrollToBottom();
-    ChatWithAIViewModel chatWithAIViewModel =
-        context.read<ChatWithAIViewModel>();
+
     bool sentSuccessfully = await chatWithAIViewModel.saveMessage(text);
     _scrollToBottom();
     if (!sentSuccessfully) {
       showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
+            return const AlertDialog(
               title: Text("Error"),
               contentTextStyle: TextStyle(fontSize: 15, color: Colors.black),
               titleTextStyle: TextStyle(color: Colors.red, fontSize: 30),
@@ -73,8 +73,6 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
   void attachImage() {}
 
   List<Widget> buildChatColumn() {
-    ChatWithAIViewModel chatWithAIViewModel =
-        context.read<ChatWithAIViewModel>();
     List<Widget> listChat = [];
     for (int i = 0; i < chatWithAIViewModel.chatList.length; i++) {
       listChat
@@ -96,7 +94,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
     return listChat;
   }
 
-  List<Widget> _buildChatTiles(ChatWithAIViewModel chatWithAIViewModel) {
+  List<Widget> _buildChatTiles() {
     List<Widget> chatTiles = [];
     for (int i = 0; i < chatWithAIViewModel.conversationList.length; i++) {
       final Conversation e = chatWithAIViewModel.conversationList[i];
@@ -110,20 +108,19 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
           actions: [
             PieAction(
               tooltip: const Text('Edit'),
-              onSelect: () =>
-                  _showRenameDialog(context, i, chatWithAIViewModel),
+              onSelect: () => _showRenameDialog(context, i),
 
               /// Optical correction
-              child: Padding(
-                padding: const EdgeInsets.only(left: 4),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 4),
                 child: FaIcon(FontAwesomeIcons.penToSquare),
               ),
             ),
             PieAction(
-              buttonTheme: PieButtonTheme(
+              buttonTheme: const PieButtonTheme(
                   backgroundColor: Colors.red, iconColor: Colors.white),
               tooltip: const Text('Delete'),
-              onSelect: () => _confirmDelete(context, i, chatWithAIViewModel),
+              onSelect: () => _confirmDelete(context, i),
               child: const FaIcon(
                 FontAwesomeIcons.trash,
               ),
@@ -145,8 +142,10 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
     return chatTiles;
   }
 
-  void _showRenameDialog(BuildContext context, int index,
-      ChatWithAIViewModel chatWithAIViewModel) {
+  void _showRenameDialog(
+    BuildContext context,
+    int index,
+  ) {
     final TextEditingController controller = TextEditingController(
       text: chatWithAIViewModel.conversationList[index].name,
     );
@@ -169,7 +168,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
       title: 'Rename Conversation',
       widget: TextField(
         controller: controller,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: 'Enter new name',
           border: OutlineInputBorder(),
         ),
@@ -177,38 +176,10 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
     );
   }
 
-  // void _showRenameDialogForChatContent(
-  //     BuildContext context, int i, ChatWithAIViewModel chatWithAIViewModel) {
-  //   final TextEditingController controller = TextEditingController(
-  //     text: chatWithAIViewModel.conversationList[i].name,
-  //   );
-  //
-  //   QuickAlert.show(
-  //     context: context,
-  //     type: QuickAlertType.info,
-  //     onConfirmBtnTap: () async {
-  //       await chatWithAIViewModel.editMessage(i, Message());
-  //     },
-  //     onCancelBtnTap: () {
-  //       context.pop();
-  //     },
-  //     animType: QuickAlertAnimType.slideInLeft,
-  //     confirmBtnText: "OK",
-  //     cancelBtnText: "Cancle",
-  //     showCancelBtn: true,
-  //     title: 'Rename Conversation',
-  //     widget: TextField(
-  //       controller: controller,
-  //       decoration: InputDecoration(
-  //         hintText: 'Enter new name',
-  //         border: OutlineInputBorder(),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  void _confirmDelete(BuildContext context, int index,
-      ChatWithAIViewModel chatWithAIViewModel) {
+  void _confirmDelete(
+    BuildContext context,
+    int index,
+  ) {
     QuickAlert.show(
       context: context,
       type: QuickAlertType.error,
@@ -225,7 +196,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
       showCancelBtn: true,
       title: 'Delete Conversation',
       titleColor: Colors.red,
-      widget: Text(
+      widget: const Text(
         "Are you sure to delete this conversation ",
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 20, color: Color(0xFF123456)),
@@ -236,7 +207,8 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
   @override
   void initState() {
     super.initState();
-    data = context.read<ChatWithAIViewModel>().loadConversationList();
+    chatWithAIViewModel = context.read<ChatWithAIViewModel>();
+    data = chatWithAIViewModel.loadConversationList();
   }
 
   void askByVoice() {}
@@ -282,7 +254,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
       shadowColor: Colors.black.withOpacity(0.3),
       // Màu bóng
       flexibleSpace: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xffd8dadc), // Xanh dương nhạt
@@ -297,7 +269,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min, // Giới hạn kích thước title
         children: [
-          Text(
+          const Text(
             "Receive Plus Version",
             style: TextStyle(
               fontSize: 20, // Tăng kích thước chữ
@@ -306,7 +278,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
               letterSpacing: 1.2, // Khoảng cách chữ
             ),
           ),
-          SizedBox(width: 8), // Khoảng cách giữa text và icon
+          const SizedBox(width: 8), // Khoảng cách giữa text và icon
           Icon(
             CupertinoIcons.plus_app,
             color: mainColorIcon, // Đổi màu trắng cho đồng bộ
@@ -326,11 +298,11 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
           padding: const EdgeInsets.symmetric(horizontal: 16), // Tăng padding
           child: GestureDetector(
             onTap: () {
-              context.read<ChatWithAIViewModel>().setIndexOfConversation(-1);
+              chatWithAIViewModel.setIndexOfConversation(-1);
               askingController.clear();
             },
             child: Container(
-              padding: EdgeInsets.all(8), // Khu vực nhấn lớn hơn
+              padding: const EdgeInsets.all(8), // Khu vực nhấn lớn hơn
               decoration: BoxDecoration(
                 shape: BoxShape.circle, // Bo tròn
                 color: Colors.white.withOpacity(0.2), // Nền nhẹ
@@ -347,9 +319,9 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
     );
   }
 
-  Drawer _buildDrawer(ChatWithAIViewModel chatWithAIViewModel) {
+  Widget _buildDrawer() {
     return Drawer(
-      backgroundColor: Color(0xFFC5DDF5), // Nền vàng chủ đạo
+      backgroundColor: const Color(0xFFC5DDF5), // Nền vàng chủ đạo
       child: SafeArea(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -358,7 +330,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
             Container(
               height: 40,
               padding: const EdgeInsets.only(left: 16),
-              child: Text(
+              child: const Text(
                 "Conversations",
                 style: TextStyle(
                   color: darkBlue,
@@ -384,7 +356,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
                   darkBlue.withOpacity(0.2),
                 ),
                 side: WidgetStateProperty.all(
-                  BorderSide(
+                  const BorderSide(
                     color: darkBlue,
                     width: 1.2,
                   ),
@@ -394,8 +366,8 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
-                leading: Padding(
-                  padding: const EdgeInsets.only(left: 4, right: 2),
+                leading: const Padding(
+                  padding: EdgeInsets.only(left: 4, right: 2),
                   child: Icon(
                     LineIcons.search,
                     color: darkBlue,
@@ -404,13 +376,13 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
                 ),
                 hintText: "Search",
                 hintStyle: WidgetStateProperty.all(
-                  TextStyle(
+                  const TextStyle(
                     color: darkBlue,
                     fontSize: 16.0,
                   ),
                 ),
                 textStyle: WidgetStateProperty.all(
-                  TextStyle(
+                  const TextStyle(
                     color: darkText,
                     fontSize: 16.0,
                     fontWeight: FontWeight.w500,
@@ -426,7 +398,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
               ),
             ),
             // Danh sách chat tiles
-            ..._buildChatTiles(chatWithAIViewModel),
+            ..._buildChatTiles(),
           ],
         ),
       ),
@@ -435,7 +407,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
 
   Widget _buildBlank() {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -647,7 +619,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
               ),
               child: Scaffold(
                   appBar: _buildAppbar(),
-                  drawer: _buildDrawer(chatWithAIViewModel),
+                  drawer: _buildDrawer(),
                   body: Column(
                     children: [
                       Expanded(

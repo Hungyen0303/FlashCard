@@ -40,22 +40,22 @@ class _HomePageState extends State<HomePage> {
         trailing: Container(
           width: 45,
           height: 45,
-          margin: EdgeInsets.only(right: 10),
-          child: Icon(
-            Icons.navigate_next,
-            color: Colors.white,
-          ),
-          decoration: BoxDecoration(
+          margin: const EdgeInsets.only(right: 10),
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [Color(0xffa16eeb), Color(0xFF6200EE)]),
               color: Colors.red,
               shape: BoxShape.circle),
+          child: const Icon(
+            color: Colors.white,
+            Icons.navigate_next,
+          ),
         ),
         onTap: () => onPressed(),
-        leading: Padding(
-            padding: const EdgeInsets.only(left: 8),
+        leading: const Padding(
+            padding: EdgeInsets.only(left: 8),
             child: Text(
               "📗",
               style: TextStyle(fontSize: 25),
@@ -90,7 +90,6 @@ class _HomePageState extends State<HomePage> {
         Provider.of<MainScreenViewModel>(context, listen: false);
     final accountViewModel =
         Provider.of<AccountViewModel>(context, listen: false);
-    accountViewModel.loadTrackData();
     mainScreenViewModel.onDoneChanged = () {
       accountViewModel.changeNumOfCompleteConversation();
     };
@@ -114,7 +113,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF8F9FA),
+      backgroundColor: const Color(0xffF8F9FA),
       appBar: _buildAppbar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),

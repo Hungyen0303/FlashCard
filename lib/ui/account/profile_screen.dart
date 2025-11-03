@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +13,7 @@ import 'package:quickalert/quickalert.dart';
 import 'account_viewmodel.dart';
 
 class ProfileScreen extends StatefulWidget {
-  ProfileScreen({super.key});
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -19,27 +22,27 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   Container buildActions(Icon icon) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
           color: Color(0xffe8a90e), borderRadius: BorderRadius.circular(10)),
       child: IconTheme(
-          data: IconThemeData(
+          data: const IconThemeData(
             color: Color(0xFF6200EE),
           ),
           child: icon),
     );
   }
 
-  TextStyle titleText = TextStyle(
-      color: MAIN_THEME_BLUE_TEXT, fontSize: 15, fontWeight: FontWeight.w700);
-  TextStyle contentTextStyle = TextStyle(
-      color: Color(0xFF6C88E5), fontSize: 25, fontWeight: FontWeight.bold);
+  TextStyle titleText =
+      const TextStyle(color: white, fontSize: 15, fontWeight: FontWeight.w700);
+  TextStyle contentTextStyle =
+      const TextStyle(color: white, fontSize: 25, fontWeight: FontWeight.w300);
   TextStyle buttonTextStyle =
-      const TextStyle(color: MAIN_THEME_BLUE_TEXT, fontWeight: FontWeight.bold);
+      const TextStyle(color: darkBlue, fontWeight: FontWeight.bold);
   TextEditingController nameController = TextEditingController();
 
-  Color boxColor = const Color(0xFFBDDDEA);
+  Color boxColor = darkBlue;
 
   AppBar _buildAppbar() {
     return AppBar(
@@ -47,13 +50,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           onPressed: () {
             context.pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.navigate_before,
-            color: Color(0xFF6200EE),
+            color: darkBlue,
           )),
-      title: Text(
+      title: const Text(
         "Profile",
-        style: TextStyle(color: MAIN_THEME_BLUE_TEXT),
+        style: TextStyle(color: darkBlue, fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
     );
@@ -72,15 +75,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           ClipOval(
             child: Container(
-              child: accountViewModel.currentUser.avatar.isEmpty
-                  ? const Icon(LineIcons.user, size: 40, color: Colors.white)
-                  : Image.network(
+              child: true
+                  ? Image.network(
                       alignment: Alignment.topCenter,
-                      accountViewModel.currentUser.avatar,
+                      'https://picsum.photos/${Random.secure().nextInt(1000)}',
                       fit: BoxFit.cover,
                       width: 80,
                       height: 80,
-                    ),
+                    )
+                  : accountViewModel.currentUser.avatar.isEmpty
+                      ? const Icon(LineIcons.user,
+                          size: 40, color: Colors.white)
+                      : Image.network(
+                          alignment: Alignment.topCenter,
+                          accountViewModel.currentUser.avatar,
+                          fit: BoxFit.cover,
+                          width: 80,
+                          height: 80,
+                        ),
             ),
           ),
           Align(
@@ -96,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.white, width: 2),
                 ),
-                child: Icon(
+                child: const Icon(
                   CupertinoIcons.camera_viewfinder,
                   size: 16,
                   color: Colors.white,
@@ -109,20 +121,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Container _buildBox(String name, Icon icon, Function ontap) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      decoration: BoxDecoration(
-          color: boxColor, borderRadius: BorderRadius.circular(5)),
-      child: GestureDetector(
-        onTap: () => ontap,
+  Widget _buildBox(String name, Icon icon, Function onTap) {
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Container(
+        margin: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        decoration: BoxDecoration(
+            color: boxColor, borderRadius: BorderRadius.circular(5)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            IconTheme(
-                data: IconThemeData(color: MAIN_THEME_BLUE_TEXT), child: icon),
-            SizedBox(
+            IconTheme(data: const IconThemeData(color: white), child: icon),
+            const SizedBox(
               width: 15,
             ),
             Text(
@@ -165,14 +176,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF80E886),
+              backgroundColor: white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             ),
             onPressed: () async {
               await changeName(context, accountViewModel);
             },
-            child: Text(
+            child: const Text(
               "Modify",
-              style: buttonTextStyle,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: darkBlue, fontSize: 16),
             ),
           ),
         ],
@@ -248,9 +264,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF80E886),
+                          backgroundColor: white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push(AppRoute.upgrade);
+                        },
                         child: Text(
                           "Upgrade",
                           style: buttonTextStyle,
@@ -260,9 +283,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 _buildBoxInfo(accountViewModel),
-                _buildBox("Chính sách ", Icon(CupertinoIcons.book), () {}),
-                _buildBox("Điều khoản ", Icon(CupertinoIcons.book), () {}),
-                _buildBox("Thông báo ", Icon(CupertinoIcons.bell), () {}),
+                _buildBox("Chính sách ", const Icon(CupertinoIcons.book),
+                    () => context.push(AppRoute.policy)),
+                _buildBox(
+                    "Điều khoản ",
+                    const Icon(CupertinoIcons.archivebox_fill),
+                    () => context.push(AppRoute.termOfService)),
                 // Expanded(
                 //     child: Align(
                 //   alignment: Alignment.bottomCenter,

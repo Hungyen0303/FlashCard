@@ -54,9 +54,7 @@ class SearchByImageState extends State<SearchByImage> {
       }
 
       setState(() {});
-    } catch (e) {
-      print("Exception $e");
-    }
+    } catch (e) {}
   }
 
   @override

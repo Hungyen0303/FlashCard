@@ -1,11 +1,9 @@
-import 'package:flashcard_learning/AppCachedData.dart';
 import 'package:flashcard_learning/AppProvider.dart';
 import 'package:flashcard_learning/data/services/supabass_service/SupabassService.dart';
 import 'package:flashcard_learning/routing/router.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:requests_inspector/requests_inspector.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -15,14 +13,13 @@ import 'AppManager.dart';
 void main() async {
   await dotenv.load(fileName: ".env");
   await Supabase.initialize(
-    url: SupaBaseService.URL,
+    url: SupaBaseService.url,
     anonKey: SupaBaseService.anonKey,
   );
-  await AppCachedData.initialize();
   await AppManager.initialize();
   runApp(MultiProvider(
     providers: AppProvider.providers,
-    child: const RequestsInspector(child: MyApp()),
+    child: MyApp(),
   ));
 }
 

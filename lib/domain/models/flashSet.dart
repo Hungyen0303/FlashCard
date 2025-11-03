@@ -3,26 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../converters/ColorConverter.dart';
-import '../converters/IconDataConverter.dart';
 
 part 'flashSet.g.dart';
 
 @JsonSerializable()
 class FlashCardSet {
-  FlashCardSet(
-      this.name, this.numOfCard, this.iconData, this.color, this.done);
-
-  
+  FlashCardSet(this.name, this.numOfCard, this.iconData, this.color, this.done);
   String name;
-
   int numOfCard;
-
-  // TODO : CHECK AGAIN Converter
-  @IconDataConverter()
-  IconData iconData;
-
-  // TODO : CHECK AGAIN Converter
-
+  int iconData;
   @ColorConverter()
   Color color;
 
