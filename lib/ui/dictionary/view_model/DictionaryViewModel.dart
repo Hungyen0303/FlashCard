@@ -32,7 +32,6 @@ class DictionaryViewModel {
     return await repo.getWord(text);
   }
 
-  final model = AppManager.getAI();
   List<String> popularWords = [];
 
   Future<List<String>> getPopularWord() async {

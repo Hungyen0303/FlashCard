@@ -11,14 +11,14 @@ import '../view_models/MainScreenViewModel.dart';
 import 'conversation_ai_screen.dart';
 
 class AIConversation extends StatefulWidget {
-  AIConversation({super.key});
+  const AIConversation({super.key});
 
   @override
   State<AIConversation> createState() => _AIConversationState();
 }
 
 class _AIConversationState extends State<AIConversation> {
-  TextStyle style = TextStyle(
+  TextStyle style = const TextStyle(
     color: MAIN_THEME_PURPLE_TEXT,
   );
 
@@ -45,7 +45,7 @@ class _AIConversationState extends State<AIConversation> {
       child: Container(
         width: 150,
         height: 210,
-        margin: EdgeInsets.only(right: 12),
+        margin: const EdgeInsets.only(right: 12),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -61,7 +61,7 @@ class _AIConversationState extends State<AIConversation> {
       child: Container(
         height: 300,
         width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: BoxDecoration(
           color: MAIN_BOX_COLOR,
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -71,7 +71,7 @@ class _AIConversationState extends State<AIConversation> {
           children: [
             Text(
               context.l10n.aiConv_title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xff187ee1),
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
@@ -79,7 +79,7 @@ class _AIConversationState extends State<AIConversation> {
             ),
             Text(
               context.l10n.aiConv_subtitle,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: "MyCustomFont",
                 color: Color(0xFF0C2849),
                 fontSize: 18,
@@ -90,7 +90,7 @@ class _AIConversationState extends State<AIConversation> {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: isLoading
+                children: isLoading || conversations.length < 3
                     ? List.generate(3, (index) => _buildShimmerCard())
                     : [
                         CardCustom(

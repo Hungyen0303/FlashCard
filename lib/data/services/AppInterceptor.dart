@@ -1,6 +1,9 @@
 import 'dart:math';
 
 import 'package:dio/dio.dart';
+import 'package:flashcard_learning/routing/route.dart';
+import 'package:flashcard_learning/routing/router.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 
 import '../../AppManager.dart';
@@ -42,6 +45,11 @@ class AppInterceptor extends Interceptor {
         );
         if (refreshResponse.data["status"] == "SUCCESS") {
           String newAccessToken = refreshResponse.data["data"]["newToken"];
+          if (newAccessToken.isEmpty) {
+            AppManager.clearToken(); // Có thể logout user
+            handler.next(err); // Lỗi khác, không xử lý
+            return;
+          }
           AppManager.saveToken(newAccessToken, AppManager.getRefreshToken());
 
           // Thử lại request gốc với token mới

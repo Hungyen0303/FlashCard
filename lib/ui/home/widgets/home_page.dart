@@ -185,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.w500))
                 ]),
               ),
-              AIConversation(),
+              const AIConversation(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(

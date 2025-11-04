@@ -174,7 +174,7 @@ class Api1Impl extends Api1 {
   }
 
   @override
-  Future<void> verifyToken(String token, String refreshToken) async {
+  Future<bool> verifyToken(String token, String refreshToken) async {
     try {
       Response res = await dio.post(
         URL.verify,
@@ -183,11 +183,15 @@ class Api1Impl extends Api1 {
       if (res.statusCode == 200) {
         if (res.data["data"]["valid"]) {
           AppManager.saveToken(res.data["data"]["newToken"], refreshToken);
+          return true;
         } else {
-          throw Exception(res.data["message"]);
+          return false;
         }
       }
-    } on DioException catch (e) {}
+      return false;
+    } on DioException catch (e) {
+      return false;
+    }
   }
 
   @override

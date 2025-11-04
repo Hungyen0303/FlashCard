@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'AppManager.dart';
 
 void main() async {
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   await dotenv.load(fileName: ".env");
   await AppManager.initialize();
   runApp(MultiProvider(

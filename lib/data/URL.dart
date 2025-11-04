@@ -1,7 +1,7 @@
 class URL {
-  // static String baseURL = "http://192.168.1.10:8080/flashcard/api";
-  static String baseURL =
-      "https://flashcard.blackmushroom-b6cf5c98.southeastasia.azurecontainerapps.io/flashcard/api";
+  static String baseURL = true
+      ? "https://flashcard.blackmushroom-b6cf5c98.southeastasia.azurecontainerapps.io/flashcard/api"
+      : "http://192.168.1.49:8080/flashcard/api";
 
   /*-------------Auth-----------------*/
 

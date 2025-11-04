@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:flashcard_learning/data/services/api/Api1.dart';
 import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';

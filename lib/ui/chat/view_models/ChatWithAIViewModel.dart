@@ -2,16 +2,11 @@ import 'package:flashcard_learning/data/repositories/chatWithAI/ChatWithAIRepo.d
 import 'package:flashcard_learning/domain/models/Conversation.dart';
 import 'package:flashcard_learning/domain/models/Message.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
-
-import '../../../AppManager.dart';
 
 class ChatWithAIViewModel extends ChangeNotifier {
   ChatWithAIViewModel(this._repo);
 
   final ChatWithAIRepo _repo;
-
-  final model = AppManager.getAI();
   String nameOfConversation = "";
   List<Conversation> conversationList = [];
   int indexOfCurrentConversation = -1;

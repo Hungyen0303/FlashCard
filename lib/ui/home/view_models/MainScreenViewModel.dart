@@ -1,7 +1,6 @@
 import 'package:flashcard_learning/data/repositories/homepage/home_repo.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../AppManager.dart';
 import '../../../domain/models/Conversation.dart';
 import '../../../domain/models/Message.dart';
 
@@ -24,8 +23,6 @@ class MainScreenViewModel extends ChangeNotifier {
       conversation.add(e.trim());
     });
   }
-
-  final model = AppManager.getAI();
 
   String title = "";
   late Conversation currentConversation;

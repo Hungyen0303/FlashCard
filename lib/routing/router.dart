@@ -23,8 +23,11 @@ class AppRouter {
   // First time use : Boarding
   // Not login : Logging
   // Login and token not expired : Home
+  static final GlobalKey<NavigatorState> rootNavigatorKey =
+      GlobalKey<NavigatorState>();
 
   static final GoRouter route = GoRouter(
+      navigatorKey: rootNavigatorKey,
       initialLocation: AppManager.firstRoute,
       errorBuilder: (context, state) => Scaffold(
             appBar: AppBar(),
