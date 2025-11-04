@@ -1,10 +1,9 @@
 import 'package:flashcard_learning/core/constants/app_icons.dart';
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:line_icons/line_icon.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 
@@ -51,8 +50,8 @@ class _CustomIconPickerDialogState extends State<CustomIconPickerDialog> {
   void _showIconPickerDialog() async {
     QuickAlert.show(
       context: context,
-      cancelBtnText: "Discard",
-      title: "-- Choose an icon -- ",
+      cancelBtnText: context.l10n.icon_picker_discard,
+      title: context.l10n.icon_picker_dialog_title,
       titleColor: Colors.deepPurple,
       showCancelBtn: true,
       cancelBtnTextStyle:
@@ -81,9 +80,9 @@ class _CustomIconPickerDialogState extends State<CustomIconPickerDialog> {
                 onPressed: () {
                   _showIconPickerDialog();
                 },
-                child: const Text(
-                  "Choose an icon ",
-                  style: TextStyle(
+                child: Text(
+                  context.l10n.icon_picker_choose_icon,
+                  style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                       color: MAIN_THEME_BLUE_TEXT),

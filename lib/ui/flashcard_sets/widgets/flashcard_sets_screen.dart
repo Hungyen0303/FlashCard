@@ -1,5 +1,6 @@
 import 'package:flashcard_learning/core/constants/app_icons.dart';
 import 'package:flashcard_learning/domain/models/flashSet.dart';
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/CustomCardProvider.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/CustomIconPickerDialog.dart';
@@ -42,7 +43,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
         border: const OutlineInputBorder(borderSide: BorderSide(width: 2)),
         alignLabelWithHint: true,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        hintText: "Enter flashcard Set's name",
+        hintText: context.l10n.myset_hint_enter_name,
       ),
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.name,
@@ -64,12 +65,12 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
     String oldName = nameController.text;
     QuickAlert.show(
       context: context,
-      cancelBtnText: "Discard",
+      cancelBtnText: context.l10n.myset_discard,
       showCancelBtn: true,
       cancelBtnTextStyle: TextStyle(color: Colors.redAccent, fontSize: 20),
       type: QuickAlertType.custom,
       barrierDismissible: true,
-      confirmBtnText: 'Save',
+      confirmBtnText: context.l10n.myset_save,
       customAsset: 'assets/img-1.jpg',
       widget: SingleChildScrollView(
         child: Column(
@@ -99,7 +100,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
           await QuickAlert.show(
             context: context,
             type: QuickAlertType.error,
-            text: 'Please input name of Set',
+            text: context.l10n.myset_error_need_name,
           );
 
           return;
@@ -137,11 +138,11 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
                 : QuickAlertType.error,
             text: actionSuccessfully
                 ? isCreating
-                    ? "Created new Flashcard Set"
-                    : "Updated  Flashcard Set"
+                    ? context.l10n.myset_created_success
+                    : context.l10n.myset_created_failed
                 : isCreating
-                    ? "Failed to create Flashcard Set "
-                    : "Failed to  update Flashcard Set ",
+                    ? context.l10n.myset_updated_success
+                    : context.l10n.myset_updated_failed,
           );
         }
       },
@@ -159,7 +160,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
       ),
       centerTitle: true,
       title: Text(
-        "Flashcard",
+        context.l10n.myset_title,
         style: TextStyle(
             fontSize: 25,
             letterSpacing: 2,
@@ -228,18 +229,18 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
   Future<void> deleteASet(String name) async {
     QuickAlert.show(
       context: context,
-      cancelBtnText: "Discard",
+      cancelBtnText: context.l10n.myset_discard,
       showCancelBtn: true,
       cancelBtnTextStyle: TextStyle(color: Colors.blueGrey, fontSize: 20),
       type: QuickAlertType.custom,
       barrierDismissible: true,
-      confirmBtnText: 'Delete',
+      confirmBtnText: context.l10n.myset_delete_button,
       confirmBtnColor: Colors.red,
       customAsset: 'assets/img-1.jpg',
-      widget: const Padding(
+      widget: Padding(
         padding: EdgeInsets.all(8.0),
         child: Text(
-          "Are you sure to delete this set",
+          context.l10n.myset_delete_title,
           style: TextStyle(color: Colors.blue, fontSize: 19),
           textAlign: TextAlign.center,
         ),
@@ -260,8 +261,8 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
                 ? QuickAlertType.success
                 : QuickAlertType.error,
             text: actionSuccessfully
-                ? "Created new Flashcard Set"
-                : "Failed to create Flashcard Set ",
+                ? context.l10n.myset_created_success
+                : context.l10n.myset_created_failed,
           );
         }
       },
@@ -299,8 +300,8 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
             ),
             SizedBox(height: 25),
             // Tiêu đề
-            const Text(
-              "No Flashcard Sets Yet",
+            Text(
+              context.l10n.myset_blank_title,
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -317,10 +318,10 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
             ),
             SizedBox(height: 15),
             // Mô tả
-            const Padding(
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                "Start your learning journey by creating your first flashcard set!",
+                context.l10n.myset_blank_desc,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -337,7 +338,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
               },
               icon: Icon(CupertinoIcons.plus_circle_fill, size: 26),
               label: Text(
-                "Create New Set",
+                context.l10n.myset_blank_btn,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
               style: ElevatedButton.styleFrom(

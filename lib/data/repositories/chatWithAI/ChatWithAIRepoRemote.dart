@@ -50,4 +50,11 @@ class ChatWithAIRepoRemote extends ChatWithAIRepo {
     await api1.editMessage(newMessage, idOfConversation, idOfMessage);
     return true;
   }
+
+  @override
+  Future<String> getResponseAI(
+    String? prompt,
+  ) async {
+    return await api1.getResponseAI(prompt ?? "");
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flutter/material.dart';
 
 class UpgradePlanScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -39,13 +40,13 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
               Colors.white,
-              Color(0xFFFFF9C4), // Vàng nhạt
+              Color(0xFFFFF9C4),
             ],
           ),
         ),
@@ -59,9 +60,10 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: IconButton(
-                        icon: Icon(Icons.arrow_back, color: Colors.black87, size: 30),
+                        icon: Icon(Icons.arrow_back,
+                            color: Colors.black87, size: 30),
                         onPressed: () {
-                          Navigator.pop(context); // Quay lại trang trước
+                          Navigator.pop(context);
                         },
                       ),
                     ),
@@ -90,7 +92,7 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
             child: Opacity(
               opacity: _fadeAnimation.value,
               child: Text(
-                "Upgrade Your Plan",
+                context.l10n.up_title,
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
@@ -114,14 +116,17 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _buildPlanCard(
-              title: "Basic",
-              price: "\$4.99/month",
+              title: context.l10n.up_basic,
+              price: context.l10n.up_basic_price,
               features: [
-                "Unlimited Flashcards",
-                "Basic Analytics",
-                "No Ads",
+                context.l10n.up_unlimited,
+                context.l10n.up_basic_analytics,
+                context.l10n.up_no_ads,
               ],
-              unavailableFeatures: ["Advanced Analytics", "Priority Support"],
+              unavailableFeatures: [
+                context.l10n.up_advanced_analytics,
+                context.l10n.up_priority_support
+              ],
               gradient: LinearGradient(
                 colors: [Color(0xFFA8E6CF), Color(0xFF34C759)],
                 begin: Alignment.topLeft,
@@ -130,14 +135,14 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
             ),
             SizedBox(width: 20),
             _buildPlanCard(
-              title: "Plus",
-              price: "\$9.99/month",
+              title: context.l10n.up_plus,
+              price: context.l10n.up_plus_price,
               features: [
-                "Unlimited Flashcards",
-                "Basic Analytics",
-                "No Ads",
-                "Advanced Analytics",
-                "Priority Support",
+                context.l10n.up_unlimited,
+                context.l10n.up_basic_analytics,
+                context.l10n.up_no_ads,
+                context.l10n.up_advanced_analytics,
+                context.l10n.up_priority_support,
               ],
               unavailableFeatures: [],
               gradient: LinearGradient(
@@ -153,7 +158,6 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
     );
   }
 
-  // Các hàm khác giữ nguyên: _buildPlanCard, _buildFeatureRow, _buildUpgradeButton
   Widget _buildPlanCard({
     required String title,
     required String price,
@@ -189,7 +193,7 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  "Recommended",
+                  context.l10n.up_recommended,
                   style: TextStyle(
                     color: Color(0xFFFF5733),
                     fontSize: 12,
@@ -216,7 +220,8 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
           ),
           SizedBox(height: 20),
           ...features.map((feature) => _buildFeatureRow(feature, true)),
-          ...unavailableFeatures.map((feature) => _buildFeatureRow(feature, false)),
+          ...unavailableFeatures
+              .map((feature) => _buildFeatureRow(feature, false)),
           SizedBox(height: 20),
           _buildUpgradeButton(),
         ],
@@ -256,18 +261,19 @@ class _UpgradePlanScreenState extends State<UpgradePlanScreen>
       child: ElevatedButton(
         onPressed: () {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Upgrading...")),
+            SnackBar(content: Text(context.l10n.up_upgrading_snack)),
           );
         },
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
           backgroundColor: Colors.white.withOpacity(0.9),
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           elevation: 5,
         ),
         child: Text(
-          "Upgrade Now",
+          context.l10n.up_upgrade_now,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,

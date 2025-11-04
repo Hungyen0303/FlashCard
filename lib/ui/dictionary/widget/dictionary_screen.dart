@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/ui/search_result/searchResult_screen.dart';
@@ -42,7 +43,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
         mainAxisSize: MainAxisSize.min, // Để Row chỉ chiếm không gian vừa đủ
         children: [
           Text(
-            "📖 Dictionary",
+            context.l10n.dict_title,
             style: GoogleFonts.poppins(
               color: MAIN_TITLE_COLOR,
               fontSize: 28,
@@ -86,7 +87,6 @@ class _DictionaryPageState extends State<DictionaryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final boxSize = MediaQuery.of(context).size * 0.4;
     return Scaffold(
         appBar: buildAppBar(),
         body: Padding(
@@ -98,7 +98,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Text(
-                    "Bạn muốn tìm gì",
+                    context.l10n.dict_ask,
                     style: titleStyle,
                   ),
                 ),
@@ -137,7 +137,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
                       size: 30.0,
                     ),
                   ),
-                  hintText: "Nhập cụm từ mà bạn muốn tìm kiếm",
+                  hintText: context.l10n.dict_hint,
                   hintStyle: WidgetStateProperty.all(
                     TextStyle(
                       color: MAIN_TITLE_COLOR,
@@ -187,9 +187,9 @@ class _DictionaryPageState extends State<DictionaryPage> {
                                 }
                                 await gotoSearchPage(_searchController.text);
                               },
-                              child: const Text(
-                                "Tra cứu",
-                                style: TextStyle(
+                              child: Text(
+                                context.l10n.dict_button_search,
+                                style: const TextStyle(
                                   fontSize: 20,
                                 ),
                               )),
@@ -204,8 +204,8 @@ class _DictionaryPageState extends State<DictionaryPage> {
                   children: [
                     _buildCard(
                         onPressed: () => SearchByMediaOverlay.show(context),
-                        title: "Phát âm",
-                        description: "Phát âm cụm từ để kiểm tra phát âm ",
+                        title: context.l10n.dict_pronounce,
+                        description: context.l10n.dict_pronounce_desc,
                         gradient: const LinearGradient(
                             colors: [
                               Color(0xff2196f3),
@@ -217,8 +217,8 @@ class _DictionaryPageState extends State<DictionaryPage> {
                     _buildCard(
                         onPressed: () =>
                             context.push(AppRoute.SearchByImagePath),
-                        title: "Tìm bằng hình ảnh",
-                        description: "Phát âm cụm từ để kiểm tra phát âm ",
+                        title: context.l10n.dict_image,
+                        description: context.l10n.dict_image_desc,
                         gradient: const LinearGradient(
                             colors: [
                               Color(0xffff6f20), // Cam nhạt
@@ -232,7 +232,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
                 _spacer(),
                 Text(
                   style: titleStyle,
-                  "Những từ tìm kiếm phổ biến ",
+                  context.l10n.dict_popular,
                 ),
                 _spacer(),
                 Column(
@@ -276,8 +276,8 @@ class _DictionaryPageState extends State<DictionaryPage> {
             ),
             FittedBox(
               child: Text(
-                maxLines: 1,
                 title,
+                maxLines: 1,
                 style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w500,

@@ -1,7 +1,7 @@
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
 
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/FlashCardSetItem.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -30,9 +30,9 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
         color: darkBlue,
       ),
       centerTitle: true,
-      title: const Text(
-        "Flashcard Public",
-        style: TextStyle(
+      title: Text(
+        context.l10n.public_flashcard_title,
+        style: const TextStyle(
             fontSize: 22,
             letterSpacing: 2,
             fontWeight: FontWeight.bold,
@@ -71,7 +71,6 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Icon lớn
             AnimatedContainer(
               duration: Duration(milliseconds: 800),
               curve: Curves.easeInOut,
@@ -81,10 +80,9 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
               ),
             ),
             SizedBox(height: 25),
-            // Tiêu đề
-            const Text(
-              "No Flashcard Sets Yet",
-              style: TextStyle(
+            Text(
+              context.l10n.public_flashcard_no_sets,
+              style: const TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: white,
@@ -99,13 +97,12 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
               ),
             ),
             const SizedBox(height: 15),
-            // Mô tả
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                "Start your learning journey by creating your first flashcard set!",
+                context.l10n.public_flashcard_no_sets_desc,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white70,
                   height: 1.5,
@@ -113,7 +110,6 @@ class _AllFlashCardSetPublicState extends State<AllFlashCardPublicSet> {
               ),
             ),
             const SizedBox(height: 35),
-            // Nút tạo mới
           ],
         ),
       ),

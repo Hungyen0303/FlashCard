@@ -508,4 +508,123 @@ class Api1Impl extends Api1 {
       } else {}
     } on DioException catch (e) {}
   }
+
+  @override
+  Future<String> getResponseAI(String prompt) async {
+    try {
+      Response res = await dio.post(
+        URL.aiChat,
+        data: {
+          "prompt": prompt,
+        },
+      );
+
+      if (res.statusCode == 200) {
+        return res.data["data"];
+      } else {
+        return 'AI is busy';
+      }
+    } on DioException catch (e) {
+      return e.message.toString();
+    }
+  }
+
+  @override
+  Future<String> getQuestionFromAI(String topic, String level) async {
+    try {
+      Response res = await dio.post(
+        URL.aiQuestion,
+        data: {
+          "topic": topic,
+          "level": level,
+        },
+      );
+
+      if (res.statusCode == 200) {
+        return res.data["data"];
+      } else {
+        return 'AI is busy';
+      }
+    } on DioException catch (e) {
+      return e.message.toString();
+    }
+  }
+
+  @override
+  Future<String> getTopics() async {
+    try {
+      Response res = await dio.get(
+        URL.aiTopics,
+      );
+
+      if (res.statusCode == 200) {
+        return res.data["data"];
+      } else {
+        return 'AI is busy';
+      }
+    } on DioException catch (e) {
+      return e.message.toString();
+    }
+  }
+
+  @override
+  Future<String> getPopularWord() async {
+    try {
+      Response res = await dio.get(
+        URL.aiPopularWord,
+      );
+
+      if (res.statusCode == 200) {
+        return res.data["data"];
+      } else {
+        return 'AI is busy';
+      }
+    } on DioException catch (e) {
+      return e.message.toString();
+    }
+  }
+
+  @override
+  Future<String> generateScoreAndQuestion(
+      String humanChat, String current, String nextQuestion) async {
+    try {
+      Response res = await dio.post(
+        URL.scoreAndQuestion,
+        data: {
+          "humanChat": humanChat,
+          "current": current,
+          "nextQuestion": nextQuestion,
+        },
+      );
+
+      if (res.statusCode == 200) {
+        return res.data["data"];
+      } else {
+        return 'AI is busy';
+      }
+    } on DioException catch (e) {
+      return e.message.toString();
+    }
+  }
+
+  @override
+  Future<String> generateLastQuestion(String humanChat, String current) async {
+    try {
+      Response res = await dio.post(
+        URL.lastQuestion,
+        data: {
+          "humanChat": humanChat,
+          "current": current,
+        },
+      );
+
+      if (res.statusCode == 200) {
+        return res.data["data"];
+      } else {
+        return 'AI is busy';
+      }
+    } on DioException catch (e) {
+      return e.message.toString();
+    }
+  }
 }

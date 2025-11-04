@@ -1,7 +1,8 @@
+import 'package:flashcard_learning/data/services/api/Api1.dart';
+import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../../../AppManager.dart';
-import '../../../data/repositories/chatWithAI/Prompt.dart';
 import '../../../data/repositories/dictionary/DictionaryRepo.dart';
 import '../../../data/repositories/dictionary/DictionaryRepoLocal.dart';
 import '../../../data/services/api/dictionaryApi.dart';
@@ -36,11 +37,9 @@ class DictionaryViewModel {
 
   Future<List<String>> getPopularWord() async {
     if (popularWords.isEmpty) {
-      String prompt = Prompt.promptForGettingPopularWord();
-      final content = [Content.text(prompt)];
-      final response = await model.generateContent(content);
-      String text = response.text ?? "";
-      popularWords = text.split("%").toList();
+      Api1 api1 = Api1Impl();
+      final response = await api1.getPopularWord();
+      popularWords = response.split("%%").toList();
       popularWords.removeLast();
     }
     return popularWords;

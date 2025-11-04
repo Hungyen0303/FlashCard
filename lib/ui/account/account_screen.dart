@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flashcard_learning/data/services/api/Api1.dart';
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
@@ -63,7 +64,7 @@ class _AccountPageState extends State<AccountPage> {
       backgroundColor: white,
       elevation: 0,
       title: Text(
-        "👳🏽‍♀️ Account",
+        "👳🏽‍♀️ ${context.l10n.account}",
         style: TextStyle(
           color: darkBlue,
           fontSize: 25,
@@ -173,9 +174,9 @@ class _AccountPageState extends State<AccountPage> {
                 ),
                 subtitle: GestureDetector(
                     onTap: _gotoAccountPage,
-                    child: const Text(
-                      "Edit Profile",
-                      style: TextStyle(
+                    child: Text(
+                      context.l10n.editProfile,
+                      style: const TextStyle(
                           decoration: TextDecoration.underline,
                           color: darkBlue),
                     )),
@@ -192,7 +193,7 @@ class _AccountPageState extends State<AccountPage> {
                 ),
               ),
               Divider(height: 2, color: dominantColor.withOpacity(0.3)),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -202,7 +203,7 @@ class _AccountPageState extends State<AccountPage> {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                              text: "Plan\n",
+                              text: '${context.l10n.plan}\n',
                               style: textStyle.copyWith(
                                   fontSize: 15, color: lightText)),
                           TextSpan(
@@ -228,9 +229,9 @@ class _AccountPageState extends State<AccountPage> {
                     onPressed: () {
                       context.push(AppRoute.upgrade);
                     },
-                    child: const Text(
-                      "Upgrade",
-                      style: TextStyle(
+                    child: Text(
+                      context.l10n.upgrade,
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: darkBlue,
                           fontSize: 16),
@@ -270,14 +271,14 @@ class _AccountPageState extends State<AccountPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Text(
-                "Activities",
-                style: TextStyle(
+              Text(
+                context.l10n.activities,
+                style: const TextStyle(
                     color: darkBlue, fontSize: 25, fontWeight: FontWeight.bold),
               ),
-              const Text(
-                "Track your progress",
-                style: TextStyle(color: lightText),
+              Text(
+                context.l10n.trackprogress,
+                style: const TextStyle(color: lightText),
               ),
               const SizedBox(
                 height: 5,
@@ -303,7 +304,7 @@ class _AccountPageState extends State<AccountPage> {
                           accountViewModel.countByDay ? boxDecoration : null,
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: Text(
-                        "Last 7 days",
+                        context.l10n.lastsevendays,
                         style: textStyleForDuration,
                       ),
                     ),
@@ -318,9 +319,11 @@ class _AccountPageState extends State<AccountPage> {
                       decoration:
                           !accountViewModel.countByDay ? boxDecoration : null,
                       width: MediaQuery.of(context).size.width * 0.4,
-                      child: Text(
-                        "Last 12 months",
-                        style: textStyleForDuration,
+                      child: FittedBox(
+                        child: Text(
+                          context.l10n.lastTwelvemonths,
+                          style: textStyleForDuration,
+                        ),
                       ),
                     ),
                   ),
@@ -364,7 +367,7 @@ class _AccountPageState extends State<AccountPage> {
                               color: white),
                         ),
                         Text(
-                          "BÀI HỌC ĐÃ HOÀN THÀNH",
+                          context.l10n.lessonCompleted,
                           style: TextStyle(
                             color: white.withOpacity(0.9),
                           ),
@@ -406,7 +409,7 @@ class _AccountPageState extends State<AccountPage> {
                               color: white),
                         ),
                         Text(
-                          "ĐOẠN HỘI THOẠI ĐÃ HOÀN THÀNH",
+                          context.l10n.conversationCompleted,
                           style: TextStyle(
                             color: white.withOpacity(0.9),
                           ),
@@ -454,9 +457,9 @@ class _AccountPageState extends State<AccountPage> {
                     onPressed: () async {
                       await logout();
                     },
-                    child: const Text(
-                      "Đăng xuất",
-                      style: TextStyle(
+                    child: Text(
+                      context.l10n.logout,
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                           color: white),

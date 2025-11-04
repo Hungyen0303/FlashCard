@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/ui/account/account_screen.dart';
 import 'package:flashcard_learning/ui/home/widgets/home_page.dart';
@@ -53,41 +54,31 @@ class _HomepageState extends State<Homepage> {
           hoverColor: Colors.grey,
           haptic: true,
           tabBorderRadius: 30,
-          //tabActiveBorder: Border.all(color: Colors.black, width: 1), // tab button border
-          //tabBorder: Border.all(color: Colors.grey, width: 1), // tab button border
-          //tabShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 8)], // tab button shadow
           curve: Curves.easeIn,
-          // tab animation curves
           duration: const Duration(milliseconds: 50),
-          // tab animation duration
           gap: 10,
-          // the tab button gap between icon and text
           color: Colors.grey[800],
-          // unselected icon color
           activeColor: textColor,
-          // selected icon and text color
           iconSize: 24,
-          // tab button icon size
           backgroundColor: Colors.white,
           tabBackgroundColor: bgColor,
           padding: EdgeInsets.symmetric(horizontal: 23, vertical: 17),
-          // navigation bar padding
-          tabs: const [
+          tabs: [
             GButton(
               icon: LineIcons.home,
-              text: 'Homepage',
+              text: context.l10n.nav_home,
             ),
             GButton(
               icon: LineIcons.bookOpen,
-              text: 'Dictionary',
+              text: context.l10n.nav_dictionary,
             ),
             GButton(
               icon: LineIcons.facebookMessenger,
-              text: 'Chat with AI',
+              text: context.l10n.nav_chat_with_ai,
             ),
             GButton(
               icon: LineIcons.user,
-              text: 'Profile',
+              text: context.l10n.nav_profile,
             )
           ]),
       body: widgets[currentPageIndex],

@@ -1,16 +1,15 @@
+import 'package:flashcard_learning/data/repositories/homepage/home_repo.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:provider/provider.dart';
 
 import '../../../AppManager.dart';
-import '../../../data/repositories/chatWithAI/Prompt.dart';
 import '../../../domain/models/Conversation.dart';
 import '../../../domain/models/Message.dart';
 
 class MainScreenViewModel extends ChangeNotifier {
-  String apiKey = dotenv.env['AI_API_KEY'] ?? "";
   List<String> conversation = [];
+
+  final HomeRepo repo;
+  MainScreenViewModel({required this.repo});
 
   Function()? onDoneChanged;
 
@@ -20,23 +19,8 @@ class MainScreenViewModel extends ChangeNotifier {
 
   Future<void> getListConversation() async {
     if (conversation.isNotEmpty) return;
-    final model = GenerativeModel(
-      model: 'gemini-2.5-flash',
-      apiKey: apiKey,
-    );
-
-    var content = [Content.text(Prompt.promptForGettingTopic)];
-    var response = await model.generateContent(content);
-    String topicText = response.text ?? "";
-    if (topicText.isEmpty) return;
-
-    content = [Content.text(Prompt.promptForGettingTitleFromTopic(topicText))];
-    response = await model.generateContent(content);
-
-    String titleText = response.text ?? "";
-    if (titleText.isEmpty) return;
-
-    titleText.split(",").forEach((e) {
+    String response = await repo.getTopics();
+    response.split(",").forEach((e) {
       conversation.add(e.trim());
     });
   }
@@ -48,11 +32,8 @@ class MainScreenViewModel extends ChangeNotifier {
   List<String> questions = [];
 
   Future<void> loadQuestion(topic, level) async {
-    String prompt = Prompt.promptsForGetQuestion(topic, level);
-    final content = [Content.text(prompt)];
-    final response = await model.generateContent(content);
-    String question = response.text ?? "";
-    question.split("%").forEach((e) {
+    final response = await repo.getQuestionFromAI(topic, level);
+    response.split("%").forEach((e) {
       questions.add(e);
     });
   }
@@ -82,12 +63,11 @@ class MainScreenViewModel extends ChangeNotifier {
     if (indexCurrentQuestion == 4) {
       chatList.add(Message(humanChat: humanChat, botChat: ""));
       notifyListeners();
-      String prompt = Prompt.promptForLastQuestion(
+
+      final String response = await repo.generateLastQuestion(
           humanChat, questions[indexCurrentQuestion - 1]);
-      final content = [Content.text(prompt)];
-      final response = await model.generateContent(content);
       Message responseMessage =
-          Message(humanChat: humanChat, botChat: response.text ?? "");
+          Message(humanChat: humanChat, botChat: response);
       chatList.removeLast();
       chatList.add(responseMessage);
       isDone = true;
@@ -96,15 +76,13 @@ class MainScreenViewModel extends ChangeNotifier {
     } else if (botChat.isEmpty) {
       chatList.add(Message(humanChat: humanChat, botChat: ""));
       notifyListeners();
-      String prompt = Prompt.promptForGetScoreAndQuestion(humanChat,
+      final String response = await repo.generateScoreAndQuestion(humanChat,
           questions[indexCurrentQuestion], questions[indexCurrentQuestion + 1]);
-      final content = [Content.text(prompt)];
-      final response = await model.generateContent(content);
       Message responseMessage =
-          Message(humanChat: humanChat, botChat: response.text ?? "");
+          Message(humanChat: humanChat, botChat: response);
 
       try {
-        double testValue = double.parse(response.text![8]);
+        double testValue = double.parse(response[8]);
         averageScore += testValue;
       } catch (e) {
         averageScore += 5;

@@ -67,4 +67,14 @@ abstract class Api1 {
   Future<void> postTrack();
 
   void reset();
+
+  /* Ai response  */
+
+  Future<String> getResponseAI(String prompt);
+  Future<String> getQuestionFromAI(String topic, String level);
+  Future<String> getTopics();
+  Future<String> getPopularWord();
+  Future<String> generateScoreAndQuestion(
+      String humanChat, String current, String nextQuestion);
+  Future<String> generateLastQuestion(String humanChat, String question);
 }

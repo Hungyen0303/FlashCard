@@ -1,4 +1,5 @@
 import 'package:flashcard_learning/data/services/api/Api1.dart';
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/logo.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
@@ -10,7 +11,6 @@ import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../../../../routing/route.dart';
-import '../../../account/account_viewmodel.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -109,7 +109,7 @@ class LoginState extends State<LoginPage> {
                     const Logo(),
                     const SizedBox(height: 20),
                     Text(
-                      "Welcome Back",
+                      context.l10n.login_welcome_back,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 28,
@@ -125,7 +125,7 @@ class LoginState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "Sign in to continue your learning journey",
+                      context.l10n.login_subtitle,
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.9),
                         fontSize: 16,
@@ -228,16 +228,16 @@ class LoginState extends State<LoginPage> {
                     ),
 
                     // Forgot Password
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(color: primaryColor),
-                        ),
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.centerRight,
+                    //   child: TextButton(
+                    //     onPressed: () {},
+                    //     child: const Text(
+                    //       'Forgot Password?',
+                    //       style: TextStyle(color: primaryColor),
+                    //     ),
+                    //   ),
+                    // ),
 
                     const SizedBox(height: 20),
 
@@ -315,17 +315,17 @@ class LoginState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          "Don't have an account? ",
+                        Text(
+                          context.l10n.login_no_account,
                           style: TextStyle(color: lightText),
                         ),
                         GestureDetector(
                           onTap: () {
                             _gotoRegisterPage(context);
                           },
-                          child: const Text(
-                            'Sign Up',
-                            style: TextStyle(
+                          child: Text(
+                            context.l10n.login_signup,
+                            style: const TextStyle(
                               color: primaryColor,
                               fontWeight: FontWeight.bold,
                             ),

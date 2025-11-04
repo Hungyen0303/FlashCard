@@ -4,6 +4,7 @@ import 'package:flashcard_learning/data/repositories/chatWithAI/ChatWithAIRepo.d
 import 'package:flashcard_learning/data/repositories/chatWithAI/ChatWithAIRepoRemote.dart';
 import 'package:flashcard_learning/data/repositories/flashcardsets/FlashCardSetRepo.dart';
 import 'package:flashcard_learning/data/repositories/flashcardsets/FlashCardSetRepoRemote.dart';
+import 'package:flashcard_learning/data/repositories/homepage/home_repo.dart';
 import 'package:flashcard_learning/data/repositories/specific_flashcard/SpecificFlashCardRepo.dart';
 import 'package:flashcard_learning/data/repositories/specific_flashcard/SpecificFlashCardRepoRemote.dart';
 import 'package:flashcard_learning/data/services/api/Api1.dart';
@@ -16,6 +17,7 @@ import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetVie
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/CustomCardProvider.dart';
 import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/view_models/SpecificFlashCardViewModel.dart';
+import 'package:flashcard_learning/utils/locale_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'data/repositories/auth/AuthRepositoryRemote.dart';
@@ -25,6 +27,9 @@ class AppProvider {
     ChangeNotifierProvider<CustomCardProvider>(
         create: (_) => CustomCardProvider()),
     Provider<Api1>(create: (_) => Api1Impl()),
+    Provider<HomeRepo>(
+        create: (context) =>
+            HomeRepo(api1: Provider.of<Api1>(context, listen: false))),
     Provider<AuthRepositoryRemote>(create: (_) => AuthRepositoryRemote()),
     ChangeNotifierProvider<LoginViewModel>(
         create: (context) => LoginViewModel(
@@ -53,7 +58,11 @@ class AppProvider {
         create: (context) => AccountViewModel(
             Provider.of<AccountRepository>(context, listen: false))),
     ChangeNotifierProvider<MainScreenViewModel>(
-        create: (_) => MainScreenViewModel()),
+        create: (context) => MainScreenViewModel(
+              repo: Provider.of<HomeRepo>(context, listen: false),
+            )),
     Provider<DictionaryViewModel>(create: (context) => DictionaryViewModel()),
+    ChangeNotifierProvider<LocaleProvider>(
+        create: (context) => LocaleProvider()),
   ];
 }

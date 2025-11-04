@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/utils/enum/level.dart';
 import 'package:flashcard_learning/ui/home/widgets/CardCustom.dart';
@@ -28,7 +29,8 @@ class _AIConversationState extends State<AIConversation> {
   @override
   void initState() {
     super.initState();
-    loadData = context.read<MainScreenViewModel>().getListConversation().then((value) {
+    loadData =
+        context.read<MainScreenViewModel>().getListConversation().then((value) {
       setState(() {
         conversations = context.read<MainScreenViewModel>().conversation;
         isLoading = false;
@@ -68,7 +70,7 @@ class _AIConversationState extends State<AIConversation> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "🚀 AI Conversations",
+              context.l10n.aiConv_title,
               style: TextStyle(
                 color: Color(0xff187ee1),
                 fontSize: 25,
@@ -76,7 +78,7 @@ class _AIConversationState extends State<AIConversation> {
               ),
             ),
             Text(
-              "Có 3 cuộc hội đối thoại",
+              context.l10n.aiConv_subtitle,
               style: TextStyle(
                 fontFamily: "MyCustomFont",
                 color: Color(0xFF0C2849),
@@ -91,37 +93,37 @@ class _AIConversationState extends State<AIConversation> {
                 children: isLoading
                     ? List.generate(3, (index) => _buildShimmerCard())
                     : [
-                  CardCustom(
-                    title: conversations[0],
-                    image: "assets/img-1.jpg",
-                    end: 3,
-                    start: 2,
-                    level: LEVEL.EASY.level,
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ConversationAIScreen(
-                            title: conversations[0],
-                            level: LEVEL.EASY.level,
-                          )));
-                    },
-                  ),
-                  CardCustom(
-                    title: conversations[1],
-                    image: "assets/img-2.jpg",
-                    end: 5,
-                    start: 4,
-                    level: LEVEL.MEDIUM.level,
-                    onTap: () {},
-                  ),
-                  CardCustom(
-                    title: conversations[2],
-                    image: "assets/img-3.jpg",
-                    end: 8,
-                    start: 7,
-                    level: LEVEL.HARD.level,
-                    onTap: () {},
-                  )
-                ],
+                        CardCustom(
+                          title: conversations[0],
+                          image: "assets/img-1.jpg",
+                          end: 3,
+                          start: 2,
+                          level: LEVEL.EASY.level,
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ConversationAIScreen(
+                                      title: conversations[0],
+                                      level: LEVEL.EASY.level,
+                                    )));
+                          },
+                        ),
+                        CardCustom(
+                          title: conversations[1],
+                          image: "assets/img-2.jpg",
+                          end: 5,
+                          start: 4,
+                          level: LEVEL.MEDIUM.level,
+                          onTap: () {},
+                        ),
+                        CardCustom(
+                          title: conversations[2],
+                          image: "assets/img-3.jpg",
+                          end: 8,
+                          start: 7,
+                          level: LEVEL.HARD.level,
+                          onTap: () {},
+                        )
+                      ],
               ),
             )
           ],

@@ -1,12 +1,10 @@
 import 'package:flashcard_learning/routing/route.dart';
-import 'package:flashcard_learning/ui/SplashScreen.dart';
 import 'package:flashcard_learning/ui/account/policy_screen.dart';
 import 'package:flashcard_learning/ui/account/term_of_service_screen.dart';
 import 'package:flashcard_learning/ui/auth/forgetpassword/widgets/forgetpassword_screen.dart';
 import 'package:flashcard_learning/ui/auth/register/widgets/register_screen.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/specific_flashcard_screen.dart';
 import 'package:flashcard_learning/ui/upgrade.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
@@ -33,7 +31,7 @@ class AppRouter {
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
+                const Center(
                     child: Text(
                   "There was no URL  ",
                   style: TextStyle(fontSize: 30, color: Colors.red),
@@ -42,7 +40,7 @@ class AppRouter {
                     onPressed: () {
                       context.go(AppRoute.home);
                     },
-                    child: Text("Back to home"))
+                    child: const Text("Back to home"))
               ],
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flashcard_learning/core/constants/app_icons.dart';
 import 'package:flashcard_learning/domain/models/flashSet.dart';
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -67,14 +68,14 @@ class FlashCardSetItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${flashCardSet.numOfCard} cards",
+                      '${flashCardSet.numOfCard} ${context.l10n.flashItem_cards}',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: flashCardSet.color,
                       ),
                     ),
-                    if (flashCardSet.done) _buildCompletionBadge(),
+                    if (flashCardSet.done) _buildCompletionBadge(context),
                   ],
                 ),
               ),
@@ -124,7 +125,7 @@ class FlashCardSetItem extends StatelessWidget {
                         size: 16, color: Colors.white70),
                     const SizedBox(width: 4),
                     Text(
-                      "Study now",
+                      context.l10n.flashItem_studyNow,
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.9),
                         fontSize: 14,
@@ -141,7 +142,7 @@ class FlashCardSetItem extends StatelessWidget {
     );
   }
 
-  Widget _buildListItem() {
+  Widget _buildListItem(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
@@ -180,7 +181,7 @@ class FlashCardSetItem extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          "${flashCardSet.numOfCard} cards",
+          '${flashCardSet.numOfCard} ${context.l10n.flashItem_cards}',
           style: TextStyle(
             color: Colors.grey.shade600,
             fontSize: 14,
@@ -189,7 +190,7 @@ class FlashCardSetItem extends StatelessWidget {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (flashCardSet.done) _buildCompletionBadge(),
+            if (flashCardSet.done) _buildCompletionBadge(context),
             const SizedBox(width: 8),
             Icon(
               Icons.chevron_right,
@@ -201,7 +202,7 @@ class FlashCardSetItem extends StatelessWidget {
     );
   }
 
-  Widget _buildCompletionBadge() {
+  Widget _buildCompletionBadge(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -218,7 +219,7 @@ class FlashCardSetItem extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           Text(
-            "Completed",
+            context.l10n.flashItem_completed,
             style: TextStyle(
               color: Colors.green.shade600,
               fontSize: 12,
@@ -241,12 +242,12 @@ class FlashCardSetItem extends StatelessWidget {
       ),
       actions: [
         PieAction(
-          tooltip: Text('Edit'),
+          tooltip: Text(context.l10n.flashItem_edit),
           onSelect: () => edit(),
           child: const Icon(Icons.edit, size: 20),
         ),
         PieAction(
-          tooltip: Text('Delete'),
+          tooltip: Text(context.l10n.flashItem_delete),
           onSelect: () => delete(),
           buttonTheme: const PieButtonTheme(
             backgroundColor: Colors.red,
@@ -255,7 +256,7 @@ class FlashCardSetItem extends StatelessWidget {
           child: const Icon(Icons.delete, size: 20),
         ),
         PieAction(
-          tooltip: Text('Share'),
+          tooltip: Text(context.l10n.flashItem_share),
           onSelect: () => share(),
           buttonTheme: const PieButtonTheme(
             backgroundColor: Colors.blue,
@@ -266,7 +267,7 @@ class FlashCardSetItem extends StatelessWidget {
       ],
       child: GestureDetector(
         onTap: () => _goToSpecificFlashCardSet(flashCardSet.name, context),
-        child: isGridView ? _buildGridItem(context) : _buildListItem(),
+        child: isGridView ? _buildGridItem(context) : _buildListItem(context),
       ),
     );
   }

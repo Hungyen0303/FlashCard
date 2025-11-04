@@ -1,5 +1,5 @@
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
-import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -43,10 +43,10 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text("Error"),
+              title: Text(context.l10n.error_title),
               contentTextStyle: TextStyle(fontSize: 15, color: Colors.black),
               titleTextStyle: TextStyle(color: Colors.red, fontSize: 30),
-              content: Text("Check internet connection "),
+              content: Text(context.l10n.error_check_internet),
             );
           });
     }
@@ -87,7 +87,7 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
   final ScrollController _scrollController = ScrollController();
 
   void _scrollToFocusedField(double offset) {
-    if (_scrollController != null && _scrollController!.hasClients) {
+    if (_scrollController.hasClients) {
       Future.delayed(const Duration(milliseconds: 250), () {
         _scrollController.animateTo(
           offset,
@@ -186,7 +186,7 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
               _scrollToFocusedField(15000);
             },
             decoration: InputDecoration(
-              hintText: 'Type your message...',
+              hintText: context.l10n.input_type_message,
               hintStyle: TextStyle(
                 color: Colors.grey.shade500,
                 fontSize: 16,
@@ -293,9 +293,7 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
                                   color: Color(0xff69e7ad),
                                   borderRadius: BorderRadius.circular(10)),
                               child: Text(
-                                "Congratulation 🎉🎉 "
-                                "\n You just completed this conversation"
-                                "\n Average Score:  ${context.read<MainScreenViewModel>().averageScore} ",
+                                "${context.l10n.conversation_done}\n${context.l10n.conversation_done_avg_score} ${context.read<MainScreenViewModel>().averageScore})}",
                                 style: TextStyle(
                                     fontSize: 20, color: Color(0xFF09411A)),
                                 textAlign: TextAlign.center,

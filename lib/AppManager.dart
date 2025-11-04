@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dio/dio.dart';
 import 'package:flashcard_learning/data/services/api/Api1.dart';
 import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
@@ -11,8 +13,14 @@ import '../../routing/route.dart';
 class AppManager {
   static String _token = "";
   static String _refreshToken = "";
+  static Locale? _locale;
   static User? _currentUser = User();
   static late SharedPreferences prefs;
+  static Future<void> setLocale(Locale locale) async {
+    await prefs.setString("locale", locale.languageCode);
+  }
+
+  static get locale => _locale;
 
   static void setUser(User u) {
     _currentUser?.name = u.name;
@@ -75,6 +83,7 @@ class AppManager {
       await prefs.setBool("isFirstTime", true);
       return AppRoute.boarding;
     }
+    _locale = Locale(prefs.getString("locale") ?? "en");
     if (await isLogged()) return AppRoute.home;
     return AppRoute.login;
   }

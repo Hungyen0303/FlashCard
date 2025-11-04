@@ -9,8 +9,8 @@ import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
-
 import 'account_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -45,6 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Color boxColor = darkBlue;
 
   AppBar _buildAppbar() {
+    final l10n = AppLocalizations.of(context)!;
     return AppBar(
       leading: IconButton(
           onPressed: () {
@@ -54,9 +55,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Icons.navigate_before,
             color: darkBlue,
           )),
-      title: const Text(
-        "Profile",
-        style: TextStyle(color: darkBlue, fontWeight: FontWeight.bold),
+      title: Text(
+        l10n.profile_title,
+        style: const TextStyle(color: darkBlue, fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
     );
@@ -133,13 +134,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             IconTheme(data: const IconThemeData(color: white), child: icon),
-            const SizedBox(
-              width: 15,
-            ),
-            Text(
-              name,
-              style: titleText,
-            )
+            const SizedBox(width: 15),
+            Text(name, style: titleText)
           ],
         ),
       ),
@@ -147,6 +143,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Container _buildBoxInfo(AccountViewModel accountViewModel) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       margin: const EdgeInsets.only(top: 10),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -158,13 +156,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Tên người dùng",
-                style: titleText,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+              Text(l10n.profile_username, style: titleText),
+              const SizedBox(height: 10),
               SizedBox(
                 width: 160,
                 child: Text(
@@ -178,18 +171,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: ElevatedButton.styleFrom(
               backgroundColor: white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
+                  borderRadius: BorderRadius.circular(10)),
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             ),
             onPressed: () async {
               await changeName(context, accountViewModel);
             },
-            child: const Text(
-              "Modify",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: darkBlue, fontSize: 16),
-            ),
+            child: Text(l10n.profile_modify,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: darkBlue,
+                    fontSize: 16)),
           ),
         ],
       ),
@@ -198,6 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> changeName(
       BuildContext context, AccountViewModel accountViewModel) async {
+    final l10n = AppLocalizations.of(context)!;
     TextEditingController controller = TextEditingController();
 
     QuickAlert.show(
@@ -205,11 +198,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         type: QuickAlertType.custom,
         showConfirmBtn: true,
         showCancelBtn: true,
-        confirmBtnText: "Confirm",
+        confirmBtnText: l10n.profile_confirm,
+        cancelBtnText: l10n.profile_cancel,
         confirmBtnColor: Colors.blue,
-        title: "Please enter your name",
+        title: l10n.profile_enter_name,
         animType: QuickAlertAnimType.scale,
-        cancelBtnText: "Cancel",
         widget: SizedBox(
           child: TextField(
             controller: controller,
@@ -232,6 +225,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
         appBar: _buildAppbar(),
         body: Consumer<AccountViewModel>(
@@ -254,7 +249,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       RichText(
                         text: TextSpan(
                           children: [
-                            TextSpan(text: "Plan\n", style: titleText),
+                            TextSpan(
+                                text: "${l10n.profile_plan}\n",
+                                style: titleText),
                             TextSpan(
                               text: accountViewModel.currentUser.plan,
                               style: contentTextStyle,
@@ -274,28 +271,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onPressed: () {
                           context.push(AppRoute.upgrade);
                         },
-                        child: Text(
-                          "Upgrade",
-                          style: buttonTextStyle,
-                        ),
+                        child:
+                            Text(l10n.profile_upgrade, style: buttonTextStyle),
                       ),
                     ],
                   ),
                 ),
                 _buildBoxInfo(accountViewModel),
-                _buildBox("Chính sách ", const Icon(CupertinoIcons.book),
+                _buildBox(l10n.profile_policy, const Icon(CupertinoIcons.book),
                     () => context.push(AppRoute.policy)),
                 _buildBox(
-                    "Điều khoản ",
+                    l10n.profile_terms,
                     const Icon(CupertinoIcons.archivebox_fill),
                     () => context.push(AppRoute.termOfService)),
-                // Expanded(
-                //     child: Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child: TextButton(
-                //       onPressed: () {},
-                //       child: Text("Xóa hoàn toàn tài khoản ")),
-                // ))
               ],
             ),
           );

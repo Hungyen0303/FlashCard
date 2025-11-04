@@ -74,6 +74,9 @@ dependencies:
   requests_inspector: ^5.1.1
   flutter_markdown: ^0.7.7+1
   markdown_widget: ^2.3.2+8
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
 dev_dependencies:
   flutter_test:
@@ -112,7 +115,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  generate: true 
   # To add assets to your application, add an assets section, like this:
   assets:
      - assets/img-1.jpg
@@ -128,6 +131,9 @@ flutter:
      - assets/icon-picker.jpg
      - assets/launch_icon.jpg
      - assets/logo-removebg.png
+     - assets/us.png
+     - assets/vietnam.png
+     - assets/languages.png
      - .env
 
 

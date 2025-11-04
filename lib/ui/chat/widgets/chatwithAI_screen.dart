@@ -1,5 +1,6 @@
 import 'package:flashcard_learning/domain/models/Conversation.dart';
 import 'package:flashcard_learning/domain/models/Message.dart';
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,11 +61,12 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
       showDialog(
           context: context,
           builder: (context) {
-            return const AlertDialog(
+            return AlertDialog(
               title: Text("Error"),
-              contentTextStyle: TextStyle(fontSize: 15, color: Colors.black),
-              titleTextStyle: TextStyle(color: Colors.red, fontSize: 30),
-              content: Text("Check internet connection "),
+              contentTextStyle:
+                  const TextStyle(fontSize: 15, color: Colors.black),
+              titleTextStyle: const TextStyle(color: Colors.red, fontSize: 30),
+              content: Text(context.l10n.chat_check_connection),
             );
           });
     }
@@ -107,7 +109,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
           },
           actions: [
             PieAction(
-              tooltip: const Text('Edit'),
+              tooltip: Text(context.l10n.chat_rename_dialog_title),
               onSelect: () => _showRenameDialog(context, i),
 
               /// Optical correction
@@ -119,7 +121,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
             PieAction(
               buttonTheme: const PieButtonTheme(
                   backgroundColor: Colors.red, iconColor: Colors.white),
-              tooltip: const Text('Delete'),
+              tooltip: Text(context.l10n.chat_delete_title),
               onSelect: () => _confirmDelete(context, i),
               child: const FaIcon(
                 FontAwesomeIcons.trash,
@@ -162,15 +164,15 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
         context.pop();
       },
       animType: QuickAlertAnimType.slideInLeft,
-      confirmBtnText: "OK",
-      cancelBtnText: "Cancle",
+      confirmBtnText: context.l10n.chat_button_ok,
+      cancelBtnText: context.l10n.chat_button_cancel,
       showCancelBtn: true,
-      title: 'Rename Conversation',
+      title: context.l10n.chat_rename_dialog_title,
       widget: TextField(
         controller: controller,
-        decoration: const InputDecoration(
-          hintText: 'Enter new name',
-          border: OutlineInputBorder(),
+        decoration: InputDecoration(
+          hintText: context.l10n.chat_rename_dialog_hint,
+          border: const OutlineInputBorder(),
         ),
       ),
     );
@@ -191,13 +193,13 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
         context.pop();
       },
       animType: QuickAlertAnimType.slideInLeft,
-      confirmBtnText: "OK",
-      cancelBtnText: "Cancle",
+      confirmBtnText: context.l10n.chat_button_ok,
+      cancelBtnText: context.l10n.chat_delete_title,
       showCancelBtn: true,
-      title: 'Delete Conversation',
+      title: context.l10n.chat_delete_confirm_body,
       titleColor: Colors.red,
-      widget: const Text(
-        "Are you sure to delete this conversation ",
+      widget: Text(
+        context.l10n.chat_delete_confirm_body,
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 20, color: Color(0xFF123456)),
       ),
@@ -269,8 +271,8 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min, // Giới hạn kích thước title
         children: [
-          const Text(
-            "Receive Plus Version",
+          Text(
+            context.l10n.chat_title_receive_plus,
             style: TextStyle(
               fontSize: 20, // Tăng kích thước chữ
               fontWeight: FontWeight.bold, // Chữ đậm
@@ -330,8 +332,8 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
             Container(
               height: 40,
               padding: const EdgeInsets.only(left: 16),
-              child: const Text(
-                "Conversations",
+              child: Text(
+                context.l10n.chat_drawer_conversations,
                 style: TextStyle(
                   color: darkBlue,
                   fontSize: 25,
@@ -374,7 +376,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
                     size: 30.0,
                   ),
                 ),
-                hintText: "Search",
+                hintText: context.l10n.chat_search,
                 hintStyle: WidgetStateProperty.all(
                   const TextStyle(
                     color: darkBlue,
@@ -429,8 +431,8 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
             ),
             SizedBox(height: 20),
             // Text hướng dẫn
-            const Text(
-              "Start a Conversation",
+            Text(
+              context.l10n.chat_blank_title,
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -446,7 +448,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
             ),
             SizedBox(height: 10),
             Text(
-              "Select a conversation from the menu\nor create a new one to begin chatting!",
+              context.l10n.chat_blank_subtitle,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -523,7 +525,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
               _scrollToFocusedField(15000);
             },
             decoration: InputDecoration(
-              hintText: 'Type your message...',
+              hintText: context.l10n.chat_input_hint,
               hintStyle: TextStyle(
                 color: Colors.grey.shade500,
                 fontSize: 16,
@@ -565,7 +567,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
                 onPressed: () {
                   // Xử lý attach file (nếu cần)
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Attach file tapped")),
+                    SnackBar(content: Text(context.l10n.chat_attach_file)),
                   );
                 },
               ),

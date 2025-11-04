@@ -16,4 +16,6 @@ abstract class ChatWithAIRepo {
 
   Future<bool> editMessage(
       Message newMessage, String idOfConversation, String idOfMessage);
+
+  Future<String?> getResponseAI(String prompt);
 }

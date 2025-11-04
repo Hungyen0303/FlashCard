@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -32,6 +33,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _scrollController = ScrollController();
 
   Future<void> _signUp() async {
+    final l10n = context.l10n;
+
     if (_formKey.currentState!.validate()) {
       LoadingOverlay.show(context);
       try {
@@ -46,8 +49,8 @@ class _RegisterPageState extends State<RegisterPage> {
           await QuickAlert.show(
               context: context,
               type: QuickAlertType.success,
-              title: "Registration Successful",
-              text: "Your account has been created successfully",
+              title: l10n.register_done,
+              text: l10n.register_done_body,
               confirmBtnColor: primaryColor,
               onConfirmBtnTap: () {
                 context.go(AppRoute.login);
@@ -59,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
           await QuickAlert.show(
             context: context,
             type: QuickAlertType.error,
-            title: "Registration Failed",
+            title: l10n.register_failed,
             text: error.toString(),
             confirmBtnColor: Colors.red,
           );
@@ -80,6 +83,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       backgroundColor: lightBackground,
       body: SingleChildScrollView(
@@ -107,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     const FlutterLogo(size: 80), // Replace with your logo
                     const SizedBox(height: 20),
                     Text(
-                      "Create Account",
+                      l10n.register_create_account,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 28,
@@ -123,7 +128,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "Start your learning journey today",
+                      l10n.register_subtitle,
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.9),
                         fontSize: 16,
@@ -146,7 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        labelText: 'Email',
+                        labelText: l10n.register_email,
                         prefixIcon: Icon(Icons.email, color: primaryColor),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -168,10 +173,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
+                          return l10n.register_email_required;
                         } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
                             .hasMatch(value)) {
-                          return 'Please enter a valid email';
+                          return l10n.register_email_invalid;
                         }
                         return null;
                       },
@@ -184,7 +189,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                       controller: _usernameController,
                       decoration: InputDecoration(
-                        labelText: 'Username',
+                        labelText: l10n.register_username,
                         prefixIcon: Icon(Icons.person, color: primaryColor),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -206,7 +211,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter a username';
+                          return l10n.register_username_required;
                         }
                         return null;
                       },
@@ -220,7 +225,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: l10n.register_password,
                         prefixIcon: Icon(Icons.lock, color: primaryColor),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -242,9 +247,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter a password';
+                          return l10n.register_password_required;
                         } else if (value.length < 6) {
-                          return 'Password must be at least 6 characters';
+                          return l10n.register_password_min_length;
                         }
                         return null;
                       },
@@ -258,7 +263,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _retypePasswordController,
                       obscureText: true,
                       decoration: InputDecoration(
-                        labelText: 'Confirm Password',
+                        labelText: l10n.register_confirm_password,
                         prefixIcon:
                             Icon(Icons.lock_outline, color: primaryColor),
                         border: OutlineInputBorder(
@@ -281,9 +286,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please confirm your password';
+                          return l10n.register_confirm_password_required;
                         } else if (value != _passwordController.text) {
-                          return 'Passwords do not match';
+                          return l10n.register_password_not_match;
                         }
                         return null;
                       },
@@ -304,9 +309,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         elevation: 3,
                         shadowColor: primaryColor.withOpacity(0.3),
                       ),
-                      child: const Text(
-                        'SIGN UP',
-                        style: TextStyle(
+                      child: Text(
+                        l10n.register_sign_up_button,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -321,13 +326,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Already have an account? ",
+                          l10n.register_have_account,
                           style: TextStyle(color: lightText),
                         ),
                         GestureDetector(
                           onTap: () => context.pop(),
                           child: Text(
-                            'Login',
+                            l10n.register_login,
                             style: TextStyle(
                               color: primaryColor,
                               fontWeight: FontWeight.bold,

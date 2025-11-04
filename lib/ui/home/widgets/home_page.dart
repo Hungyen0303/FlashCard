@@ -1,11 +1,14 @@
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
+import 'package:flashcard_learning/utils/locale_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
+
 import '../../../AppManager.dart';
 import 'ai_conversation.dart';
 import '../../flashcard_sets/widgets/flashcard_sets_screen.dart';
@@ -95,8 +98,52 @@ class _HomePageState extends State<HomePage> {
     };
   }
 
+  void showLanguageSelectionDialog(BuildContext context) {
+    final provider = context.read<LocaleProvider>();
+
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text('Select Language'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    leading: Image.asset('assets/vietnam.png', width: 35),
+                    title: const Text('Tiếng Việt'),
+                    onTap: () {
+                      if (provider.locale.languageCode == 'en') {
+                        provider.setLocale(const Locale('vi'));
+                      }
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: Image.asset('assets/us.png', width: 35),
+                    title: const Text('English'),
+                    onTap: () {
+                      if (provider.locale.languageCode == 'vi') {
+                        provider.setLocale(const Locale('en'));
+                      }
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+            ));
+  }
+
   AppBar _buildAppbar() {
     return AppBar(
+      actions: [
+        GestureDetector(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 24.0),
+            child: Image.asset('assets/languages.png', width: 35),
+          ),
+          onTap: () => showLanguageSelectionDialog(context),
+        )
+      ],
       title: const Text(
         "🏠 ",
         style: TextStyle(
@@ -106,12 +153,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<String> listTiles = [
-    "Ôn lại từ trong flashcard ",
-    "Học flashcard của cộng đồng",
+    "", // will set below
+    "",
   ];
 
   @override
   Widget build(BuildContext context) {
+    listTiles[0] = context.l10n.home_review_flashcard;
+    listTiles[1] = context.l10n.home_learn_public;
+
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FA),
       appBar: _buildAppbar(),
@@ -123,9 +173,10 @@ class _HomePageState extends State<HomePage> {
             children: [
               RichText(
                 text: TextSpan(children: [
-                  const TextSpan(
-                      text: "Chào mừng bạn trở lại, \n",
-                      style: TextStyle(color: MAIN_TITLE_COLOR, fontSize: 18)),
+                  TextSpan(
+                      text: context.l10n.home_welcome_back,
+                      style: const TextStyle(
+                          color: MAIN_TITLE_COLOR, fontSize: 18)),
                   TextSpan(
                       text: AppManager.getUser()!.name,
                       style: const TextStyle(
@@ -135,11 +186,11 @@ class _HomePageState extends State<HomePage> {
                 ]),
               ),
               AIConversation(),
-              const Padding(
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "Hôm nay chúng ta nên làm gì ",
-                  style: TextStyle(
+                  context.l10n.home_what_should_do_today,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF2489EE),
                     fontSize: 25,

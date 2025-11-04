@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flashcard_learning/domain/models/Word.dart';
 import 'package:flashcard_learning/domain/models/WordFromAPI.dart';
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -61,7 +62,7 @@ class SearchResultPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            "Word Not Found",
+            context.l10n.sr_not_found_title,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -72,7 +73,7 @@ class SearchResultPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Text(
-              "We couldn't find the word you're looking for. Please try another search.",
+              context.l10n.sr_not_found_desc,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -86,7 +87,7 @@ class SearchResultPage extends StatelessWidget {
               context.pop();
             },
             icon: const Icon(Icons.search),
-            label: const Text("Search Again"),
+            label: Text(context.l10n.sr_search_again),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue[600],
               foregroundColor: Colors.white,
@@ -111,7 +112,7 @@ class SearchResultPage extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          "Dictionary",
+          context.l10n.sr_dictionary_title,
           style: TextStyle(
             color: Colors.white,
             fontSize: 23,
@@ -173,18 +174,19 @@ class SearchResultPage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  _buildText("📘 Definition", submain),
+                                  _buildText(
+                                      context.l10n.sr_definition, submain),
                                   Text(
                                     word!.meanings.isNotEmpty
                                         ? word!.meanings[i].definition
-                                        : "We could not find the meaning ",
+                                        : context.l10n.sr_no_meaning,
                                     style: contentStyle,
                                   ),
-                                  _buildText("✅ Example", submain),
+                                  _buildText(context.l10n.sr_example, submain),
                                   Text(
                                     word!.meanings.isNotEmpty
                                         ? word!.meanings[i].example
-                                        : "We could not find the example",
+                                        : context.l10n.sr_no_example,
                                     style: contentStyle,
                                   ),
                                 ],
@@ -204,7 +206,7 @@ class SearchResultPage extends StatelessWidget {
                               }
                             },
                             child: Text(
-                              "Xem người khác thực hành >",
+                              context.l10n.sr_watch_others,
                               style:
                                   TextStyle(color: Colors.blue, fontSize: 18),
                             ),

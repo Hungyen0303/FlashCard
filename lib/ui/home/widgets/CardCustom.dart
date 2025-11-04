@@ -1,3 +1,4 @@
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/material.dart';
 
@@ -80,7 +81,7 @@ class _CardCustomState extends State<CardCustom> {
               Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
                 child: Text(
-                  "⏰ ${widget.start}-${widget.end} minutes",
+                  "⏰ ${widget.start}-${widget.end} ${context.l10n.card_time_label}",
                   style: TextStyle(color: widget.textColor),
                 ),
               ),

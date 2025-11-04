@@ -1,5 +1,4 @@
 import 'package:flashcard_learning/data/repositories/chatWithAI/ChatWithAIRepo.dart';
-import 'package:flashcard_learning/data/repositories/chatWithAI/Prompt.dart';
 import 'package:flashcard_learning/domain/models/Conversation.dart';
 import 'package:flashcard_learning/domain/models/Message.dart';
 import 'package:flutter/cupertino.dart';
@@ -61,13 +60,10 @@ class ChatWithAIViewModel extends ChangeNotifier {
     chatList.add(Message(humanChat: humanChat, botChat: ""));
     notifyListeners();
 
-    String prompt = Prompt.getPromptForChat();
-    String finalContent = "$prompt. Content is $humanChat";
+    String? response = await _repo.getResponseAI(humanChat);
 
-    final content = [Content.text(finalContent)];
-    final response = await model.generateContent(content);
     Message responseMessage =
-        Message(humanChat: humanChat, botChat: response.text ?? "");
+        Message(humanChat: humanChat, botChat: response ?? '');
 
     chatList.removeLast();
     chatList.add(responseMessage);

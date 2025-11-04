@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/routing/router.dart';
 import 'package:flashcard_learning/ui/dictionary/view_model/DictionaryViewModel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
@@ -47,10 +48,10 @@ class SearchByImageState extends State<SearchByImage> {
       textRecognized = recognizedText.text;
       if (textRecognized.isEmpty) {
         isError = true;
-        errorMessage = "Can not find any word";
+        errorMessage = context.l10n.image_cannot_find;
       } else if (textRecognized.split(" ").length > 1) {
         isError = true;
-        errorMessage = "Too many word , please choose another picture";
+        errorMessage = context.l10n.image_too_many;
       }
 
       setState(() {});
@@ -71,7 +72,7 @@ class SearchByImageState extends State<SearchByImage> {
     LoadingOverlay.hide();
 
     context.pop();
-    // TODO Route
+
     Navigator.of(context).push(MaterialPageRoute(
         builder: (_) => SearchResultPage(
               word: wordFromAPI,
@@ -121,7 +122,7 @@ class SearchByImageState extends State<SearchByImage> {
                 ),
                 centerTitle: true,
                 title: Text(
-                  "Text Recognition",
+                  context.l10n.image_title,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 23,
@@ -149,7 +150,7 @@ class SearchByImageState extends State<SearchByImage> {
                 ),
                 child: Icon(CupertinoIcons.plus, color: Colors.blueAccent),
                 elevation: 6,
-                tooltip: "Pick an image",
+                tooltip: context.l10n.image_pick_image,
               ),
               body: path.isEmpty
                   ? Center(
@@ -163,7 +164,7 @@ class SearchByImageState extends State<SearchByImage> {
                           ),
                           SizedBox(height: 20),
                           Text(
-                            "Press + to add an image",
+                            context.l10n.image_press_to_add,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.blueAccent,
@@ -188,7 +189,7 @@ class SearchByImageState extends State<SearchByImage> {
                           RichText(
                             text: TextSpan(children: [
                               TextSpan(
-                                text: "Recognized word: ",
+                                text: context.l10n.image_recognized_word,
                                 style: hintStyle,
                               ),
                               TextSpan(
@@ -223,7 +224,7 @@ class SearchByImageState extends State<SearchByImage> {
                                                     Color(0xff8518de)
                                                   ])),
                                           child: Text(
-                                            "Search",
+                                            context.l10n.image_button_search,
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 18),

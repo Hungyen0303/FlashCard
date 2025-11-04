@@ -48,4 +48,13 @@ class URL {
       "$conversationBase/$idOfConversation";
 
   static String track = "$info/track";
+
+  /* AI */
+
+  static String aiChat = "$baseURL/ai/chats";
+  static String aiQuestion = "$baseURL/ai/questions";
+  static String aiTopics = "$baseURL/ai/topics";
+  static String aiPopularWord = "$baseURL/ai/words";
+  static String scoreAndQuestion = "$baseURL/ai/score";
+  static String lastQuestion = "$baseURL/ai/last-question";
 }

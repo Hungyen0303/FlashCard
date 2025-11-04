@@ -1,6 +1,9 @@
+import 'package:flashcard_learning/l10n/app_localization.dart';
+import 'package:flashcard_learning/utils/locale_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../../../routing/route.dart';
 
@@ -16,6 +19,46 @@ class OnBoardingPageState extends State<OnBoardingPage> {
 
   void _onIntroEnd(BuildContext context) {
     context.go(AppRoute.login);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showLanguageSelectionDialog(context);
+    });
+  }
+
+  void showLanguageSelectionDialog(BuildContext context) {
+    final provider = context.read<LocaleProvider>();
+
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text('Select Language'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    leading: Image.asset('assets/vietnam.png', width: 35),
+                    title: const Text('Tiếng Việt'),
+                    onTap: () {
+                      provider.setLocale(const Locale('vi'));
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: Image.asset('assets/us.png', width: 35),
+                    title: const Text('English'),
+                    onTap: () {
+                      provider.setLocale(const Locale('en'));
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+            ));
   }
 
   Widget _buildImage(String assetName, [double width = 250]) {
@@ -37,8 +80,8 @@ class OnBoardingPageState extends State<OnBoardingPage> {
         globalBackgroundColor: isDarkMode ? Colors.grey[900] : Colors.white,
         pages: [
           PageViewModel(
-            title: "Unlock Your English Potential!",
-            body: "Learn faster with interactive flashcards designed for your success.",
+            title: context.l10n.onboarding_title_1,
+            body: context.l10n.onboarding_body_1,
             image: _buildImage('img-1.jpg'),
             decoration: PageDecoration(
               titleTextStyle: TextStyle(
@@ -55,8 +98,8 @@ class OnBoardingPageState extends State<OnBoardingPage> {
             ),
           ),
           PageViewModel(
-            title: "Turn Words Into Knowledge!",
-            body: "Discover the power of consistent practice and effortless learning.",
+            title: context.l10n.onboarding_title_2,
+            body: context.l10n.onboarding_body_2,
             image: _buildImage('img-2.jpg'),
             decoration: PageDecoration(
               titleTextStyle: TextStyle(
@@ -73,8 +116,8 @@ class OnBoardingPageState extends State<OnBoardingPage> {
             ),
           ),
           PageViewModel(
-            title: "Master English, One Card at a Time!",
-            body: "Your path to fluency starts here—take the first step today.",
+            title: context.l10n.onboarding_title_3,
+            body: context.l10n.onboarding_body_3,
             image: _buildImage('img-1.jpg'),
             decoration: PageDecoration(
               titleTextStyle: TextStyle(
@@ -95,7 +138,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
         onSkip: () => _onIntroEnd(context),
         showSkipButton: true,
         skip: Text(
-          'Skip',
+          context.l10n.onboarding_skip,
           style: TextStyle(
             fontWeight: FontWeight.w600,
             color: isDarkMode ? Colors.white70 : Colors.black54,
@@ -106,7 +149,7 @@ class OnBoardingPageState extends State<OnBoardingPage> {
           color: isDarkMode ? Colors.white70 : Colors.black54,
         ),
         done: Text(
-          'Get Started',
+          context.l10n.onboarding_get_started,
           style: TextStyle(
             fontWeight: FontWeight.w600,
             color: theme.primaryColor,

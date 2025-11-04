@@ -1,0 +1,251 @@
+{
+  "helloWorld": "Hello World!",
+
+  "account" : "Tài khoản",
+  "editProfile" : "Chỉnh sửa thông tin",
+  "plan" : "Gói đăng kí",
+  "upgrade" : "Nâng cấp" ,
+  "activities" : "Hoạt động",
+  "trackprogress" : "Theo dõi tiến trình của bạn",
+  "lastsevendays" : "7 ngày gần nhất",
+  "lastTwelvemonths" : "12 tháng gần nhất",
+  "lessonCompleted" :"BÀI HỌC ĐÃ HOÀN THÀNH" , 
+  "conversationCompleted" : "ĐOẠN HỘI THOẠI ĐÃ HOÀN THÀNH",
+  "logout" : "Đăng xuất" ,
+  "policy_title": "Chính sách bảo mật",
+  "policy_header": "Chính sách bảo mật cho ứng dụng Flashcard Learning",
+  "policy_last_updated": "Cập nhật lần cuối: 26 tháng 10, 2023",
+
+  "policy_section_1_title": "1. Giới thiệu",
+  "policy_section_1_body": "Chào mừng bạn đến với ứng dụng Flashcard Learning. Chúng tôi cam kết bảo vệ thông tin cá nhân và quyền riêng tư của bạn. Nếu bạn có bất kỳ câu hỏi hoặc thắc mắc nào về chính sách này hoặc về cách chúng tôi xử lý thông tin cá nhân của bạn, vui lòng liên hệ tại support@flashcardlearning.com.",
+
+  "policy_section_2_title": "2. Thông tin chúng tôi thu thập",
+  "policy_section_2_body_1": "Chúng tôi thu thập thông tin cá nhân mà bạn tự nguyện cung cấp khi bạn đăng ký ứng dụng, thể hiện sự quan tâm đến thông tin về chúng tôi hoặc sản phẩm/dịch vụ của chúng tôi, khi bạn tham gia các hoạt động trên ứng dụng hoặc khi bạn liên hệ với chúng tôi.",
+  "policy_section_2_body_2": "Thông tin cá nhân chúng tôi thu thập phụ thuộc vào cách bạn tương tác với ứng dụng, lựa chọn của bạn và các tính năng bạn sử dụng. Thông tin cá nhân có thể bao gồm: tên, email và nội dung do người dùng tạo như flashcards.",
+
+  "policy_section_3_title": "3. Cách chúng tôi sử dụng thông tin của bạn",
+  "policy_section_3_body": "Chúng tôi sử dụng thông tin cá nhân thu thập qua ứng dụng cho nhiều mục đích kinh doanh được mô tả bên dưới. Chúng tôi xử lý thông tin dựa trên lợi ích kinh doanh hợp pháp, để thực hiện hợp đồng, với sự đồng ý của bạn và/hoặc để tuân thủ nghĩa vụ pháp lý.",
+
+  "policy_section_4_title": "4. Thông tin của bạn có được chia sẻ với bất kỳ ai không?",
+  "policy_section_4_body": "Chúng tôi chỉ chia sẻ thông tin với sự đồng ý của bạn, để tuân thủ luật pháp, để cung cấp dịch vụ, bảo vệ quyền lợi của bạn hoặc đáp ứng các nghĩa vụ kinh doanh.",
+
+  "policy_section_5_title": "5. Liên hệ",
+  "policy_section_5_body": "Nếu bạn có câu hỏi hoặc góp ý về chính sách này, bạn có thể gửi email đến support@flashcardlearning.com.",
+
+  "profile_title": "Hồ sơ",
+  "profile_username": "Tên người dùng",
+  "profile_modify": "Chỉnh sửa",
+  "profile_enter_name": "Vui lòng nhập tên",
+  "profile_confirm": "Xác nhận",
+  "profile_cancel": "Hủy",
+  "profile_plan": "Gói hiện tại",
+  "profile_upgrade": "Nâng cấp",
+  "profile_policy": "Chính sách bảo mật",
+  "profile_terms": "Điều khoản dịch vụ",
+
+  "term_title": "Điều khoản dịch vụ",
+  "term_header": "Điều khoản dịch vụ cho ứng dụng Flashcard Learning",
+  "term_last_updated": "Cập nhật lần cuối: 26 tháng 10, 2023",
+
+  "term_1_title": "1. Chấp nhận điều khoản",
+  "term_1_body": "Bằng việc truy cập hoặc sử dụng ứng dụng Flashcard Learning, bạn đồng ý tuân thủ các Điều khoản dịch vụ này và Chính sách bảo mật của chúng tôi. Nếu bạn không đồng ý với bất kỳ phần nào của điều khoản, bạn không được phép sử dụng dịch vụ.",
+
+  "term_2_title": "2. Tài khoản người dùng",
+  "term_2_body_1": "Bạn chịu trách nhiệm giữ bí mật tài khoản và mật khẩu của mình. Bạn đồng ý chịu trách nhiệm cho mọi hoạt động diễn ra dưới tài khoản của bạn.",
+  "term_2_body_2": "Bạn phải từ 13 tuổi trở lên mới được sử dụng dịch vụ. Nếu bạn dưới 18 tuổi, bạn phải có sự đồng ý của phụ huynh/thầy cô để sử dụng ứng dụng.",
+
+  "term_3_title": "3. Nội dung do người dùng tạo",
+  "term_3_body_1": "Bạn giữ toàn bộ quyền đối với flashcard và nội dung khác bạn tạo trên ứng dụng. Khi gửi nội dung, bạn cấp cho chúng tôi quyền sử dụng, lưu trữ và hiển thị nội dung đó để cung cấp dịch vụ.",
+  "term_3_body_2": "Bạn hoàn toàn chịu trách nhiệm đối với nội dung bạn tạo và chia sẻ. Bạn đồng ý không tạo nội dung bất hợp pháp, xúc phạm hoặc vi phạm quyền sở hữu trí tuệ của người khác.",
+
+  "term_4_title": "4. Hoạt động bị cấm",
+  "term_4_intro": "Bạn không được sử dụng dịch vụ để:",
+  "term_4_list_1": "• Vi phạm pháp luật",
+  "term_4_list_2": "• Vi phạm quyền sở hữu trí tuệ",
+  "term_4_list_3": "• Quấy rối, xúc phạm hoặc gây hại cho người khác",
+  "term_4_list_4": "• Phân phối mã độc / malware",
+  "term_4_list_5": "• Cố gắng truy cập trái phép vào hệ thống của chúng tôi",
+
+  "term_5_title": "5. Thay đổi dịch vụ và tính khả dụng",
+  "term_5_body": "Chúng tôi có quyền sửa đổi, tạm ngưng hoặc chấm dứt bất kỳ phần nào của dịch vụ bất cứ lúc nào. Chúng tôi không đảm bảo dịch vụ luôn hoạt động liên tục hoặc không có lỗi.",
+
+  "term_6_title": "6. Chấm dứt tài khoản",
+  "term_6_body": "Chúng tôi có thể chấm dứt / tạm ngưng tài khoản của bạn ngay lập tức, không cần thông báo trước nếu bạn vi phạm Điều khoản dịch vụ hoặc gây hại cho người dùng khác, chúng tôi hoặc bên thứ ba.",
+
+  "term_7_title": "7. Tuyên bố miễn trừ trách nhiệm",
+  "term_7_body": "Dịch vụ được cung cấp \"như hiện tại\" mà không có bất kỳ bảo đảm nào, rõ ràng hay ngụ ý. Chúng tôi không đảm bảo dịch vụ sẽ đáp ứng nhu cầu của bạn hoặc luôn hoạt động ổn định, bảo mật hoặc không có lỗi.",
+
+  "term_8_title": "8. Giới hạn trách nhiệm",
+  "term_8_body": "Trong phạm vi tối đa được pháp luật cho phép, chúng tôi không chịu trách nhiệm cho bất kỳ thiệt hại gián tiếp, ngẫu nhiên, đặc biệt, hậu quả hoặc mất lợi nhuận nào.",
+
+  "term_9_title": "9. Thay đổi điều khoản",
+  "term_9_body": "Chúng tôi có quyền sửa đổi điều khoản bất cứ lúc nào. Chúng tôi sẽ thông báo thay đổi quan trọng qua ứng dụng hoặc email. Tiếp tục sử dụng dịch vụ sau khi thay đổi nghĩa là bạn chấp nhận điều khoản mới.",
+
+  "term_10_title": "10. Luật áp dụng",
+  "term_10_body": "Điều khoản này được điều chỉnh theo luật tại nơi công ty chúng tôi đặt trụ sở, không xét đến xung đột luật pháp.",
+
+  "term_11_title": "11. Liên hệ",
+  "term_11_body": "Nếu bạn có câu hỏi về Điều khoản dịch vụ, hãy liên hệ support@flashcardlearning.com.",
+  "login_welcome_back": "Chào mừng bạn quay lại",
+  "login_subtitle": "Đăng nhập để tiếp tục hành trình học tập",
+  "login_email_required": "Vui lòng nhập email",
+  "login_password": "Mật khẩu",
+  "login_password_required": "Vui lòng nhập mật khẩu",
+  "login_button": "ĐĂNG NHẬP",
+  "login_or": "HOẶC",
+  "login_no_account": "Chưa có tài khoản? ",
+  "login_signup": "Đăng ký",
+  "register_create_account": "Tạo tài khoản",
+  "register_subtitle": "Bắt đầu hành trình học tập hôm nay",
+
+  "register_email": "Email",
+  "register_email_required": "Vui lòng nhập email",
+  "register_email_invalid": "Vui lòng nhập email hợp lệ",
+
+  "register_username": "Tên người dùng",
+  "register_username_required": "Vui lòng nhập tên người dùng",
+
+  "register_password": "Mật khẩu",
+  "register_password_required": "Vui lòng nhập mật khẩu",
+  "register_password_min_length": "Mật khẩu phải có ít nhất 6 ký tự",
+
+  "register_confirm_password": "Xác nhận mật khẩu",
+  "register_confirm_password_required": "Vui lòng xác nhận mật khẩu",
+  "register_password_not_match": "Mật khẩu không khớp",
+
+  "register_sign_up_button": "ĐĂNG KÝ",
+
+  "register_done": "Đăng ký thành công",
+  "register_done_body": "Tài khoản của bạn đã được tạo thành công",
+
+  "register_failed": "Đăng ký thất bại",
+
+  "register_have_account": "Đã có tài khoản? ",
+  "register_login": "Đăng nhập",
+
+  "chat_title_receive_plus": "Nhận phiên bản Plus",
+
+  "chat_drawer_conversations": "Cuộc hội thoại",
+  "chat_search": "Tìm kiếm",
+
+  "chat_rename_dialog_title": "Đổi tên cuộc hội thoại",
+  "chat_rename_dialog_hint": "Nhập tên mới",
+  "chat_button_ok": "OK",
+  "chat_button_cancel": "Hủy",
+
+  "chat_delete_title": "Xóa cuộc hội thoại",
+  "chat_delete_confirm_body": "Bạn có chắc muốn xóa cuộc hội thoại này?",
+
+  "chat_error": "Lỗi",
+  "chat_check_connection": "Kiểm tra kết nối mạng",
+
+  "chat_blank_title": "Bắt đầu trò chuyện",
+  "chat_blank_subtitle": "Chọn cuộc hội thoại trong menu\nhoặc tạo mới để bắt đầu!",
+
+  "chat_input_hint": "Nhập tin nhắn...",
+  "chat_attach_file": "Đã nhấn đính kèm file",
+  
+  "dict_title": "📖 Từ điển",
+
+  "dict_ask": "Bạn muốn tìm gì",
+  "dict_hint": "Nhập cụm từ mà bạn muốn tìm kiếm",
+  "dict_button_search": "Tra cứu",
+
+  "dict_pronounce": "Phát âm",
+  "dict_pronounce_desc": "Phát âm cụm từ để kiểm tra phát âm",
+
+  "dict_image": "Tìm bằng hình ảnh",
+  "dict_image_desc": "Phát âm cụm từ để kiểm tra phát âm",
+
+  "dict_popular": "Những từ tìm kiếm phổ biến",
+  "image_title": "Nhận dạng văn bản",
+  "image_pick_image": "Chọn hình ảnh",
+  "image_press_to_add": "Nhấn + để chọn hình ảnh",
+  "image_cannot_find": "Không tìm thấy từ nào",
+  "image_too_many": "Có quá nhiều từ, vui lòng chọn hình khác",
+  "image_recognized_word": "Từ nhận dạng: ",
+  "image_button_search": "Tra cứu",
+
+  "voice_hint_press_and_speak": "Hãy bấm nút micro và nói to",
+  "voice_correction": "Độ chính xác: ",
+  "voice_button_search": "Tra cứu",
+  "icon_picker_choose_icon": "Chọn biểu tượng",
+  "icon_picker_dialog_title": "-- Chọn biểu tượng --",
+  "icon_picker_discard": "Hủy bỏ",
+  "public_flashcard_title": "Flashcard công khai",
+  "public_flashcard_no_sets": "Chưa có bộ flashcard nào",
+  "public_flashcard_no_sets_desc": "Hãy bắt đầu hành trình học tập bằng cách tạo bộ flashcard đầu tiên!",
+  "myset_title": "Bộ Flashcard",
+  "myset_hint_enter_name": "Nhập tên bộ flashcard",
+  "myset_discard": "Hủy",
+  "myset_save": "Lưu",
+  "myset_error_need_name": "Vui lòng nhập tên bộ flashcard",
+  "myset_created_success": "Tạo bộ Flashcard thành công",
+  "myset_created_failed": "Tạo bộ Flashcard thất bại",
+  "myset_updated_success": "Cập nhật bộ Flashcard thành công",
+  "myset_updated_failed": "Cập nhật bộ Flashcard thất bại",
+  "myset_delete_title": "Bạn chắc chắn muốn xóa bộ flashcard này",
+  "myset_delete_button": "Xóa",
+  "myset_blank_title": "Chưa có bộ flashcard nào",
+  "myset_blank_desc": "Hãy bắt đầu hành trình học tập bằng cách tạo bộ flashcard đầu tiên!",
+  "myset_blank_btn": "Tạo bộ mới",
+  "flashItem_cards": "thẻ",
+  "flashItem_studyNow": "Học ngay",
+  "flashItem_completed": "Đã hoàn thành",
+  "flashItem_edit": "Chỉnh sửa",
+  "flashItem_delete": "Xoá",
+  "flashItem_share": "Chia sẻ",
+  "aiConv_title": "🚀 Cuộc trò chuyện AI",
+  "aiConv_subtitle": "Có 3 cuộc hội thoại",
+
+  "card_time_label": "phút",
+  "error_title": "Lỗi",
+  "error_check_internet": "Hãy kiểm tra kết nối Internet",
+  "input_type_message": "Nhập tin nhắn...",
+  "conversation_done": "Chúc mừng! 🎉🎉 Bạn đã hoàn thành cuộc hội thoại này",
+  "conversation_done_avg_score": "Điểm trung bình:",
+  "home_review_flashcard": "Ôn lại từ trong flashcard",
+  "home_learn_public": "Học flashcard của cộng đồng",
+  "home_welcome_back": "Chào mừng bạn trở lại,\n",
+  "home_what_should_do_today": "Hôm nay chúng ta nên làm gì",
+  "onboarding_title_1": "Mở khóa tiềm năng tiếng Anh của bạn!",
+  "onboarding_body_1": "Học nhanh hơn với flashcard tương tác được thiết kế cho thành công của bạn.",
+  "onboarding_title_2": "Biến từ vựng thành kiến thức!",
+  "onboarding_body_2": "Khám phá sức mạnh của việc luyện tập đều đặn và học tập nhẹ nhàng.",
+  "onboarding_title_3": "Làm chủ tiếng Anh từng thẻ một!",
+  "onboarding_body_3": "Con đường đến sự lưu loát bắt đầu từ đây—hãy bước đi đầu tiên ngay hôm nay.",
+  "onboarding_skip": "Bỏ qua",
+  "onboarding_get_started": "Bắt đầu",
+  "nav_home": "Trang chủ",
+  "nav_dictionary": "Từ điển",
+  "nav_chat_with_ai": "Chat với AI",
+  "nav_profile": "Hồ sơ",
+  "sr_not_found_title": "Không tìm thấy từ",
+  "sr_not_found_desc": "Chúng tôi không tìm thấy từ bạn đang tìm. Hãy thử từ khác.",
+  "sr_search_again": "Tìm lại",
+  "sr_dictionary_title": "Từ điển",
+  "sr_definition": "📘 Định nghĩa",
+  "sr_no_meaning": "Không tìm thấy nghĩa",
+  "sr_example": "✅ Ví dụ",
+  "sr_no_example": "Không tìm thấy ví dụ",
+  "sr_watch_others": "Xem người khác thực hành >",
+  "up_title": "Nâng cấp gói của bạn",
+  "up_basic": "Cơ bản",
+  "up_basic_price": "119.000đ/tháng",
+  "up_unlimited": "Flashcard không giới hạn",
+  "up_basic_analytics": "Thống kê cơ bản",
+  "up_no_ads": "Không quảng cáo",
+  "up_advanced_analytics": "Thống kê nâng cao",
+  "up_priority_support": "Hỗ trợ ưu tiên",
+  "up_plus": "Plus",
+  "up_plus_price": "239.000đ/tháng",
+  "up_recommended": "Đề xuất",
+  "up_upgrade_now": "Nâng cấp ngay",
+  "up_upgrading_snack": "Đang nâng cấp..."
+
+
+
+
+
+
+}

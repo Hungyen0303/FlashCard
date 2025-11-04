@@ -1,0 +1,264 @@
+{
+  "helloWorld": "Hello World!",
+  
+  "account" : "Account",
+  "editProfile" : "Edit Profile",
+  "plan" : "Plan",
+  "upgrade" : "Upgrade" ,
+  "activities" : "Activities",
+  "trackprogress" : "Track your progress",
+  "lastsevendays" : "Last 7 days",
+  "lastTwelvemonths" : "Last 12 months",
+  "lessonCompleted" :"LESSON COMPLETED" ,
+  "conversationCompleted" : "CONVERSATION COMPLETED",
+  "logout" : "Log out" ,
+
+  "policy_title": "Privacy Policy",
+  "policy_header": "Privacy Policy for Flashcard Learning App",
+  "policy_last_updated": "Last updated: October 26, 2023",
+
+  "policy_section_1_title": "1. Introduction",
+  "policy_section_1_body": "Welcome to Flashcard Learning App. We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about our policy, or our practices with regards to your personal information, please contact us at support@flashcardlearning.com.",
+
+  "policy_section_2_title": "2. Information We Collect",
+  "policy_section_2_body_1": "We collect personal information that you voluntarily provide to us when you register on the app, express an interest in obtaining information about us or our products and services, when you participate in activities on the app or otherwise when you contact us.",
+  "policy_section_2_body_2": "The personal information that we collect depends on the context of your interactions with us and the app, the choices you make and the products and features you use. The personal information we collect may include the following: name, email address, and user-generated content like flashcards.",
+
+  "policy_section_3_title": "3. How We Use Your Information",
+  "policy_section_3_body": "We use personal information collected via our app for a variety of business purposes described below. We process your personal information for these purposes in reliance on our legitimate business interests, in order to enter into or perform a contract with you, with your consent, and/or for compliance with our legal obligations.",
+
+  "policy_section_4_title": "4. Will Your Information Be Shared With Anyone?",
+  "policy_section_4_body": "We only share information with your consent, to comply with laws, to provide you with services, to protect your rights, or to fulfill business obligations.",
+
+  "policy_section_5_title": "5. Contact Us",
+  "policy_section_5_body": "If you have questions or comments about this policy, you may email us at support@flashcardlearning.com.",
+
+  "profile_title": "Profile",
+  "profile_username": "Username",
+  "profile_modify": "Modify",
+  "profile_enter_name": "Please enter your name",
+  "profile_confirm": "Confirm",
+  "profile_cancel": "Cancel",
+  "profile_plan": "Plan",
+  "profile_upgrade": "Upgrade",
+  "profile_policy": "Privacy Policy",
+  "profile_terms": "Terms of Service",
+
+
+  "term_title": "Terms of Service",
+  "term_header": "Terms of Service for Flashcard Learning App",
+  "term_last_updated": "Last updated: October 26, 2023",
+
+  "term_1_title": "1. Acceptance of Terms",
+  "term_1_body": "By accessing or using the Flashcard Learning App, you agree to be bound by these Terms of Service and our Privacy Policy. If you disagree with any part of the terms, you may not access our service.",
+
+  "term_2_title": "2. User Accounts",
+  "term_2_body_1": "You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.",
+  "term_2_body_2": "You must be at least 13 years old to use this service. If you are under 18, you must have parental consent to use this app.",
+
+  "term_3_title": "3. User-Generated Content",
+  "term_3_body_1": "You retain all rights to the flashcards and other content you create using our app. By submitting content, you grant us a worldwide, non-exclusive, royalty-free license to use, store, and display that content for the purpose of providing our services to you.",
+  "term_3_body_2": "You are solely responsible for the content you create and share. You agree not to create content that is illegal, offensive, or infringes on others' intellectual property rights.",
+
+  "term_4_title": "4. Prohibited Activities",
+  "term_4_intro": "You may not use our service to:",
+  "term_4_list_1": "• Violate any laws or regulations",
+  "term_4_list_2": "• Infringe on intellectual property rights",
+  "term_4_list_3": "• Harass, abuse, or harm others",
+  "term_4_list_4": "• Distribute malware or malicious code",
+  "term_4_list_5": "• Attempt to gain unauthorized access to our systems",
+
+  "term_5_title": "5. Service Modifications and Availability",
+  "term_5_body": "We reserve the right to modify, suspend, or discontinue any part of our service at any time. We do not guarantee that our service will be available uninterrupted or error-free.",
+
+  "term_6_title": "6. Termination",
+  "term_6_body": "We may terminate or suspend your account immediately, without prior notice, for conduct that we believe violates these Terms of Service or is harmful to other users, us, or third parties, or for any other reason.",
+
+  "term_7_title": "7. Disclaimer of Warranties",
+  "term_7_body": "The service is provided \"as is\" without warranties of any kind, either express or implied. We do not warrant that the service will meet your requirements or be available on an uninterrupted, secure, or error-free basis.",
+
+  "term_8_title": "8. Limitation of Liability",
+  "term_8_body": "To the maximum extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues.",
+
+  "term_9_title": "9. Changes to Terms",
+  "term_9_body": "We reserve the right to modify these terms at any time. We will provide notice of significant changes through our app or via email. Continued use of our service after changes constitutes acceptance of the new terms.",
+
+  "term_10_title": "10. Governing Law",
+  "term_10_body": "These terms shall be governed by and construed in accordance with the laws of the jurisdiction where our company is established, without regard to its conflict of law provisions.",
+
+  "term_11_title": "11. Contact Us",
+  "term_11_body": "If you have any questions about these Terms of Service, please contact us at support@flashcardlearning.com.",
+
+  "login_welcome_back": "Welcome Back",
+  "login_subtitle": "Sign in to continue your learning journey",
+  "login_email_required": "Please enter your email",
+  "login_password": "Password",
+  "login_password_required": "Please enter your password",
+  "login_button": "LOGIN",
+  "login_or": "OR",
+  "login_no_account": "Don't have an account? ",
+  "login_signup": "Sign Up",
+  "register_create_account": "Create Account",
+  "register_subtitle": "Start your learning journey today",
+
+  "register_email": "Email",
+  "register_email_required": "Please enter your email",
+  "register_email_invalid": "Please enter a valid email",
+
+  "register_username": "Username",
+  "register_username_required": "Please enter a username",
+
+  "register_password": "Password",
+  "register_password_required": "Please enter a password",
+  "register_password_min_length": "Password must be at least 6 characters",
+
+  "register_confirm_password": "Confirm Password",
+  "register_confirm_password_required": "Please confirm your password",
+  "register_password_not_match": "Passwords do not match",
+
+  "register_sign_up_button": "SIGN UP",
+
+  "register_done": "Registration Successful",
+  "register_done_body": "Your account has been created successfully",
+
+  "register_failed": "Registration Failed",
+
+  "register_have_account": "Already have an account? ",
+  "register_login": "Login",
+  
+  
+  "chat_title_receive_plus": "Receive Plus Version",
+
+  "chat_drawer_conversations": "Conversations",
+  "chat_search": "Search",
+
+  "chat_rename_dialog_title": "Rename Conversation",
+  "chat_rename_dialog_hint": "Enter new name",
+  "chat_button_ok": "OK",
+  "chat_button_cancel": "Cancel",
+
+  "chat_delete_title": "Delete Conversation",
+  "chat_delete_confirm_body": "Are you sure to delete this conversation?",
+
+  "chat_error": "Error",
+  "chat_check_connection": "Check internet connection",
+
+  "chat_blank_title": "Start a Conversation",
+  "chat_blank_subtitle": "Select a conversation from the menu\nor create a new one to begin chatting!",
+
+  "chat_input_hint": "Type your message...",
+  "chat_attach_file": "Attach file tapped",
+
+  "dict_title": "📖 Dictionary",
+
+  "dict_ask": "What do you want to search?",
+  "dict_hint": "Enter the phrase you want to search",
+  "dict_button_search": "Search",
+
+  "dict_pronounce": "Pronounce",
+  "dict_pronounce_desc": "Speak phrase to check pronunciation",
+
+  "dict_image": "Search by Image",
+  "dict_image_desc": "Speak phrase to check pronunciation",
+
+  "dict_popular": "Popular search words",
+  "image_title": "Text Recognition",
+  "image_pick_image": "Pick an image",
+  "image_press_to_add": "Press + to add an image",
+  "image_cannot_find": "Can not find any word",
+  "image_too_many": "Too many words, please choose another picture",
+  "image_recognized_word": "Recognized word: ",
+  "image_button_search": "Search",
+  
+  
+  "voice_hint_press_and_speak": "Please press mic and speak out loud",
+  "voice_correction": "Correction: ",
+  "voice_button_search": "Search",
+
+  "icon_picker_choose_icon": "Choose an icon",
+  "icon_picker_dialog_title": "-- Choose an icon --",
+  "icon_picker_discard": "Discard",
+
+  "public_flashcard_title": "Flashcard Public",
+  "public_flashcard_no_sets": "No Flashcard Sets Yet",
+  "public_flashcard_no_sets_desc": "Start your learning journey by creating your first flashcard set!",
+
+  "myset_title": "Flashcard",
+  "myset_hint_enter_name": "Enter flashcard Set's name",
+  "myset_discard": "Discard",
+  "myset_save": "Save",
+  "myset_error_need_name": "Please input name of Set",
+  "myset_created_success": "Created new Flashcard Set",
+  "myset_created_failed": "Failed to create Flashcard Set",
+  "myset_updated_success": "Updated Flashcard Set",
+  "myset_updated_failed": "Failed to update Flashcard Set",
+  "myset_delete_title": "Are you sure to delete this set",
+  "myset_delete_button": "Delete",
+  "myset_blank_title": "No Flashcard Sets Yet",
+  "myset_blank_desc": "Start your learning journey by creating your first flashcard set!",
+  "myset_blank_btn": "Create New Set",
+  "flashItem_cards": "cards",
+  "flashItem_studyNow": "Study now",
+  "flashItem_completed": "Completed",
+  "flashItem_edit": "Edit",
+  "flashItem_delete": "Delete",
+  "flashItem_share": "Share",
+
+  "aiConv_title": "🚀 AI Conversations",
+  "aiConv_subtitle": "There are 3 conversations",
+
+  "card_time_label": "minutes",
+  "error_title": "Error",
+  "error_check_internet": "Check internet connection",
+  "input_type_message": "Type your message...",
+  "conversation_done": "Congratulations! 🎉🎉 You just completed this conversation",
+  "conversation_done_avg_score": "Average Score:",
+  "home_review_flashcard": "Review words in flashcard",
+  "home_learn_public": "Learn community flashcards",
+  "home_welcome_back": "Welcome back,\n",
+  "home_what_should_do_today": "What should we do today?",
+  "onboarding_title_1": "Unlock Your English Potential!",
+  "onboarding_body_1": "Learn faster with interactive flashcards designed for your success.",
+  "onboarding_title_2": "Turn Words Into Knowledge!",
+  "onboarding_body_2": "Discover the power of consistent practice and effortless learning.",
+  "onboarding_title_3": "Master English, One Card at a Time!",
+  "onboarding_body_3": "Your path to fluency starts here—take the first step today.",
+  "onboarding_skip": "Skip",
+  "onboarding_get_started": "Get Started",
+
+  "nav_home": "Homepage",
+  "nav_dictionary": "Dictionary",
+  "nav_chat_with_ai": "Chat with AI",
+  "nav_profile": "Profile",
+
+  "sr_not_found_title": "Word Not Found",
+  "sr_not_found_desc": "We couldn't find the word you're looking for. Please try another search.",
+  "sr_search_again": "Search Again",
+  "sr_dictionary_title": "Dictionary",
+  "sr_definition": "📘 Definition",
+  "sr_no_meaning": "We could not find the meaning",
+  "sr_example": "✅ Example",
+  "sr_no_example": "We could not find the example",
+  "sr_watch_others": "Watch others practice >",
+  "up_title": "Upgrade Your Plan",
+  "up_basic": "Basic",
+  "up_basic_price": "$4.99/month",
+  "up_unlimited": "Unlimited Flashcards",
+  "up_basic_analytics": "Basic Analytics",
+  "up_no_ads": "No Ads",
+  "up_advanced_analytics": "Advanced Analytics",
+  "up_priority_support": "Priority Support",
+  "up_plus": "Plus",
+  "up_plus_price": "$9.99/month",
+  "up_recommended": "Recommended",
+  "up_upgrade_now": "Upgrade Now",
+  "up_upgrading_snack": "Upgrading..."
+
+
+
+
+
+
+
+
+}
