@@ -519,11 +519,13 @@ class ApiImpl extends Api {
       );
 
       if (res.statusCode == 200) {
-        return res.data["data"];
+        return res.data["data"]["botChat"];
       } else {
         return 'AI is busy';
       }
     } on DioException catch (e) {
+      return 'AI is busy';
+    } on Exception catch (e) {
       return 'AI is busy';
     }
   }

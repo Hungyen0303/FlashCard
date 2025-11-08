@@ -134,6 +134,7 @@ flutter:
      - assets/us.png
      - assets/vietnam.png
      - assets/languages.png
+     - assets/gemini.png
      - .env
 
 

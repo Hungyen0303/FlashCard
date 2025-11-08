@@ -14,7 +14,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
-import '../../chat/widgets/chatwithAI_screen.dart';
+import '../../chat/widgets/chat_with_ai_screen.dart';
 import '../../dictionary/view_model/DictionaryViewModel.dart';
 import '../../dictionary/widget/dictionary_screen.dart';
 

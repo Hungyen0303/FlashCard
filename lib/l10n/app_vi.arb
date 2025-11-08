@@ -248,7 +248,9 @@
   "please_login_again" : "Vui lòng đăng nhập lại",
   "session_expired" : "Phiên đăng nhập đã hết hạn",
   "sorry_For_now_feature_not_available" : "Xin lỗi, hiện tại tính năng này chưa khả dụng",
-  "chat_error_title": "Lỗi"
+  "chat_error_title": "Lỗi",
+  "chat_cancle" : "Hủy"
+
 
 
 

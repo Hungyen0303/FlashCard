@@ -148,6 +148,7 @@
 
   "chat_input_hint": "Type your message...",
   "chat_attach_file": "Attach file tapped",
+  "chat_cancle" : "Cancle",
 
   "dict_title": "📖 Dictionary",
 

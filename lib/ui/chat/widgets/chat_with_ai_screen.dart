@@ -198,15 +198,10 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
       },
       animType: QuickAlertAnimType.slideInLeft,
       confirmBtnText: context.l10n.chat_button_ok,
-      cancelBtnText: context.l10n.chat_delete_title,
+      cancelBtnText: context.l10n.chat_cancle,
       showCancelBtn: true,
       title: context.l10n.chat_delete_confirm_body,
       titleColor: Colors.red,
-      widget: Text(
-        context.l10n.chat_delete_confirm_body,
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 20, color: Color(0xFF123456)),
-      ),
     );
   }
 
@@ -325,7 +320,6 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            // Header cho Drawer (tùy chọn)
             Container(
               height: 40,
               padding: const EdgeInsets.only(left: 16),
@@ -396,7 +390,6 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
                 surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
               ),
             ),
-            // Danh sách chat tiles
             ..._buildChatTiles(),
           ],
         ),
@@ -662,7 +655,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
             color: Colors.white,
           );
         } else
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
       },
     );
   }

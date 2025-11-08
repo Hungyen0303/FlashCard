@@ -54,9 +54,10 @@ class ChatWithAIViewModel extends ChangeNotifier {
 
     chatList.add(Message(humanChat: humanChat, botChat: ""));
     notifyListeners();
-
-    String? response = await _repo.getResponseAI(humanChat,
-        conversationList[indexOfCurrentConversation].id.toString() ?? "");
+    print('before ');
+    String? response = await _repo.getResponseAI(
+        humanChat, conversationList[indexOfCurrentConversation].id.toString());
+    print('before 2');
 
     Message responseMessage =
         Message(humanChat: humanChat, botChat: response ?? '');

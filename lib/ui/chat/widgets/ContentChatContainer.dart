@@ -1,11 +1,8 @@
-import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pie_menu/pie_menu.dart';
-import 'package:markdown_widget/markdown_widget.dart';
 
 class ContentChatContainer extends StatelessWidget {
   const ContentChatContainer(
@@ -32,10 +29,14 @@ class ContentChatContainer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: CircleAvatar(
+              radius: 20,
               backgroundColor: Colors.transparent,
-              child: Image.asset(
-                "assets/apple-icon.png",
-                width: 45,
+              child: ClipOval(
+                child: Image.asset(
+                  fit: BoxFit.contain,
+                  "assets/gemini.png",
+                  width: 30,
+                ),
               ),
             ),
           ),
