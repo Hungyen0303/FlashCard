@@ -2,6 +2,7 @@ import 'package:flashcard_learning/data/repositories/account/AccountRepositoryRe
 import 'package:flashcard_learning/data/repositories/account/accountRepository.dart';
 import 'package:flashcard_learning/data/repositories/chatWithAI/ChatWithAIRepo.dart';
 import 'package:flashcard_learning/data/repositories/chatWithAI/ChatWithAIRepoRemote.dart';
+import 'package:flashcard_learning/data/repositories/dictionary/DictionaryRepo.dart';
 import 'package:flashcard_learning/data/repositories/flashcardsets/FlashCardSetRepo.dart';
 import 'package:flashcard_learning/data/repositories/flashcardsets/FlashCardSetRepoRemote.dart';
 import 'package:flashcard_learning/data/repositories/homepage/home_repo.dart';
@@ -16,6 +17,7 @@ import 'package:flashcard_learning/ui/dictionary/view_model/DictionaryViewModel.
 import 'package:flashcard_learning/ui/flashcard_sets/view_models/flashCardSetViewModel.dart';
 import 'package:flashcard_learning/ui/flashcard_sets/widgets/CustomCardProvider.dart';
 import 'package:flashcard_learning/ui/home/view_models/MainScreenViewModel.dart';
+import 'package:flashcard_learning/ui/home/view_models/navigation_viewmodel.dart';
 import 'package:flashcard_learning/ui/specific_flashcard/view_models/SpecificFlashCardViewModel.dart';
 import 'package:flashcard_learning/utils/locale_provider.dart';
 import 'package:provider/provider.dart';
@@ -30,12 +32,22 @@ class AppProvider {
     Provider<HomeRepo>(
         create: (context) =>
             HomeRepo(api1: Provider.of<Api1>(context, listen: false))),
-    Provider<AuthRepositoryRemote>(create: (_) => AuthRepositoryRemote()),
+    Provider<DictionaryRepo>(
+        create: (context) => DictionaryRepoRemote(
+            api1: Provider.of<Api1>(context, listen: false))),
+    ChangeNotifierProvider<NavigationViewModel>(
+        create: (context) => NavigationViewModel(
+            api1: Provider.of<Api1>(context, listen: false))),
+    Provider<AuthRepositoryRemote>(
+        create: (_) =>
+            AuthRepositoryRemote(api1: Provider.of<Api1>(_, listen: false))),
     ChangeNotifierProvider<LoginViewModel>(
         create: (context) => LoginViewModel(
             authRepository:
                 Provider.of<AuthRepositoryRemote>(context, listen: false))),
-    Provider<FlashCardSetRepo>(create: (_) => FlashCardSetRepoRemote()),
+    Provider<FlashCardSetRepo>(
+        create: (_) =>
+            FlashCardSetRepoRemote(api1: Provider.of<Api1>(_, listen: false))),
     ChangeNotifierProvider<FlashCardSetViewModel>(
         create: (context) => FlashCardSetViewModel(
             Provider.of<FlashCardSetRepo>(context, listen: false))),
@@ -61,7 +73,10 @@ class AppProvider {
         create: (context) => MainScreenViewModel(
               repo: Provider.of<HomeRepo>(context, listen: false),
             )),
-    Provider<DictionaryViewModel>(create: (context) => DictionaryViewModel()),
+    Provider<DictionaryViewModel>(
+        create: (context) => DictionaryViewModel(
+              repo: Provider.of<DictionaryRepo>(context, listen: false),
+            )),
     ChangeNotifierProvider<LocaleProvider>(
         create: (context) => LocaleProvider()),
   ];

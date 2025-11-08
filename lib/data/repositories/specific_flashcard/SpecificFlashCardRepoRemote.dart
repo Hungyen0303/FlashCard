@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flashcard_learning/data/repositories/specific_flashcard/SpecificFlashCardRepo.dart';
 import 'package:flashcard_learning/data/services/api/Api1.dart';
-import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
 
 import '../../../domain/models/Flashcard.dart';
 

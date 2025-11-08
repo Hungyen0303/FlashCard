@@ -54,7 +54,8 @@ class ChatWithAIRepoRemote extends ChatWithAIRepo {
   @override
   Future<String> getResponseAI(
     String? prompt,
+    String id,
   ) async {
-    return await api1.getResponseAI(prompt ?? "");
+    return await api1.getResponseAI(prompt ?? "", id);
   }
 }

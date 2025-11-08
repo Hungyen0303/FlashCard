@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flashcard_learning/data/repositories/auth/AuthRepository.dart';
 import 'package:flashcard_learning/data/services/api/Api1.dart';
-import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
 import 'package:flashcard_learning/domain/models/user.dart';
 
 class AuthRepositoryRemote extends AuthRepository {
-  final Api1 _api1 = Api1Impl();
+  AuthRepositoryRemote({required Api1 api1}) : _api1 = api1;
 
-  User? cachedUser = null;
+  final Api1 _api1;
+
+  User? cachedUser;
 
   @override
   Future<void> login(String username, String password) async {

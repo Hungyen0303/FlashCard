@@ -9,7 +9,7 @@ class LoadingOverlay {
     _overlayEntry = OverlayEntry(
       builder: (context) => Container(
         color: Colors.black.withOpacity(0.5),
-        child: Center(
+        child: const Center(
             child: SpinKitFadingFour(
           color: Colors.white,
         )),

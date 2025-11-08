@@ -1,8 +1,5 @@
 import 'dart:ui';
 
-import 'package:dio/dio.dart';
-import 'package:flashcard_learning/data/services/api/Api1.dart';
-import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
 import 'package:flashcard_learning/domain/models/user.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,34 +33,10 @@ class AppManager {
 
   static String firstRoute = AppRoute.boarding;
 
-  /// if there are no token => login
-  /// if token is still valid => auto login
-  /// if token is not valid => refresh =>auto login
-  /// if both is not valid => login
-
-  static final Api1 _api1 = Api1Impl();
-
-  static Future<bool> isLogged() async {
-    if (_token.isEmpty) {
-      return false;
-    } else {
-      try {
-        return await _api1.verifyToken(_token, _refreshToken);
-      } on Exception catch (e) {
-        return false;
-      }
-    }
-  }
-
   static Future<void> initialize() async {
     prefs = await SharedPreferences.getInstance();
-
     loadToken();
-
     firstRoute = await getInitialRoute();
-    if (firstRoute == AppRoute.home) {
-      await loadUser();
-    }
   }
 
   static Future<String> getInitialRoute() async {
@@ -72,19 +45,15 @@ class AppManager {
       return AppRoute.boarding;
     }
     _locale = Locale(prefs.getString("locale") ?? "en");
-    if (await isLogged()) return AppRoute.home;
-    return AppRoute.login;
+    if (getToken().isEmpty) {
+      return AppRoute.login;
+    } else {
+      return AppRoute.home;
+    }
   }
 
   static User? getUser() {
     return _currentUser;
-  }
-
-  static Future<void> loadUser() async {
-    try {
-      await _api1.getUser();
-    } on DioException catch (e) {
-    } on Exception catch (e) {}
   }
 
   static Future<void> saveToken(String token, String refreshToken) async {

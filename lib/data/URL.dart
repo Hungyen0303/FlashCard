@@ -1,7 +1,7 @@
 class URL {
-  static String baseURL = true
+  static String baseURL = false
       ? "https://flashcard.blackmushroom-b6cf5c98.southeastasia.azurecontainerapps.io/flashcard/api"
-      : "http://192.168.1.49:8080/flashcard/api";
+      : "http://192.168.1.35:8080/flashcard/api";
 
   /*-------------Auth-----------------*/
 
@@ -51,7 +51,7 @@ class URL {
 
   /* AI */
 
-  static String aiChat = "$baseURL/ai/chats";
+  static String aiChat(String id) => "$baseURL/ai/chats/$id";
   static String aiQuestion = "$baseURL/ai/questions";
   static String aiTopics = "$baseURL/ai/topics";
   static String aiPopularWord = "$baseURL/ai/words";

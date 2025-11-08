@@ -51,7 +51,7 @@ class AppRouter {
         GoRoute(
             path: AppRoute.home,
             builder: (context, state) {
-              return const Homepage();
+              return const ShellScreen();
             }),
         GoRoute(
             path: AppRoute.boarding,
@@ -61,7 +61,7 @@ class AppRouter {
         GoRoute(
             path: AppRoute.login,
             builder: (context, state) {
-              return LoginPage();
+              return const LoginPage();
             }),
         GoRoute(
             path: AppRoute.forgetpassword,

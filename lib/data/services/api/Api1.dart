@@ -70,7 +70,7 @@ abstract class Api1 {
 
   /* Ai response  */
 
-  Future<String> getResponseAI(String prompt);
+  Future<String> getResponseAI(String prompt, String id);
   Future<String> getQuestionFromAI(String topic, String level);
   Future<String> getTopics();
   Future<String> getPopularWord();

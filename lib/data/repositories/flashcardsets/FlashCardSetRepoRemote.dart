@@ -1,11 +1,12 @@
 import 'package:flashcard_learning/data/repositories/flashcardsets/FlashCardSetRepo.dart';
-import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
 import 'package:flashcard_learning/domain/models/flashSet.dart';
 
 import '../../services/api/Api1.dart';
 
 class FlashCardSetRepoRemote extends FlashCardSetRepo {
-  Api1 api1 = Api1Impl();
+  FlashCardSetRepoRemote({required this.api1});
+
+  final Api1 api1;
 
   @override
   Future<bool> addNewSetToPublic(FlashCardSet newSet) async {

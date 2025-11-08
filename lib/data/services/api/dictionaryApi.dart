@@ -28,7 +28,6 @@ class DictionaryApi {
           break;
         }
       }
-
       return wordFromAPI;
     } catch (e) {
       rethrow;

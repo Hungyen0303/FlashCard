@@ -1,9 +1,4 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
-import 'package:flashcard_learning/routing/route.dart';
-import 'package:flashcard_learning/routing/router.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 
 import '../../AppManager.dart';
@@ -23,6 +18,7 @@ class AppInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
+    print('ON ERROR');
     Logger logger = Logger("ON REFRESHING");
     logger.info("refreshing ...");
     if (err.response?.statusCode == 401) {
@@ -64,8 +60,10 @@ class AppInterceptor extends Interceptor {
             handler.resolve(retry);
           }
           pendingRequests.clear();
-        } else {
-          throw Exception("Please login again");
+        } else if (refreshResponse.data["status"] == "Error") {
+          handler.reject(err); // Refresh thất bại, trả lỗi về
+          AppManager.clearToken(); // Có thể logout user
+          pendingRequests.clear();
         }
       } catch (e) {
         handler.reject(err); // Refresh thất bại, trả lỗi về

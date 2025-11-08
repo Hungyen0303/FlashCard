@@ -62,7 +62,7 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text("Error"),
+              title: Text(context.l10n.chat_error_title),
               contentTextStyle:
                   const TextStyle(fontSize: 15, color: Colors.black),
               titleTextStyle: const TextStyle(color: Colors.red, fontSize: 30),
@@ -72,7 +72,11 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
     }
   }
 
-  void attachImage() {}
+  void attachImage() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(context.l10n.sorry_For_now_feature_not_available)),
+    );
+  }
 
   List<Widget> buildChatColumn() {
     List<Widget> listChat = [];
@@ -269,29 +273,22 @@ class _ChatWithAiPageState extends State<ChatWithAIPage> {
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min, // Giới hạn kích thước title
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             context.l10n.chat_title_receive_plus,
-            style: TextStyle(
-              fontSize: 20, // Tăng kích thước chữ
-              fontWeight: FontWeight.bold, // Chữ đậm
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
               color: darkBlue,
-              letterSpacing: 1.2, // Khoảng cách chữ
+              letterSpacing: 1.2,
             ),
           ),
-          const SizedBox(width: 8), // Khoảng cách giữa text và icon
+          const SizedBox(width: 8),
           Icon(
             CupertinoIcons.plus_app,
-            color: mainColorIcon, // Đổi màu trắng cho đồng bộ
-            size: 28, // Tăng kích thước icon
-            // shadows: [
-            //   Shadow(
-            //     color: Colors.black.withOpacity(0.3),
-            //     blurRadius: 4,
-            //     offset: Offset(0, 2),
-            //   ),
-            // ],
+            color: mainColorIcon,
+            size: 28,
           ),
         ],
       ),

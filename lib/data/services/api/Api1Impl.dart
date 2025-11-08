@@ -17,9 +17,9 @@ import '../../URL.dart';
 Dio setupDio({required String token}) {
   final dio = Dio(
     BaseOptions(
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
-      sendTimeout: const Duration(seconds: 30),
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 15),
+      sendTimeout: const Duration(seconds: 15),
       contentType: "application/json",
       responseType: ResponseType.json,
     ),
@@ -55,26 +55,29 @@ class Api1Impl extends Api1 {
     dio = setupDio(token: token);
   }
 
+  void updateDioToken() {
+    final token = AppManager.getToken();
+    dio.options.headers["Authorization"] = "Bearer $token";
+  }
+
   @override
   void reset() {
-    _initDio(); // ← Tạo lại dio với token mới
+    updateDioToken(); // ← Tạo lại dio với token mới
   }
 
   @override
   Future<void> login((String, String) credentials) async {
     final (username, password) = credentials;
     try {
+      // remove authorization in header of dio
+      dio.options.headers.remove("Authorization");
+
       final response = await dio.post(
         URL.login,
         data: {
           "username": username,
           "password": password,
         },
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-          },
-        ),
       );
       if (response.statusCode == 200) {
         if (response.data["status"] == Status.success.value) {
@@ -84,7 +87,7 @@ class Api1Impl extends Api1 {
           AppManager.setUser(
               User.fromJson(response.data["data"]["userInfoRes"]));
         }
-        _initDio();
+        updateDioToken();
       } else {
         throw DioException(
           requestOptions: response.requestOptions,
@@ -183,6 +186,7 @@ class Api1Impl extends Api1 {
       if (res.statusCode == 200) {
         if (res.data["data"]["valid"]) {
           AppManager.saveToken(res.data["data"]["newToken"], refreshToken);
+          reset();
           return true;
         } else {
           return false;
@@ -514,10 +518,10 @@ class Api1Impl extends Api1 {
   }
 
   @override
-  Future<String> getResponseAI(String prompt) async {
+  Future<String> getResponseAI(String prompt, String id) async {
     try {
       Response res = await dio.post(
-        URL.aiChat,
+        URL.aiChat(id),
         data: {
           "prompt": prompt,
         },
@@ -529,7 +533,7 @@ class Api1Impl extends Api1 {
         return 'AI is busy';
       }
     } on DioException catch (e) {
-      return e.message.toString();
+      return 'AI is busy';
     }
   }
 

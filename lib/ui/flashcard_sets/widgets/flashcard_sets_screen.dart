@@ -155,7 +155,7 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
 
   AppBar _buildAppbar() {
     return AppBar(
-      leading: BackButton(
+      leading: const BackButton(
         color: darkBlue,
       ),
       centerTitle: true,
@@ -269,8 +269,23 @@ class _AllFlashCardSetState extends State<AllFlashCardSet> {
     );
   }
 
-  void shareASet(FlashCardSet set) {
-    Provider.of<FlashCardSetViewModel>(context, listen: false).shareNewSet(set);
+  void shareASet(FlashCardSet set) async {
+    if (set.numOfCard == 0) {
+      QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          text: context.l10n.myset_share_error);
+    } else {
+      bool success =
+          await Provider.of<FlashCardSetViewModel>(context, listen: false)
+              .shareNewSet(set);
+      if (success) {
+        QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            text: context.l10n.myset_share_success);
+      }
+    }
   }
 
   Widget _buildBlankPage() {

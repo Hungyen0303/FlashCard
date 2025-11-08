@@ -1,4 +1,5 @@
 import 'package:flashcard_learning/AppProvider.dart';
+import 'package:flashcard_learning/data/services/api/Api1.dart';
 import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/routing/router.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
@@ -6,6 +7,7 @@ import 'package:flashcard_learning/utils/locale_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:requests_inspector/requests_inspector.dart';
 
 import 'AppManager.dart';
 
@@ -16,7 +18,7 @@ void main() async {
   await AppManager.initialize();
   runApp(MultiProvider(
     providers: AppProvider.providers,
-    child: const MyApp(),
+    child: const RequestsInspector(child: MyApp()),
   ));
 }
 

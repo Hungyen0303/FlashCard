@@ -47,3 +47,4 @@ app.*.map.json
 /macos/
 /lib/ui/test/Testpage.dart
 
+upload-keystore.jks

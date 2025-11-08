@@ -252,10 +252,16 @@
   "up_plus_price": "$9.99/month",
   "up_recommended": "Recommended",
   "up_upgrade_now": "Upgrade Now",
-  "up_upgrading_snack": "Upgrading..."
+  "up_upgrading_snack": "Upgrading...",
 
 
 
+  "myset_share_error" : "Can not share empty set",
+  "myset_share_success" : "Share success",
+  "please_login_again" : "Please login again",
+  "session_expired" : "Session expired",
+  "sorry_For_now_feature_not_available" : "Sorry, for now, this feature is not available",
+  "chat_error_title": "Error"
 
 
 

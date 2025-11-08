@@ -241,7 +241,15 @@
   "up_plus_price": "239.000đ/tháng",
   "up_recommended": "Đề xuất",
   "up_upgrade_now": "Nâng cấp ngay",
-  "up_upgrading_snack": "Đang nâng cấp..."
+  "up_upgrading_snack": "Đang nâng cấp...",
+
+  "myset_share_error" : "Không thể chia sẻ bộ flashcard rỗng",
+  "myset_share_success" : "Chia sẻ thành công",
+  "please_login_again" : "Vui lòng đăng nhập lại",
+  "session_expired" : "Phiên đăng nhập đã hết hạn",
+  "sorry_For_now_feature_not_available" : "Xin lỗi, hiện tại tính năng này chưa khả dụng",
+  "chat_error_title": "Lỗi"
+
 
 
 
