@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flashcard_learning/data/services/AppInterceptor.dart';
-import 'package:flashcard_learning/data/services/api/Api1.dart';
+import 'package:flashcard_learning/data/services/api/api.dart';
 import 'package:flashcard_learning/data/services/api/Status.dart';
 import 'package:flashcard_learning/domain/models/Flashcard.dart';
 import 'package:requests_inspector/requests_inspector.dart';
@@ -43,10 +43,10 @@ Dio setupDio({required String token}) {
   return dio;
 }
 
-class Api1Impl extends Api1 {
+class ApiImpl extends Api {
   late Dio dio; // ← Không khởi tạo ở đây
 
-  Api1Impl() {
+  ApiImpl() {
     _initDio(); // ← Khởi tạo trong constructor
   }
 
@@ -84,8 +84,6 @@ class Api1Impl extends Api1 {
           final token = response.data["data"]["token"] as String;
           final refreshToken = response.data["data"]["refreshToken"] as String;
           AppManager.saveToken(token, refreshToken);
-          AppManager.setUser(
-              User.fromJson(response.data["data"]["userInfoRes"]));
         }
         updateDioToken();
       } else {
@@ -96,7 +94,13 @@ class Api1Impl extends Api1 {
         );
       }
     } on DioException catch (e) {
-      rethrow;
+      if (e.type == DioExceptionType.receiveTimeout) {
+        if (AppManager.locale.languageCode == "vi") {
+          throw Exception("Máy chủ đang bận. Vui lòng thử lại.");
+        } else {
+          throw Exception("Server is busy. Please try again.");
+        }
+      }
     }
   }
 
@@ -126,18 +130,11 @@ class Api1Impl extends Api1 {
   }
 
   @override
-  Future<void> updateUser(User newUser) async {
+  Future<User?> updateUser(User newUser) async {
     try {
-      final response = await dio.patch(URL.info,
-          options: Options(
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer ${AppManager.getToken()}",
-            },
-          ),
-          data: newUser.toJson());
+      final response = await dio.patch(URL.info, data: newUser.toJson());
       if (response.statusCode == 200) {
-        AppManager.setUser(User.fromJson(response.data["data"]));
+        return User.fromJson(response.data["data"]);
       } else {
         throw DioException(
           requestOptions: response.requestOptions,
@@ -151,19 +148,13 @@ class Api1Impl extends Api1 {
   }
 
   @override
-  Future<void> getUser() async {
+  Future<User?> getUser() async {
     try {
       final response = await dio.get(
         URL.info,
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer ${AppManager.getToken()}",
-          },
-        ),
       );
       if (response.statusCode == 200) {
-        AppManager.setUser(User.fromJson(response.data["data"]));
+        return User.fromJson(response.data["data"]);
       } else {
         throw DioException(
           requestOptions: response.requestOptions,

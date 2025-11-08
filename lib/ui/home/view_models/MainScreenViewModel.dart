@@ -11,9 +11,7 @@ class MainScreenViewModel extends ChangeNotifier {
   MainScreenViewModel({required this.repo});
 
   Function()? onDoneChanged;
-
   bool hasError = false;
-
   String messageErrors = "";
 
   Future<void> getListConversation() async {
@@ -50,7 +48,7 @@ class MainScreenViewModel extends ChangeNotifier {
   bool isDone = false;
   int indexCurrentQuestion = -1;
 
-  Future<void> initialize(String title, String level) async {
+  Future<void> initializeChat(String title, String level) async {
     this.title = title;
     await loadQuestion(title, level);
     saveMessage("Let's get started", questions[0]);

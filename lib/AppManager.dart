@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:flashcard_learning/domain/models/user.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../routing/route.dart';
 
@@ -9,19 +7,12 @@ class AppManager {
   static String _token = "";
   static String _refreshToken = "";
   static Locale? _locale;
-  static User? _currentUser = User();
   static late SharedPreferences prefs;
   static Future<void> setLocale(Locale locale) async {
     await prefs.setString("locale", locale.languageCode);
   }
 
   static get locale => _locale;
-
-  static void setUser(User u) {
-    _currentUser?.name = u.name;
-    _currentUser?.avatar = u.avatar;
-    _currentUser?.plan = u.plan;
-  }
 
   static String getToken() {
     return _token;
@@ -52,10 +43,6 @@ class AppManager {
     }
   }
 
-  static User? getUser() {
-    return _currentUser;
-  }
-
   static Future<void> saveToken(String token, String refreshToken) async {
     _token = token;
     _refreshToken = refreshToken;
@@ -79,6 +66,5 @@ class AppManager {
     await clearToken();
     _token = "";
     _refreshToken = "";
-    setUser(User());
   }
 }

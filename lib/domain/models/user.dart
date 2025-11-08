@@ -19,7 +19,7 @@ class User {
   User.fromJson(Map<String, dynamic> user) {
     name = user["name"] ?? "";
     plan = user["plan"] ?? "";
-    avatar = user["avatarPath"] ??"" ;
+    avatar = user["avatarPath"] ?? "";
   }
 
   Map<String, dynamic> toJson() {

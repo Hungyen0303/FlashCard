@@ -1,4 +1,4 @@
-import 'package:flashcard_learning/data/services/api/Api1.dart';
+import 'package:flashcard_learning/data/services/api/api.dart';
 import 'package:flashcard_learning/domain/models/Word.dart';
 
 abstract class DictionaryRepo {
@@ -6,13 +6,13 @@ abstract class DictionaryRepo {
 }
 
 class DictionaryRepoRemote extends DictionaryRepo {
-  DictionaryRepoRemote({required this.api1});
-  final Api1 api1;
+  DictionaryRepoRemote({required this.api});
+  final Api api;
 
   @override
   Future<String> getPopularWord() async {
     try {
-      return await api1.getPopularWord();
+      return await api.getPopularWord();
     } catch (e) {
       rethrow;
     }

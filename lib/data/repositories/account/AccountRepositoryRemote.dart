@@ -1,13 +1,13 @@
 import 'package:flashcard_learning/data/repositories/account/accountRepository.dart';
-import 'package:flashcard_learning/data/services/api/Api1.dart';
+import 'package:flashcard_learning/data/services/api/api.dart';
 
 import '../../../AppManager.dart';
 import '../../../domain/models/user.dart';
 
 class AccountRepositoryRemote extends AccountRepository {
-  AccountRepositoryRemote({required this.api1});
+  AccountRepositoryRemote({required this.api});
 
-  final Api1 api1;
+  final Api api;
 
   @override
   void setImage(String path) {
@@ -23,7 +23,7 @@ class AccountRepositoryRemote extends AccountRepository {
   @override
   Future<void> updateUser(User newUser) async {
     try {
-      await api1.updateUser(newUser);
+      await api.updateUser(newUser);
     } catch (e) {
       // TODO hasError and showEror
     }
@@ -31,19 +31,20 @@ class AccountRepositoryRemote extends AccountRepository {
 
   @override
   Future<User?> getUser() async {
-    if (AppManager.getUser() != null)
-      return AppManager.getUser();
-    else
+    try {
+      return await api.getUser();
+    } catch (e) {
       return null;
+    }
   }
 
   @override
   Future<Map<String, int>> getTrackData() async {
-    return await api1.getTrackData();
+    return await api.getTrackData();
   }
 
   @override
   Future<void> postTrack() async {
-    await api1.postTrack();
+    await api.postTrack();
   }
 }

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flashcard_learning/data/repositories/specific_flashcard/SpecificFlashCardRepo.dart';
-import 'package:flashcard_learning/data/services/api/Api1.dart';
+import 'package:flashcard_learning/data/services/api/api.dart';
 
 import '../../../domain/models/Flashcard.dart';
 
@@ -8,9 +8,9 @@ class SpecificFlashCardRepoRemote extends SpecificFlashCardRepo {
   List<FlashCard> cachedList = [];
   String nameOfSet = "";
 
-  SpecificFlashCardRepoRemote({required this.api1});
+  SpecificFlashCardRepoRemote({required this.api});
 
-  final Api1 api1;
+  final Api api;
 
   @override
   void setNameOfSet(String newName) {
@@ -21,7 +21,7 @@ class SpecificFlashCardRepoRemote extends SpecificFlashCardRepo {
   Future<List<FlashCard>> getAll(String nameOfSet) async {
     try {
       if (nameOfSet != this.nameOfSet) {
-        cachedList = await api1.getAllFlashcard(nameOfSet);
+        cachedList = await api.getAllFlashcard(nameOfSet);
         this.nameOfSet = nameOfSet;
       }
       return cachedList;
@@ -33,7 +33,7 @@ class SpecificFlashCardRepoRemote extends SpecificFlashCardRepo {
   @override
   Future<bool> addNewCard(FlashCard flashcard) async {
     try {
-      bool success = await api1.addNewCard(flashcard, nameOfSet);
+      bool success = await api.addNewCard(flashcard, nameOfSet);
       if (success) {
         cachedList.add(flashcard);
         return true;
@@ -48,7 +48,7 @@ class SpecificFlashCardRepoRemote extends SpecificFlashCardRepo {
   @override
   Future<bool> deleteACard(FlashCard card) async {
     try {
-      bool success = await api1.deleteFlashcard(card, nameOfSet);
+      bool success = await api.deleteFlashcard(card, nameOfSet);
       if (success) {
         cachedList.remove(card);
         return true;
@@ -63,7 +63,7 @@ class SpecificFlashCardRepoRemote extends SpecificFlashCardRepo {
   @override
   Future<bool> editACard(FlashCard oldCard, FlashCard newCard) async {
     try {
-      bool success = await api1.updateCard(oldCard, newCard, nameOfSet);
+      bool success = await api.updateCard(oldCard, newCard, nameOfSet);
       if (success) {
         var index = cachedList.indexWhere((e) => oldCard == e);
         cachedList[index] = newCard;
@@ -88,7 +88,7 @@ class SpecificFlashCardRepoRemote extends SpecificFlashCardRepo {
       );
       newFlashcard.done = !oldFlashcard.done;
       bool success =
-          await api1.updateCard(oldFlashcard, newFlashcard, nameOfSet);
+          await api.updateCard(oldFlashcard, newFlashcard, nameOfSet);
 
       if (success) {
         cachedList[index] = newFlashcard;

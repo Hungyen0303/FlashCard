@@ -4,22 +4,19 @@ import 'package:flashcard_learning/domain/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../AppManager.dart';
-
 class AccountViewModel extends ChangeNotifier {
   AccountViewModel(this._repo);
 
-  User get currentUser => _currentUser;
-  User _currentUser = AppManager.getUser() ??
-      User.named(username: "guest", name: "guest", plan: "Basic", avatar: "");
-
   final AccountRepository _repo;
+  User? _currentUser;
+  User? get currentUser => _currentUser;
+
+  Future<void> loadUser() async {
+    _currentUser = await _repo.getUser() ?? User();
+    notifyListeners();
+  }
 
   bool countByDay = true;
-
-  void loadUser() {
-    _currentUser = AppManager.getUser()!;
-  }
 
   Future<void> changeAvatar() async {
     final ImagePicker picker = ImagePicker();
@@ -29,9 +26,9 @@ class AccountViewModel extends ChangeNotifier {
         String linkAfterUploading =
             await SupaBaseService.uploadImageToSupabase(image.path, image.name);
         await _repo.updateUser(User.named(
-            username: _currentUser.username,
-            name: _currentUser.name,
-            plan: _currentUser.plan,
+            username: _currentUser?.username ?? '',
+            name: _currentUser?.name ?? '',
+            plan: _currentUser?.plan ?? '',
             avatar: linkAfterUploading));
         loadUser();
         notifyListeners();
@@ -63,10 +60,10 @@ class AccountViewModel extends ChangeNotifier {
   Future<bool> updateName(String newName) async {
     try {
       await _repo.updateUser(User.named(
-          username: _currentUser.username,
+          username: _currentUser?.username ?? '',
           name: newName,
-          plan: _currentUser.plan,
-          avatar: _currentUser.avatar));
+          plan: _currentUser?.plan ?? '',
+          avatar: _currentUser?.avatar ?? ''));
       loadUser();
       notifyListeners();
       return true;

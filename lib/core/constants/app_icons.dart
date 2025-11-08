@@ -83,12 +83,11 @@ class IconMapper {
 
   static int toCode(IconData iconData) {
     return _codeToIcon.entries
-            .firstWhere(
-              (entry) => entry.value == iconData,
-              orElse: () => const MapEntry(-1, Icons.help_outline),
-            )
-            .key ??
-        -1;
+        .firstWhere(
+          (entry) => entry.value == iconData,
+          orElse: () => const MapEntry(-1, Icons.help_outline),
+        )
+        .key;
   }
 
   /// Danh sách tất cả mã (dùng để random hoặc chọn)

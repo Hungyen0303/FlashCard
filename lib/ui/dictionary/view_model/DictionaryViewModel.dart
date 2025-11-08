@@ -1,5 +1,5 @@
-import 'package:flashcard_learning/data/services/api/Api1.dart';
-import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
+import 'package:flashcard_learning/data/services/api/api.dart';
+import 'package:flashcard_learning/data/services/api/api_impl.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../../../AppManager.dart';

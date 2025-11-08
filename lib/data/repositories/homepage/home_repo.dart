@@ -1,25 +1,25 @@
-import 'package:flashcard_learning/data/services/api/Api1.dart';
+import 'package:flashcard_learning/data/services/api/api.dart';
+import 'package:flashcard_learning/domain/models/user.dart';
 
 class HomeRepo {
-  final Api1 api1;
+  final Api api;
 
-  HomeRepo({required this.api1});
+  HomeRepo({required this.api});
 
   Future<String> getQuestionFromAI(String topic, String level) async {
-    return await api1.getQuestionFromAI(topic, level);
+    return await api.getQuestionFromAI(topic, level);
   }
 
   Future<String> getTopics() async {
-    return await api1.getTopics();
+    return await api.getTopics();
   }
 
   Future<String> generateScoreAndQuestion(
       String humanChat, String current, String nextQuestion) async {
-    return await api1.generateScoreAndQuestion(
-        humanChat, current, nextQuestion);
+    return await api.generateScoreAndQuestion(humanChat, current, nextQuestion);
   }
 
   Future<String> generateLastQuestion(String humanChat, String question) async {
-    return await api1.generateLastQuestion(humanChat, question);
+    return await api.generateLastQuestion(humanChat, question);
   }
 }

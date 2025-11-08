@@ -1,8 +1,9 @@
 import 'package:flashcard_learning/AppManager.dart';
 import 'package:flashcard_learning/data/repositories/dictionary/DictionaryRepo.dart';
-import 'package:flashcard_learning/data/services/api/Api1.dart';
+import 'package:flashcard_learning/data/services/api/api.dart';
 import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/routing/route.dart';
+import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/home/view_models/navigation_viewmodel.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/ui/account/account_screen.dart';
@@ -51,6 +52,7 @@ class _ShellScreenState extends State<ShellScreen> {
       const AccountPage(),
     ];
     final navVM = context.read<NavigationViewModel>();
+    context.read<AccountViewModel>().loadUser();
 
     navVM.addListener(() {
       if (navVM.tokenExpired) {

@@ -1,8 +1,9 @@
 import 'package:flashcard_learning/data/URL.dart';
-import 'package:flashcard_learning/data/services/api/Api1.dart';
+import 'package:flashcard_learning/data/services/api/api.dart';
 import 'package:flashcard_learning/l10n/app_localization.dart';
 import 'package:flashcard_learning/logo.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
+import 'package:flashcard_learning/ui/home/view_models/navigation_viewmodel.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -46,8 +47,9 @@ class LoginState extends State<LoginPage> {
           _emailController.text, _passwordController.text);
       if (mounted && !loginViewModel.hasError) {
         LoadingOverlay.hide();
-        context.read<Api1>().reset();
-        context.go('/home');
+        context.read<Api>().reset();
+        context.read<NavigationViewModel>().changeIndex(0);
+        context.go(AppRoute.home);
       } else if (mounted) {
         LoadingOverlay.hide();
         QuickAlert.show(

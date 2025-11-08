@@ -28,6 +28,8 @@ class _HomePageState extends State<HomePage> {
         context, MaterialPageRoute(builder: (_) => const AllFlashCardSet()));
   }
 
+  late MainScreenViewModel mainScreenViewModel;
+
   Widget buildListTile(
       {required String title,
       required IconData leadingIcon,
@@ -89,7 +91,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    final mainScreenViewModel =
+    mainScreenViewModel =
         Provider.of<MainScreenViewModel>(context, listen: false);
     final accountViewModel =
         Provider.of<AccountViewModel>(context, listen: false);
@@ -152,16 +154,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<String> listTiles = [
-    "", // will set below
-    "",
-  ];
-
   @override
   Widget build(BuildContext context) {
-    listTiles[0] = context.l10n.home_review_flashcard;
-    listTiles[1] = context.l10n.home_learn_public;
-
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FA),
       appBar: _buildAppbar(),
@@ -171,19 +165,21 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: context.l10n.home_welcome_back,
-                      style: const TextStyle(
-                          color: MAIN_TITLE_COLOR, fontSize: 18)),
-                  TextSpan(
-                      text: AppManager.getUser()!.name,
-                      style: const TextStyle(
-                          color: MAIN_TITLE_COLOR,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500))
-                ]),
+              Consumer<AccountViewModel>(
+                builder: (context, accountVM, child) => RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                        text: context.l10n.home_welcome_back,
+                        style: const TextStyle(
+                            color: MAIN_TITLE_COLOR, fontSize: 18)),
+                    TextSpan(
+                        text: accountVM.currentUser?.name ?? '...',
+                        style: const TextStyle(
+                            color: MAIN_TITLE_COLOR,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500))
+                  ]),
+                ),
               ),
               const AIConversation(),
               Padding(
@@ -198,13 +194,13 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               buildListTile(
-                  title: listTiles[0],
+                  title: context.l10n.home_review_flashcard,
                   leadingIcon: Icons.rate_review_outlined,
                   onPressed: () {
                     _gotoAllCollections(context);
                   }),
               buildListTile(
-                  title: listTiles[1],
+                  title: context.l10n.home_learn_public,
                   leadingIcon: LineIcons.plusCircle,
                   onPressed: () {
                     context.push(AppRoute.public_flashcard);

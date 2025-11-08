@@ -1,23 +1,23 @@
 import 'package:flashcard_learning/data/repositories/flashcardsets/FlashCardSetRepo.dart';
 import 'package:flashcard_learning/domain/models/flashSet.dart';
 
-import '../../services/api/Api1.dart';
+import '../../services/api/api.dart';
 
 class FlashCardSetRepoRemote extends FlashCardSetRepo {
-  FlashCardSetRepoRemote({required this.api1});
+  FlashCardSetRepoRemote({required this.api});
 
-  final Api1 api1;
+  final Api api;
 
   @override
   Future<bool> addNewSetToPublic(FlashCardSet newSet) async {
-    await api1.publicSet(newSet.name);
+    await api.publicSet(newSet.name);
     return true;
   }
 
   @override
   Future<List<FlashCardSet>> getAllSetPublic() async {
     try {
-      return await api1.getAllFlashcardSetPublic();
+      return await api.getAllFlashcardSetPublic();
     } catch (e) {
       rethrow;
     }
@@ -26,7 +26,7 @@ class FlashCardSetRepoRemote extends FlashCardSetRepo {
   @override
   Future<List<FlashCardSet>> getAll() async {
     try {
-      return await api1.getAllFlashcardSet();
+      return await api.getAllFlashcardSet();
     } catch (e) {
       rethrow;
     }
@@ -35,7 +35,7 @@ class FlashCardSetRepoRemote extends FlashCardSetRepo {
   @override
   Future<bool> addNewSet(FlashCardSet newSet) async {
     try {
-      await api1.addNewSet(newSet);
+      await api.addNewSet(newSet);
 
       return true;
     } catch (e) {
@@ -46,7 +46,7 @@ class FlashCardSetRepoRemote extends FlashCardSetRepo {
   @override
   Future<bool> editASet(String nameOfSet, FlashCardSet newSet) async {
     try {
-      await api1.updateSet(nameOfSet, newSet);
+      await api.updateSet(nameOfSet, newSet);
       return true;
     } catch (e) {
       return false;
@@ -56,7 +56,7 @@ class FlashCardSetRepoRemote extends FlashCardSetRepo {
   @override
   Future<bool> deleteASet(String name) async {
     try {
-      return await api1.deleteSet(name);
+      return await api.deleteSet(name);
     } catch (e) {
       return false;
     }

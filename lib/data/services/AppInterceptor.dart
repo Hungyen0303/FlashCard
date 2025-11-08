@@ -42,7 +42,7 @@ class AppInterceptor extends Interceptor {
         if (refreshResponse.data["status"] == "SUCCESS") {
           String newAccessToken = refreshResponse.data["data"]["newToken"];
           if (newAccessToken.isEmpty) {
-            AppManager.clearToken(); // Có thể logout user
+            AppManager.logout(); // Có thể logout user
             handler.next(err); // Lỗi khác, không xử lý
             return;
           }
@@ -62,12 +62,12 @@ class AppInterceptor extends Interceptor {
           pendingRequests.clear();
         } else if (refreshResponse.data["status"] == "Error") {
           handler.reject(err); // Refresh thất bại, trả lỗi về
-          AppManager.clearToken(); // Có thể logout user
+          AppManager.logout(); // Có thể logout user
           pendingRequests.clear();
         }
       } catch (e) {
         handler.reject(err); // Refresh thất bại, trả lỗi về
-        AppManager.clearToken(); // Có thể logout user
+        AppManager.logout(); // Có thể logout user
         pendingRequests.clear();
       } finally {
         isRefreshing = false;

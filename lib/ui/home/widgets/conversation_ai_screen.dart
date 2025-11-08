@@ -81,7 +81,7 @@ class _ConversationAIScreenState extends State<ConversationAIScreen> {
     super.initState();
     data = context
         .read<MainScreenViewModel>()
-        .initialize(widget.title, widget.level);
+        .initializeChat(widget.title, widget.level);
   }
 
   final ScrollController _scrollController = ScrollController();

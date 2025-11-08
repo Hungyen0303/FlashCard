@@ -25,7 +25,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 5),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-          color: Color(0xffe8a90e), borderRadius: BorderRadius.circular(10)),
+          color: const Color(0xffe8a90e),
+          borderRadius: BorderRadius.circular(10)),
       child: IconTheme(
           data: const IconThemeData(
             color: Color(0xFF6200EE),
@@ -84,12 +85,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: 80,
                       height: 80,
                     )
-                  : accountViewModel.currentUser.avatar.isEmpty
+                  : accountViewModel.currentUser?.avatar.isEmpty ?? true
                       ? const Icon(LineIcons.user,
                           size: 40, color: Colors.white)
                       : Image.network(
                           alignment: Alignment.topCenter,
-                          accountViewModel.currentUser.avatar,
+                          accountViewModel.currentUser?.avatar ?? '',
                           fit: BoxFit.cover,
                           width: 80,
                           height: 80,
@@ -103,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 await accountViewModel.changeAvatar();
               },
               child: Container(
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: Colors.grey,
                   shape: BoxShape.circle,
@@ -161,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 width: 160,
                 child: Text(
-                  accountViewModel.currentUser.name,
+                  accountViewModel.currentUser?.name ?? '',
                   style: contentTextStyle,
                 ),
               ),
@@ -172,7 +173,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: white,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             ),
             onPressed: () async {
               await changeName(context, accountViewModel);
@@ -207,17 +208,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: TextField(
             controller: controller,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20),
+            style: const TextStyle(fontSize: 20),
             keyboardType: TextInputType.name,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 border: OutlineInputBorder(borderSide: BorderSide(width: 1))),
           ),
         ),
         onConfirmBtnTap: () async {
-          if (accountViewModel.currentUser.name != controller.text) {
+          if (accountViewModel.currentUser?.name != controller.text) {
             LoadingOverlay.show(context);
             await accountViewModel.updateName(controller.text);
             LoadingOverlay.hide();
+
             context.pop();
           }
         });
@@ -253,7 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 text: "${l10n.profile_plan}\n",
                                 style: titleText),
                             TextSpan(
-                              text: accountViewModel.currentUser.plan,
+                              text: accountViewModel.currentUser?.plan ?? '',
                               style: contentTextStyle,
                             ),
                           ],

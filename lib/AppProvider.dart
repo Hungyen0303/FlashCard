@@ -8,8 +8,8 @@ import 'package:flashcard_learning/data/repositories/flashcardsets/FlashCardSetR
 import 'package:flashcard_learning/data/repositories/homepage/home_repo.dart';
 import 'package:flashcard_learning/data/repositories/specific_flashcard/SpecificFlashCardRepo.dart';
 import 'package:flashcard_learning/data/repositories/specific_flashcard/SpecificFlashCardRepoRemote.dart';
-import 'package:flashcard_learning/data/services/api/Api1.dart';
-import 'package:flashcard_learning/data/services/api/Api1Impl.dart';
+import 'package:flashcard_learning/data/services/api/api.dart';
+import 'package:flashcard_learning/data/services/api/api_impl.dart';
 import 'package:flashcard_learning/ui/account/account_viewmodel.dart';
 import 'package:flashcard_learning/ui/auth/login/view_models/login_viewmodel.dart';
 import 'package:flashcard_learning/ui/chat/view_models/ChatWithAIViewModel.dart';
@@ -28,44 +28,44 @@ class AppProvider {
   static List<SingleChildWidget> providers = [
     ChangeNotifierProvider<CustomCardProvider>(
         create: (_) => CustomCardProvider()),
-    Provider<Api1>(create: (_) => Api1Impl()),
+    Provider<Api>(create: (_) => ApiImpl()),
     Provider<HomeRepo>(
         create: (context) =>
-            HomeRepo(api1: Provider.of<Api1>(context, listen: false))),
+            HomeRepo(api: Provider.of<Api>(context, listen: false))),
     Provider<DictionaryRepo>(
         create: (context) => DictionaryRepoRemote(
-            api1: Provider.of<Api1>(context, listen: false))),
+            api: Provider.of<Api>(context, listen: false))),
     ChangeNotifierProvider<NavigationViewModel>(
-        create: (context) => NavigationViewModel(
-            api1: Provider.of<Api1>(context, listen: false))),
+        create: (context) =>
+            NavigationViewModel(api: Provider.of<Api>(context, listen: false))),
     Provider<AuthRepositoryRemote>(
         create: (_) =>
-            AuthRepositoryRemote(api1: Provider.of<Api1>(_, listen: false))),
+            AuthRepositoryRemote(api: Provider.of<Api>(_, listen: false))),
     ChangeNotifierProvider<LoginViewModel>(
         create: (context) => LoginViewModel(
             authRepository:
                 Provider.of<AuthRepositoryRemote>(context, listen: false))),
     Provider<FlashCardSetRepo>(
         create: (_) =>
-            FlashCardSetRepoRemote(api1: Provider.of<Api1>(_, listen: false))),
+            FlashCardSetRepoRemote(api: Provider.of<Api>(_, listen: false))),
     ChangeNotifierProvider<FlashCardSetViewModel>(
         create: (context) => FlashCardSetViewModel(
             Provider.of<FlashCardSetRepo>(context, listen: false))),
     Provider<SpecificFlashCardRepo>(
         create: (context) => SpecificFlashCardRepoRemote(
-            api1: Provider.of<Api1>(context, listen: false))),
+            api: Provider.of<Api>(context, listen: false))),
     ChangeNotifierProvider<SpecificFlashCardViewModel>(
         create: (context) => SpecificFlashCardViewModel(
             Provider.of<SpecificFlashCardRepo>(context, listen: false))),
     Provider<ChatWithAIRepo>(
         create: (context) => ChatWithAIRepoRemote(
-            api1: Provider.of<Api1>(context, listen: false))),
+            api: Provider.of<Api>(context, listen: false))),
     ChangeNotifierProvider<ChatWithAIViewModel>(
         create: (context) => ChatWithAIViewModel(
             Provider.of<ChatWithAIRepo>(context, listen: false))),
     Provider<AccountRepository>(
         create: (context) => AccountRepositoryRemote(
-            api1: Provider.of<Api1>(context, listen: false))),
+            api: Provider.of<Api>(context, listen: false))),
     ChangeNotifierProvider<AccountViewModel>(
         create: (context) => AccountViewModel(
             Provider.of<AccountRepository>(context, listen: false))),

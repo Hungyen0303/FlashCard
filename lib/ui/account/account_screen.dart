@@ -29,6 +29,12 @@ class _AccountPageState extends State<AccountPage> {
     await context.read<AccountViewModel>().logout();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    context.read<AccountViewModel>().loadUser();
+  }
+
   void _gotoAccountPage() {
     context.push(AppRoute.profile);
   }
@@ -129,12 +135,14 @@ class _AccountPageState extends State<AccountPage> {
                                   width: 80,
                                   height: 80,
                                 )
-                              : accountViewModel.currentUser.avatar.isEmpty
+                              : accountViewModel.currentUser?.avatar.isEmpty ??
+                                      true
                                   ? const Icon(LineIcons.user,
                                       size: 40, color: white)
                                   : Image.network(
                                       alignment: Alignment.topCenter,
-                                      accountViewModel.currentUser.avatar,
+                                      accountViewModel.currentUser?.avatar ??
+                                          '',
                                       fit: BoxFit.cover,
                                       width: 60,
                                       height: 60,
@@ -166,7 +174,7 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                 ),
                 title: Text(
-                  accountViewModel.currentUser.name,
+                  accountViewModel.currentUser?.name ?? '',
                   style:
                       TextStyle(color: darkText, fontWeight: FontWeight.bold),
                 ),
@@ -205,7 +213,7 @@ class _AccountPageState extends State<AccountPage> {
                               style: textStyle.copyWith(
                                   fontSize: 15, color: lightText)),
                           TextSpan(
-                            text: accountViewModel.currentUser.plan,
+                            text: accountViewModel.currentUser?.plan ?? '',
                             style: textStyle.copyWith(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
