@@ -101,6 +101,12 @@ class ApiImpl extends Api {
           throw Exception("Server is busy. Please try again.");
         }
       }
+    } on SocketException catch (e) {
+      if (AppManager.locale.languageCode == "vi") {
+        throw Exception("Máy chủ đang bận. Vui lòng thử lại.");
+      } else {
+        throw Exception("Server is busy. Please try again.");
+      }
     }
   }
 

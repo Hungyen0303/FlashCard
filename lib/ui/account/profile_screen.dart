@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flashcard_learning/l10n/app_localizations.dart';
 import 'package:flashcard_learning/routing/route.dart';
 import 'package:flashcard_learning/utils/LoadingOverlay.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
@@ -10,7 +11,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 import 'account_viewmodel.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localization.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

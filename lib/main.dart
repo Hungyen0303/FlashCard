@@ -1,6 +1,5 @@
 import 'package:flashcard_learning/AppProvider.dart';
-import 'package:flashcard_learning/data/services/api/api.dart';
-import 'package:flashcard_learning/l10n/app_localization.dart';
+import 'package:flashcard_learning/l10n/app_localizations.dart';
 import 'package:flashcard_learning/routing/router.dart';
 import 'package:flashcard_learning/utils/color/AllColor.dart';
 import 'package:flashcard_learning/utils/locale_provider.dart';
@@ -12,8 +11,6 @@ import 'package:requests_inspector/requests_inspector.dart';
 import 'AppManager.dart';
 
 void main() async {
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
   await dotenv.load(fileName: ".env");
   await AppManager.initialize();
   runApp(MultiProvider(

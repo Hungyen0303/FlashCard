@@ -59,8 +59,8 @@ class _AccountPageState extends State<AccountPage> {
     color: dominantColor.withOpacity(0.2),
     border: Border.all(color: dominantColor, width: 1.5),
   );
-  TextStyle textStyleForDuration =
-      TextStyle(color: darkBlue, fontWeight: FontWeight.bold, fontSize: 18);
+  TextStyle textStyleForDuration = const TextStyle(
+      color: darkBlue, fontWeight: FontWeight.bold, fontSize: 18);
 
   AppBar _buildAppbar() {
     return AppBar(

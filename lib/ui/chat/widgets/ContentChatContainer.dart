@@ -111,8 +111,8 @@ class ContentChatContainer extends StatelessWidget {
           constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width * 0.7,
               minWidth: MediaQuery.of(context).size.width * 0.1),
-          padding: EdgeInsets.all(8),
-          margin: EdgeInsets.only(right: 10, top: 20),
+          padding: const EdgeInsets.all(8),
+          margin: const EdgeInsets.only(right: 10, top: 20),
           decoration: BoxDecoration(
             color: Colors.grey[500],
             borderRadius: BorderRadius.circular(8),
@@ -131,6 +131,17 @@ class ContentChatContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return PieMenu(
         onPressed: () {},
+        actions: [
+          PieAction(
+            tooltip: const Text("Copy"),
+            onSelect: () => copyText(content),
+            child: const Icon(
+              CupertinoIcons.doc_on_doc,
+              size: 20,
+              color: Colors.white,
+            ),
+          ),
+        ],
         child:
             isBot ? aiResponseWidget(context) : humanResponseWidget(context));
   }

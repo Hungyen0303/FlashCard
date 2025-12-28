@@ -1,5 +1,4 @@
 import 'package:flashcard_learning/data/services/api/api.dart';
-import 'package:flashcard_learning/domain/models/Word.dart';
 
 abstract class DictionaryRepo {
   Future<String> getPopularWord();

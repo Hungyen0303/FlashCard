@@ -1,5 +1,4 @@
 import 'package:flashcard_learning/data/services/api/api.dart';
-import 'package:flashcard_learning/domain/models/user.dart';
 
 class HomeRepo {
   final Api api;
